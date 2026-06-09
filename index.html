@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>HUNTR — EMEA Tech M&A Target Signal</title>
+<style>
+  :root {
+    --bg:#0a0e14;
+    --bg-2:#0f141d;
+    --panel:#121925;
+    --panel-2:#161f2e;
+    --line:#1f2a3a;
+    --line-2:#27374d;
+    --txt:#e6edf6;
+    --txt-2:#9fb0c5;
+    --txt-3:#6a7c93;
+    --accent:#4da3ff;
+    --accent-dim:#1b3a5c;
+    --gold:#e8b84b;
+    --hot:#ff5b6e;
+    --warm:#ff9a52;
+    --cool:#3ad0a8;
+    --green:#3ad07a;
+    --mono:"SFMono-Regular",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --shadow:0 18px 48px rgba(0,0,0,.55);
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(77,163,255,.06), transparent 60%),
+      var(--bg);
+    color:var(--txt);
+    font-family:var(--sans);
+    font-size:13px;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  .num { font-family:var(--mono); font-variant-numeric:tabular-nums; }
+
+  /* ---------- App shell ---------- */
+  .app { display:grid; grid-template-rows:auto 1fr; height:100vh; }
+
+  header.topbar {
+    display:flex; align-items:center; gap:18px;
+    padding:0 18px; height:54px;
+    background:linear-gradient(180deg,var(--bg-2),var(--bg));
+    border-bottom:1px solid var(--line);
+    z-index:40;
+  }
+  .brand { display:flex; align-items:center; gap:10px; cursor:default; }
+  .brand .mark {
+    width:26px; height:26px; border-radius:7px;
+    background:linear-gradient(135deg,var(--accent),#2f6fd0);
+    display:grid; place-items:center; font-weight:800; color:#04101f; font-size:15px;
+    box-shadow:0 0 0 1px rgba(77,163,255,.4), 0 6px 16px rgba(77,163,255,.25);
+  }
+  .brand .name { font-weight:700; letter-spacing:.14em; font-size:14px; }
+  .brand .name b { color:var(--accent); }
+  .brand .tag {
+    font-size:9.5px; letter-spacing:.18em; color:var(--txt-3);
+    border-left:1px solid var(--line-2); padding-left:10px; margin-left:2px;
+  }
+  .search {
+    flex:1; max-width:420px; position:relative;
+  }
+  .search input {
+    width:100%; height:34px; border-radius:8px;
+    background:var(--panel); border:1px solid var(--line-2);
+    color:var(--txt); padding:0 12px 0 32px; font-family:var(--sans); font-size:12.5px;
+    outline:none; transition:border .15s, box-shadow .15s;
+  }
+  .search input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(77,163,255,.15); }
+  .search svg { position:absolute; left:10px; top:9px; width:16px; height:16px; stroke:var(--txt-3); }
+  .topbar .spacer { flex:1; }
+  .pill {
+    font-size:10.5px; color:var(--txt-2); background:var(--panel);
+    border:1px solid var(--line-2); border-radius:999px; padding:5px 11px;
+    display:flex; align-items:center; gap:7px; white-space:nowrap;
+  }
+  .pill .dot { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); }
+  .pill.warn { color:var(--gold); border-color:#3a3320; background:#1c1809; }
+  .iconbtn {
+    width:34px; height:34px; border-radius:8px; border:1px solid var(--line-2);
+    background:var(--panel); color:var(--txt-2); display:none; place-items:center; cursor:pointer;
+  }
+
+  /* ---------- Body grid ---------- */
+  .body { display:grid; grid-template-columns:248px 1fr; min-height:0; }
+
+  /* ---------- Sidebar ---------- */
+  aside.side {
+    background:var(--bg-2); border-right:1px solid var(--line);
+    overflow-y:auto; padding:14px 0 40px;
+  }
+  .side h4 {
+    margin:18px 16px 8px; font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--txt-3); font-weight:700;
+  }
+  .side .grp:first-child h4 { margin-top:4px; }
+  .filt {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:6px 16px; cursor:pointer; color:var(--txt-2); font-size:12.5px;
+    border-left:2px solid transparent; user-select:none;
+  }
+  .filt:hover { background:var(--panel); color:var(--txt); }
+  .filt.on { color:var(--txt); border-left-color:var(--accent); background:linear-gradient(90deg,rgba(77,163,255,.10),transparent); }
+  .filt .cnt { font-family:var(--mono); font-size:10.5px; color:var(--txt-3); }
+  .filt .left { display:flex; align-items:center; gap:9px; }
+  .filt .swatch { width:9px; height:9px; border-radius:2px; }
+  .side .reset {
+    margin:6px 16px 0; font-size:11px; color:var(--accent); cursor:pointer; display:inline-block;
+  }
+  .side .reset:hover { text-decoration:underline; }
+
+  /* dual-handle range slider */
+  .range { margin:4px 16px 6px; }
+  .range .vals { display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--txt-2); margin-bottom:9px; }
+  .range .vals b { color:var(--accent); }
+  .slider { position:relative; height:24px; }
+  .slider .track { position:absolute; top:9px; left:0; right:0; height:5px; border-radius:3px; background:var(--line); }
+  .slider .fill { position:absolute; top:9px; height:5px; border-radius:3px; background:linear-gradient(90deg,var(--cool),var(--gold),var(--hot)); }
+  .slider input[type=range] {
+    position:absolute; top:0; left:0; width:100%; margin:0; height:24px;
+    -webkit-appearance:none; appearance:none; background:transparent; pointer-events:none;
+  }
+  .slider input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none; appearance:none; pointer-events:auto; cursor:grab;
+    width:16px; height:16px; border-radius:50%; background:var(--txt);
+    border:3px solid var(--accent); box-shadow:0 2px 6px rgba(0,0,0,.5); margin-top:0;
+  }
+  .slider input[type=range]::-moz-range-thumb {
+    pointer-events:auto; cursor:grab; width:16px; height:16px; border-radius:50%;
+    background:var(--txt); border:3px solid var(--accent); box-shadow:0 2px 6px rgba(0,0,0,.5);
+  }
+  .slider input[type=range]:active::-webkit-slider-thumb { cursor:grabbing; }
+
+  /* methodology / modal */
+  .infobtn { cursor:pointer; }
+  .modal-scrim { position:fixed; inset:0; background:rgba(2,5,10,.62); backdrop-filter:blur(2px); opacity:0; pointer-events:none; transition:opacity .2s; z-index:70; display:grid; place-items:center; padding:24px; }
+  .modal-scrim.show { opacity:1; pointer-events:auto; }
+  .modal { width:760px; max-width:100%; max-height:86vh; overflow:hidden; background:var(--panel); border:1px solid var(--line-2); border-radius:14px; box-shadow:var(--shadow); display:flex; flex-direction:column; transform:translateY(8px) scale(.99); transition:transform .2s; }
+  .modal-scrim.show .modal { transform:none; }
+  .modal .mh { display:flex; align-items:center; gap:12px; padding:16px 20px; border-bottom:1px solid var(--line); }
+  .modal .mh .mt { font-size:15px; font-weight:700; }
+  .modal .mh .ms { font-size:11px; color:var(--txt-3); }
+  .modal .mh .close { margin-left:auto; border:0; background:var(--panel-2); color:var(--txt-2); width:30px; height:30px; border-radius:7px; cursor:pointer; font-size:15px; }
+  .modal .mb { overflow-y:auto; padding:18px 20px 26px; }
+  .modal p { color:var(--txt-2); line-height:1.6; font-size:12.5px; }
+  .modal .lead { color:var(--txt); }
+  .fmeth { border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-top:12px; }
+  .fmeth .row { display:grid; grid-template-columns:150px 1fr 132px; gap:0; border-bottom:1px solid var(--line); }
+  .fmeth .row:last-child { border-bottom:0; }
+  .fmeth .row.head { background:var(--bg-2); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--txt-3); font-weight:700; }
+  .fmeth .row > div { padding:9px 12px; font-size:11.5px; }
+  .fmeth .row .fnm { font-weight:600; color:var(--txt); display:flex; align-items:center; gap:7px; }
+  .fmeth .row .fnm .w { font-family:var(--mono); font-size:10px; color:var(--txt-3); }
+  .fmeth .row .src { color:var(--accent); font-family:var(--mono); font-size:10.5px; border-left:1px solid var(--line); }
+  .fmeth .row .desc { color:var(--txt-2); }
+  .srcs { display:grid; gap:8px; margin-top:10px; }
+  .srcrow { display:grid; grid-template-columns:160px 1fr; gap:10px; padding:9px 12px; background:var(--panel-2); border:1px solid var(--line); border-radius:8px; font-size:11.5px; }
+  .srcrow .sn { font-weight:600; color:var(--txt); }
+  .srcrow .sn a { color:var(--accent); text-decoration:none; font-family:var(--mono); font-size:10.5px; display:block; margin-top:2px; }
+  .srcrow .sd { color:var(--txt-2); line-height:1.5; }
+  .modal .callout { background:var(--panel-2); border:1px solid var(--line); border-left:2px solid var(--gold); border-radius:8px; padding:11px 13px; color:var(--txt-2); font-size:12px; line-height:1.55; margin-top:14px; }
+  /* provenance tag in tearsheet */
+  .prov { font-size:9.5px; color:var(--txt-3); margin-top:4px; font-family:var(--mono); display:flex; align-items:center; gap:5px; }
+  .prov a { color:var(--accent); text-decoration:none; }
+  .prov a:hover { text-decoration:underline; }
+  .prov .demo { color:var(--gold); }
+  .prov-live { color:var(--green); font-weight:600; }
+  .fw { color:var(--txt-3); font-family:var(--mono); font-size:10px; }
+  .srctag { color:var(--txt-3); }
+  /* broad collapsible audit header */
+  .audit-head { display:flex; align-items:center; justify-content:space-between; gap:8px;
+    margin-top:7px; padding:8px 11px; background:var(--panel-2); border:1px solid var(--line);
+    border-radius:7px; cursor:pointer; user-select:none; transition:background .12s,border-color .12s; }
+  .audit-head:hover { background:var(--panel); border-color:var(--line-2); }
+  .audit-head .ah-label { font-size:11px; color:var(--txt-2); font-weight:600; }
+  .audit-head:hover .ah-label { color:var(--txt); }
+  .audit-head .ah-chev { color:var(--txt-3); font-size:11px; transition:transform .2s; }
+  .audit-head.open { background:var(--panel); border-color:var(--accent); }
+  .audit-head.open .ah-chev { transform:rotate(90deg); color:var(--accent); }
+  .audit-head.open .ah-label { color:var(--txt); }
+  /* whole-driver clickable audit trigger */
+  .factor-head { cursor:pointer; border-radius:8px; padding:6px 7px; margin:0 -7px; transition:background .12s; }
+  .factor-head:hover { background:var(--panel-2); }
+  .factor-head.open { background:var(--panel-2); }
+  .fhv { display:inline-flex; align-items:center; gap:6px; }
+  .fchev { font-size:10px; color:var(--txt-3); transition:transform .2s; }
+  .factor-head:hover .fchev { color:var(--txt-2); }
+  .factor-head.open .fchev { transform:rotate(90deg); color:var(--accent); }
+  .prov-hint { margin-left:auto; color:var(--txt-3); }
+  .factor-head:hover .prov-hint { color:var(--accent); }
+  /* per-factor audit panel */
+  .audit { display:none; margin:8px 0 2px; padding:10px 12px; background:var(--bg-2); border:1px solid var(--line); border-radius:8px; }
+  .audit.open { display:block; }
+  .arow { display:flex; justify-content:space-between; gap:12px; font-size:11px; padding:4px 0; border-bottom:1px dashed var(--line); }
+  .arow:last-of-type { border-bottom:0; }
+  .arow > span { color:var(--txt-3); flex:none; }
+  .arow b { color:var(--txt); font-weight:600; text-align:right; font-family:var(--mono); font-size:10.5px; }
+  .arow b.hi { color:var(--accent); }
+  .awhy { font-size:11px; color:var(--txt-2); line-height:1.5; margin-top:8px; padding-top:8px; border-top:1px solid var(--line); }
+  .awhy b { color:var(--txt); }
+  .asrc { font-size:10px; color:var(--txt-3); margin-top:7px; }
+  .asrc a { color:var(--accent); text-decoration:none; }
+  /* score build-up */
+  .buildwrap { border:1px solid var(--line-2); border-radius:10px; overflow:hidden; margin-bottom:16px; }
+  .buildhdr { display:flex; align-items:center; justify-content:space-between; padding:10px 13px; cursor:pointer; background:var(--panel-2); font-weight:600; font-size:12px; }
+  .buildhdr .bchev { color:var(--txt-3); transition:transform .2s; }
+  .buildhdr.open .bchev { transform:rotate(90deg); }
+  .build { display:none; padding:4px 13px 12px; }
+  .build.open { display:block; }
+  .brow { display:grid; grid-template-columns:1fr 58px 38px 84px; gap:6px; padding:5px 0; border-bottom:1px solid var(--line); font-size:11.5px; align-items:center; }
+  .brow > span:first-child { color:var(--txt-2); }
+  .brow .num { text-align:right; color:var(--txt); }
+  .brow.bhead { font-size:9px; letter-spacing:.05em; text-transform:uppercase; border-bottom:1px solid var(--line-2); }
+  .brow.bhead span { color:var(--txt-3)!important; }
+  .brow.btot { border-bottom:0; border-top:1px solid var(--line-2); margin-top:2px; font-weight:700; }
+  .brow.btot > span:first-child { color:var(--txt); }
+  .brow.btot .num { color:var(--accent); }
+  .bnote { font-size:10.5px; color:var(--txt-3); line-height:1.5; margin-top:9px; }
+  .methlink { color:var(--accent); cursor:pointer; }
+  .methlink:hover { text-decoration:underline; }
+  /* editable driver inputs */
+  .ed-sub { width:48px; background:var(--bg); border:1px solid var(--line-2); color:var(--accent);
+    font-family:var(--mono); font-size:11.5px; text-align:right; border-radius:5px; padding:2px 5px; outline:none; }
+  .ed-sub:focus { border-color:var(--accent); box-shadow:0 0 0 2px rgba(77,163,255,.18); }
+  .ed-sub::-webkit-inner-spin-button { opacity:.45; }
+  .edhint { font-size:10px; color:var(--txt-3); margin:3px 0 7px; }
+  .edhint b { color:var(--cool); font-weight:600; }
+  /* share-price chart */
+  .sp-demo { float:right; text-transform:none; letter-spacing:0; font-weight:600; color:var(--gold); font-size:10px; }
+  .spwrap { border:1px solid var(--line); border-radius:10px; padding:10px 12px 12px; background:var(--panel-2); }
+  .sphead { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; }
+  .spperf { font-size:16px; font-weight:700; font-family:var(--mono); }
+  .spperf span { font-size:10px; color:var(--txt-3); font-weight:500; margin-left:5px; }
+  .spmeta { font-size:10px; color:var(--txt-3); font-family:var(--mono); }
+  .spchart { height:120px; }
+  .spbtns { display:flex; gap:4px; margin-top:9px; flex-wrap:wrap; }
+  .spbtns button { flex:1; min-width:34px; border:1px solid var(--line-2); background:var(--panel);
+    color:var(--txt-2); font-family:var(--mono); font-size:10.5px; padding:5px 0; border-radius:6px; cursor:pointer; transition:all .12s; }
+  .spbtns button:hover { color:var(--txt); border-color:var(--accent); }
+  .spbtns button.on { background:var(--accent-dim); color:var(--txt); border-color:var(--accent); }
+
+  /* ---------- Main ---------- */
+  main.main { min-width:0; display:grid; grid-template-rows:auto auto 1fr; min-height:0; }
+
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border-bottom:1px solid var(--line); }
+  .kpi { background:var(--bg-2); padding:12px 16px; }
+  .kpi .l { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--txt-3); }
+  .kpi .v { font-size:21px; font-weight:700; margin-top:3px; font-family:var(--mono); }
+  .kpi .s { font-size:10.5px; color:var(--txt-3); margin-top:1px; }
+  .kpi .v .u { font-size:12px; color:var(--txt-2); font-weight:500; }
+
+  .toolbar {
+    display:flex; align-items:center; gap:10px; padding:9px 16px;
+    border-bottom:1px solid var(--line); background:var(--bg-2);
+  }
+  .toolbar .title { font-size:13px; font-weight:600; }
+  .toolbar .title span { color:var(--txt-3); font-weight:400; margin-left:6px; }
+  .toolbar .spacer { flex:1; }
+  .seg { display:flex; background:var(--panel); border:1px solid var(--line-2); border-radius:8px; overflow:hidden; }
+  .seg button {
+    border:0; background:transparent; color:var(--txt-2); font-family:var(--sans);
+    font-size:11.5px; padding:6px 11px; cursor:pointer;
+  }
+  .seg button.on { background:var(--accent-dim); color:var(--txt); }
+  .seg button:not(:last-child){ border-right:1px solid var(--line-2); }
+
+  .tablewrap { overflow:auto; min-height:0; }
+  table { width:100%; border-collapse:collapse; }
+  thead th {
+    position:sticky; top:0; z-index:5; background:var(--bg-2);
+    text-align:right; font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--txt-3); font-weight:600; padding:9px 14px; border-bottom:1px solid var(--line);
+    cursor:pointer; white-space:nowrap; user-select:none;
+  }
+  thead th.l { text-align:left; }
+  thead th:hover { color:var(--txt); }
+  thead th .arr { color:var(--accent); font-size:9px; }
+  tbody tr { border-bottom:1px solid rgba(31,42,58,.55); cursor:pointer; transition:background .08s; }
+  tbody tr:hover { background:var(--panel); }
+  tbody tr.sel { background:var(--accent-dim); }
+  td { padding:9px 14px; text-align:right; white-space:nowrap; }
+  td.l { text-align:left; }
+  .rank { color:var(--txt-3); font-family:var(--mono); font-size:11.5px; width:34px; }
+  .co { display:flex; align-items:center; gap:10px; }
+  .co .flag { font-size:15px; line-height:1; }
+  .co .nm { font-weight:600; }
+  .co .tk { color:var(--txt-3); font-family:var(--mono); font-size:10.5px; margin-top:1px; }
+  .sub { color:var(--txt-2); }
+  .chip {
+    display:inline-block; font-size:10px; padding:2px 8px; border-radius:999px;
+    background:var(--panel-2); border:1px solid var(--line-2); color:var(--txt-2);
+  }
+  /* score cell */
+  .score { display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+  .scorebar { width:74px; height:6px; border-radius:3px; background:var(--line); overflow:hidden; }
+  .scorebar i { display:block; height:100%; border-radius:3px; }
+  .scoreval { font-family:var(--mono); font-weight:700; width:26px; text-align:right; }
+  .dec {
+    font-family:var(--mono); font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:5px;
+  }
+  .delta.up { color:var(--green); }
+  .delta.dn { color:var(--hot); }
+
+  /* ---------- Detail drawer ---------- */
+  .scrim { position:fixed; inset:0; background:rgba(2,5,10,.55); opacity:0; pointer-events:none; transition:opacity .2s; z-index:50; backdrop-filter:blur(1px); }
+  .scrim.show { opacity:1; pointer-events:auto; }
+  .drawer {
+    position:fixed; top:0; right:0; height:100vh; width:420px; max-width:92vw;
+    background:var(--panel); border-left:1px solid var(--line-2);
+    transform:translateX(100%); transition:transform .26s cubic-bezier(.4,0,.2,1);
+    z-index:60; display:flex; flex-direction:column; box-shadow:var(--shadow);
+  }
+  .drawer.show { transform:translateX(0); }
+  .dh { padding:18px 18px 14px; border-bottom:1px solid var(--line); }
+  .dh .top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .dh .nm { font-size:18px; font-weight:700; display:flex; align-items:center; gap:9px; }
+  .dh .meta { color:var(--txt-3); font-size:11.5px; margin-top:3px; font-family:var(--mono); }
+  .dh .close { border:0; background:var(--panel-2); color:var(--txt-2); width:30px; height:30px; border-radius:7px; cursor:pointer; font-size:16px; }
+  .dh .close:hover { color:var(--txt); }
+  .bigscore { display:flex; align-items:baseline; gap:10px; margin-top:14px; }
+  .bigscore .v { font-size:40px; font-weight:800; font-family:var(--mono); line-height:1; }
+  .bigscore .o { color:var(--txt-3); font-size:13px; }
+  .bigscore .badge { margin-left:auto; align-self:center; font-size:11px; padding:5px 10px; border-radius:7px; font-weight:700; }
+  .dbody { overflow-y:auto; padding:16px 18px 40px; }
+  .sech { font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--txt-3); font-weight:700; margin:18px 0 10px; }
+  .sech:first-child { margin-top:2px; }
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:9px; overflow:hidden; }
+  .stat { background:var(--panel-2); padding:9px 11px; }
+  .stat .l { font-size:10px; color:var(--txt-3); }
+  .stat .v { font-size:13.5px; font-weight:600; font-family:var(--mono); margin-top:2px; }
+  .factor { margin-bottom:11px; }
+  .factor .fr { display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:4px; }
+  .factor .fr .fn { color:var(--txt-2); }
+  .factor .fr .fv { font-family:var(--mono); color:var(--txt); font-weight:600; }
+  .ftrack { height:7px; background:var(--line); border-radius:4px; overflow:hidden; }
+  .ftrack i { display:block; height:100%; border-radius:4px; }
+  .narr { color:var(--txt-2); font-size:12px; line-height:1.55; background:var(--panel-2); border:1px solid var(--line); border-left:2px solid var(--accent); border-radius:8px; padding:11px 13px; }
+
+  /* acquirer cards */
+  .acq { background:var(--panel-2); border:1px solid var(--line); border-radius:9px; margin-bottom:8px; overflow:hidden; }
+  .acq summary { list-style:none; cursor:pointer; padding:10px 12px; display:flex; align-items:center; gap:10px; }
+  .acq summary::-webkit-details-marker { display:none; }
+  .acq .arank { font-family:var(--mono); font-size:11px; color:var(--txt-3); width:16px; flex:none; }
+  .acq .ainfo { flex:1; min-width:0; }
+  .acq .an { font-weight:600; font-size:12.5px; display:flex; align-items:center; gap:7px; }
+  .acq .atype { font-size:9px; letter-spacing:.06em; text-transform:uppercase; padding:1px 6px; border-radius:4px; font-weight:700; }
+  .acq .atype.strat { color:var(--accent); background:rgba(77,163,255,.12); }
+  .acq .atype.spons { color:var(--cool); background:rgba(58,208,168,.12); }
+  .acq .atype.state { color:var(--gold); background:rgba(232,184,75,.12); }
+  .acq .afitline { display:flex; align-items:center; gap:8px; margin-top:5px; }
+  .acq .afitbar { flex:1; height:5px; border-radius:3px; background:var(--line); overflow:hidden; }
+  .acq .afitbar i { display:block; height:100%; border-radius:3px; }
+  .acq .afitv { font-family:var(--mono); font-size:10.5px; color:var(--txt-2); width:54px; text-align:right; }
+  .acq .chev { color:var(--txt-3); font-size:11px; transition:transform .2s; flex:none; }
+  .acq[open] .chev { transform:rotate(90deg); }
+  .acq .why { padding:0 12px 12px 38px; font-size:11.5px; line-height:1.55; color:var(--txt-2); }
+  .acq .why .ang { color:var(--gold); font-weight:600; }
+  .acqhint { font-size:10.5px; color:var(--txt-3); margin:-3px 0 9px; }
+
+  .footer-note { padding:7px 16px; font-size:10.5px; color:var(--txt-3); border-top:1px solid var(--line); background:var(--bg-2); display:flex; align-items:center; gap:8px; }
+  .footer-note b { color:var(--gold); font-weight:700; }
+
+  .empty { padding:50px; text-align:center; color:var(--txt-3); }
+
+  /* ---------- Responsive ---------- */
+  .backdrop { display:none; }
+  @media (max-width:880px){
+    body { font-size:13px; }
+    .iconbtn { display:grid; }
+    .body { grid-template-columns:1fr; }
+    aside.side {
+      position:fixed; top:54px; left:0; bottom:0; width:270px; z-index:45;
+      transform:translateX(-100%); transition:transform .24s; box-shadow:var(--shadow);
+    }
+    aside.side.show { transform:translateX(0); }
+    .backdrop { display:block; position:fixed; inset:54px 0 0 0; background:rgba(0,0,0,.5); z-index:44; opacity:0; pointer-events:none; transition:opacity .2s; }
+    .backdrop.show { opacity:1; pointer-events:auto; }
+    .kpis { grid-template-columns:repeat(2,1fr); }
+    .search { max-width:none; }
+    .brand .tag { display:none; }
+    .col-sub, thead th.col-sub { display:none; }
+    .col-mc, thead th.col-mc { display:none; }
+    .drawer { width:100%; max-width:100%; }
+  }
+  @media (max-width:520px){
+    .col-dec, thead th.col-dec { display:none; }
+    .brand .name { font-size:12px; }
+    .kpi .v { font-size:18px; }
+  }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-thumb { background:#1d2737; border-radius:6px; border:2px solid var(--bg-2); }
+  ::-webkit-scrollbar-track { background:transparent; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="iconbtn" id="menuBtn" title="Filters">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+    <div class="brand">
+      <div class="mark">H</div>
+      <div>
+        <div class="name"><b>HUNT</b>R</div>
+      </div>
+      <div class="tag">EMEA · TECH · M&amp;A TARGET SIGNAL</div>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" placeholder="Search company or ticker…  (e.g. Worldline, UBI)" autocomplete="off" />
+    </div>
+    <div class="spacer"></div>
+    <div class="pill infobtn" id="methBtn" title="How the signal is built &amp; where the data comes from"><span style="color:var(--accent)">ⓘ</span> Methodology</div>
+    <div class="seg" id="dsSeg" title="Switch between placeholder and live Stage-1 data"><button data-ds="demo">Demo</button><button data-ds="live" class="on">Live</button></div>
+    <div class="pill warn" id="srcPill" title="Data source">⚠ Illustrative data</div>
+  </header>
+
+  <div class="body">
+    <div class="backdrop" id="backdrop"></div>
+    <!-- SIDEBAR -->
+    <aside class="side" id="side">
+      <div class="grp">
+        <h4>Signal range</h4>
+        <div class="range">
+          <div class="vals"><span>Signal <b id="rMin">0</b></span><span><b id="rMax">100</b></span></div>
+          <div class="slider">
+            <div class="track"></div>
+            <div class="fill" id="rFill"></div>
+            <input type="range" id="rLo" min="0" max="100" value="0" step="1" />
+            <input type="range" id="rHi" min="0" max="100" value="100" step="1" />
+          </div>
+        </div>
+      </div>
+      <div class="grp">
+        <h4>Decile range</h4>
+        <div class="range">
+          <div class="vals"><span>From <b id="rDMin">D1</b></span><span>to <b id="rDMax">D10</b></span></div>
+          <div class="slider">
+            <div class="track"></div>
+            <div class="fill" id="rDFill"></div>
+            <input type="range" id="rDLo" min="1" max="10" value="1" step="1" />
+            <input type="range" id="rDHi" min="1" max="10" value="10" step="1" />
+          </div>
+        </div>
+      </div>
+      <div class="grp">
+        <h4>Geography</h4>
+        <div id="geoFilters"></div>
+      </div>
+      <div class="grp">
+        <h4>Subsector</h4>
+        <div id="subFilters"></div>
+      </div>
+      <div class="grp">
+        <h4>Size band</h4>
+        <div id="sizeFilters"></div>
+      </div>
+      <span class="reset" id="resetBtn">↺ Reset all filters</span>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="kpis">
+        <div class="kpi"><div class="l">Universe (filtered)</div><div class="v" id="kpiCount">—</div><div class="s">EMEA-listed Tech</div></div>
+        <div class="kpi"><div class="l">High-conviction (D9–D10)</div><div class="v" id="kpiHigh">—</div><div class="s">Score ≥ 70</div></div>
+        <div class="kpi"><div class="l">Median score</div><div class="v" id="kpiMed">—</div><div class="s">0–100 scale</div></div>
+        <div class="kpi"><div class="l">Aggregate mkt cap</div><div class="v" id="kpiMc">—</div><div class="s">illustrative</div></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="title">Acquisition-likelihood ranking <span id="ctxLabel">· All EMEA</span></div>
+        <div class="spacer"></div>
+        <div class="seg" id="viewSeg">
+          <button data-v="all" class="on">All</button>
+          <button data-v="top">Top decile</button>
+          <button data-v="movers">Movers</button>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="l" data-k="rank">#</th>
+              <th class="l" data-k="name">Company</th>
+              <th class="l col-sub" data-k="subsector">Subsector</th>
+              <th class="col-mc" data-k="mc">Mkt cap</th>
+              <th class="col-dec" data-k="decile">Decile</th>
+              <th data-k="delta" title="30-day change in score">Δ30d</th>
+              <th data-k="score">Signal ▾</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="emptyState" style="display:none;">No companies match the current filters.</div>
+      </div>
+
+      <div class="footer-note">
+        <b>Prototype.</b> Scores, deltas &amp; financials are illustrative placeholders to demonstrate the interface — not a validated signal. Next phase wires in real, sourced free/open data + a backtested model.
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- DETAIL DRAWER -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer"></aside>
+
+<!-- METHODOLOGY MODAL -->
+<div class="modal-scrim" id="methScrim">
+  <div class="modal" id="methModal">
+    <div class="mh">
+      <div>
+        <div class="mt">Methodology &amp; data sources</div>
+        <div class="ms">How the acquisition-likelihood signal is constructed — and how to audit every datapoint</div>
+      </div>
+      <button class="close" id="methClose">✕</button>
+    </div>
+    <div class="mb" id="methBody"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   ILLUSTRATIVE DATA — placeholder scores for UI demonstration.
+   Replaced in next phase with sourced free data + backtested model.
+   ============================================================ */
+const SUBSECTORS = {
+  appsw:   {label:"Application Software", c:"#4da3ff"},
+  infrasw: {label:"Infrastructure SW",   c:"#7c8cff"},
+  cyber:   {label:"Cybersecurity",       c:"#c47cff"},
+  semis:   {label:"Semiconductors",      c:"#ff9a52"},
+  semieq:  {label:"Semi Equipment",      c:"#ffc24d"},
+  itserv:  {label:"IT Services",         c:"#3ad0a8"},
+  pay:     {label:"Fintech / Payments",  c:"#3ad07a"},
+  internet:{label:"Internet / E-comm",   c:"#46c5e0"},
+  hw:      {label:"Hardware / Networking",c:"#9aa7b8"},
+  gaming:  {label:"Gaming",              c:"#ff6fae"},
+};
+const REGIONS = {
+  dach:   "DACH",
+  fr:     "France",
+  ukie:   "UK & Ireland",
+  benelux:"Benelux",
+  nordics:"Nordics",
+  seur:   "Southern Europe",
+  me:     "Israel & Middle East",
+  cee:    "CEE",
+};
+// company: name, ticker, flag, region, subsector, mc($bn), score(0-100), d30, factors{}, note, stats{}
+const F = (val,o,bs,sz,sc,si)=>({val,o,bs,sz,sc,si}); // valuation, ownership, balanceSheet, size, sectorConsol, strategicInterest
+const DATA = [
+  ["Worldline","WLN","🇫🇷","fr","pay",6.2,86,+9, F(92,74,40,70,88,82),"Depressed multiple post-derating, fragmented payments landscape consolidating, repeated press speculation around private-equity and strategic interest."],
+  ["Ubisoft","UBI","🇫🇷","fr","gaming",4.1,84,+12, F(80,58,46,78,72,90),"Founding family + Tencent stake dynamics, activist pressure, strategic IP attractive to larger publishers; ongoing take-private chatter."],
+  ["Atos","ATO","🇫🇷","fr","itserv",1.9,82,-4, F(95,52,18,82,64,70),"Balance-sheet distress and restructuring make whole-co or asset-level break-up plausible; strategic assets (BDS) repeatedly courted."],
+  ["Nexi","NEXI","🇮🇹","seur","pay",7.8,79,+6, F(84,60,44,58,90,72),"European payments scale player trading below private-market value; sponsor ownership overhang and sector roll-up logic."],
+  ["Endava","DAVA","🇬🇧","ukie","itserv",1.7,77,+5, F(78,55,62,86,58,74),"Mid-cap digital-engineering pure-play, de-rated with sector; attractive tuck-in for larger IT-services consolidators."],
+  ["SES","SESG","🇱🇺","benelux","hw",4.4,76,+3, F(82,50,48,72,80,66),"Satellite consolidation theme (Intelsat combination); strategic spectrum assets and persistent M&A speculation."],
+  ["Trustpilot","TRST","🇬🇧","ukie","internet",2.0,74,+7, F(66,70,72,84,46,78),"Profitable category-leading reviews platform with clean balance sheet; plausible target for martech/data acquirers."],
+  ["Soitec","SOI","🇫🇷","fr","semis",3.0,73,+4, F(74,48,60,80,62,76),"Niche SOI substrate technology of strategic interest amid semiconductor supply-chain reshoring."],
+  ["Temenos","TEMN","🇨🇭","dach","appsw",5.1,73,+2, F(76,56,52,66,54,80),"Core-banking software franchise repeatedly linked to private equity; sticky revenue base attractive to sponsors."],
+  ["Wise","WISE","🇬🇧","ukie","pay",13.5,71,+3, F(58,46,78,52,60,86),"Founder-controlled but strategically coveted cross-border rails; scarcity value to banks/fintech acquirers."],
+  ["AMS-OSRAM","AMS","🇦🇹","dach","semis",2.6,70,-3, F(80,52,30,76,66,64),"Leveraged sensor/photonics player; portfolio disposals and break-up scenarios discussed by the market."],
+  ["Sinch","SINCH","🇸🇪","nordics","infrasw",2.3,69,+5, F(72,50,46,80,70,62),"CPaaS consolidator that itself screens as a target after de-rating; founder/major-holder dynamics."],
+  ["Nordic Semiconductor","NOD","🇳🇴","nordics","semis",2.8,68,+4, F(70,60,66,78,58,66),"Bluetooth/low-power wireless leader; scarce IoT-connectivity asset of interest to larger semis."],
+  ["Allfunds","ALLFG","🇪🇸","seur","pay",4.0,67,+1, F(68,52,58,70,66,68),"Fund-distribution network previously approached by Euronext; strategic infrastructure asset."],
+  ["CD Projekt","CDR","🇵🇱","cee","gaming",4.6,66,+2, F(60,44,70,72,64,80),"Premier European game studio with marquee IP; persistent speculation despite governance protections."],
+  ["Nemetschek","NEM","🇩🇪","dach","appsw",13.8,64,0, F(40,38,74,40,58,78),"High-quality AEC software compounder; quality + vertical leadership make it a strategic prize if ever in play."],
+  ["Cellebrite","CLBT","🇮🇱","me","cyber",4.5,64,+3, F(54,48,72,70,60,74),"Digital-intelligence niche with government customer base; sponsor heritage and clear strategic buyers."],
+  ["Bytes Technology","BYIT","🇬🇧","ukie","itserv",1.5,63,+4, F(58,56,80,86,52,52),"Cash-generative software reseller; small, clean and acquirable by larger VARs / private equity."],
+  ["Darktrace*","DARK","🇬🇧","ukie","cyber",5.3,62,-8, F(50,46,64,66,56,80),"Reference case — AI cyber asset; illustrative only (precedent interest from sponsors)."],
+  ["Kainos","KNOS","🇬🇧","ukie","itserv",1.4,61,+2, F(56,52,82,88,48,50),"Founder-influenced UK digital-services & Workday-partner; scarcity + balance-sheet strength."],
+  ["evolution","EVO","🇸🇪","nordics","gaming",18.2,60,+1, F(78,40,76,44,50,58),"Cash-rich live-casino leader; valuation reset creates optionality though scale limits acquirer set."],
+  ["Sopra Steria","SOP","🇫🇷","fr","itserv",3.8,59,+2, F(60,50,58,64,62,52),"European IT-services scale player; recurrent consolidation candidate on both sides of deals."],
+  ["Wix.com","WIX","🇮🇱","me","internet",9.5,58,+1, F(50,42,70,56,48,72),"Website-builder platform reaching profitability; strategic web-presence asset for larger internet co's."],
+  ["Computacenter","CCC","🇬🇧","ukie","itserv",3.1,57,0, F(54,48,74,62,52,46),"Steady reseller/infrastructure-services compounder; acquirable but family-influenced register."],
+  ["Sage Group","SGE","🇬🇧","ukie","appsw",16.0,55,+1, F(44,40,68,38,46,74),"SME accounting-software incumbent; long-rumoured private-equity / strategic target given recurring revenue."],
+  ["BE Semiconductor","BESI","🇳🇱","benelux","semieq",17.5,54,-1, F(46,42,72,40,44,72),"Hybrid-bonding leader; strategically pivotal but premium valuation tempers near-term deal odds."],
+  ["Logitech","LOGN","🇨🇭","dach","hw",13.0,53,0, F(48,38,80,48,42,56),"Cash-rich peripherals brand; periodic activist/strategic interest, large but digestible."],
+  ["Sinch","XXXX","🇸🇪","nordics","infrasw",0,0,0, F(0,0,0,0,0,0),"_dup"],
+  ["NICE","NICE","🇮🇱","me","appsw",10.5,52,+1, F(46,44,70,46,44,68),"CX/analytics software leader; large-cap but strategically central to enterprise-software consolidation."],
+  ["Auto Trader","AUTO","🇬🇧","ukie","internet",8.2,51,0, F(38,40,82,50,40,66),"Dominant UK auto-marketplace; high quality, occasionally cited in classifieds-consolidation chatter."],
+  ["Capgemini","CAP","🇫🇷","fr","itserv",30.0,46,0, F(42,34,56,26,50,48),"Scale IT-services consolidator; far more likely acquirer than target at current size."],
+  ["CyberArk","CYBR","🇮🇱","me","cyber",18.5,45,-1, F(34,36,62,40,46,70),"Identity-security leader; premium asset but large, and an active acquirer in its own right."],
+  ["Adyen","ADYEN","🇳🇱","benelux","pay",45.0,40,0, F(28,30,78,22,42,64),"Best-in-class payments platform; founder-controlled and too large for most acquirers."],
+  ["Dassault Systèmes","DSY","🇫🇷","fr","appsw",42.0,38,0, F(26,28,66,22,40,60),"3D/PLM franchise; family/Dassault control and scale make a takeover highly unlikely near-term."],
+  ["STMicroelectronics","STMPA","🇫🇷","fr","semis",24.0,37,-1, F(40,30,52,30,44,46),"Strategic European foundry/IDM; state-linked ownership and scale are strong takeover deterrents."],
+  ["Infineon","IFX","🇩🇪","dach","semis",48.0,34,0, F(34,30,54,20,46,48),"European auto/power-semis champion; scale and strategic-sovereignty sensitivity reduce deal odds."],
+  ["Hexagon","HEXA","🇸🇪","nordics","infrasw",30.0,33,+1, F(32,38,50,28,42,52),"Industrial-tech & metrology group; potential structural break-up discussed but large and family-anchored."],
+  ["Spotify","SPOT","🇸🇪","nordics","internet",115.0,22,0, F(18,20,70,8,28,52),"Audio-streaming leader; founder-controlled mega-cap, effectively un-acquirable."],
+  ["Ericsson","ERIC","🇸🇪","nordics","hw",26.0,21,0, F(30,22,48,26,30,30),"Telecoms-equipment major; strategic-infrastructure status and scale make M&A improbable."],
+  ["Nokia","NOKIA","🇫🇮","nordics","hw",24.0,20,0, F(28,24,52,28,30,28),"Networking incumbent; national-strategic asset, very low takeover probability."],
+  ["ASML","ASML","🇳🇱","benelux","semieq",340.0,8,0, F(6,10,72,2,18,40),"EUV-lithography monopoly; strategically irreplaceable mega-cap, effectively un-acquirable."],
+  ["SAP","SAP","🇩🇪","dach","appsw",290.0,7,0, F(8,12,64,2,16,36),"European software flagship; scale alone places it beyond any realistic acquirer."],
+];
+
+// factor weights — SINGLE SOURCE OF TRUTH for scoring & audit (editable at runtime)
+const FKEYS=["val","o","bs","sz","sc","si"];
+const WEIGHTS={val:20,o:20,bs:15,sz:15,sc:15,si:15};
+// composite is weighted MEAN (normalised by the weight sum) so it stays 0–100 even if weights are edited
+const compositeRaw=f=>{ let n=0,d=0; for(const k of FKEYS){ n+=WEIGHTS[k]*f[k]; d+=WEIGHTS[k]; } return d? n/d : 0; };
+const rescore=c=>{ c.scoreRaw=compositeRaw(c.f); c.score=Math.round(c.scoreRaw); };
+
+// clean dup / placeholder rows; HEADLINE SCORE IS COMPUTED from the weighted factors,
+// so the audit drill-down always reconciles exactly to the score.
+let companies = DATA.filter(r=>r[1]!=="XXXX").map(r=>{
+  const f=r[8], raw=compositeRaw(f);
+  return { name:r[0], ticker:r[1], flag:r[2], region:r[3], subsector:r[4],
+    mc:r[5], d30:r[7], f, note:r[9], scoreRaw:raw, score:Math.round(raw) };
+});
+
+// derive deciles globally (1 = lowest likelihood, 10 = highest)
+function reassignDeciles(){
+  const sorted=[...companies].sort((a,b)=>a.score-b.score);
+  const n=sorted.length;
+  sorted.forEach((c,i)=>{ c.decile=Math.min(10,Math.floor((i/n)*10)+1); });
+}
+reassignDeciles();
+
+/* ============================================================
+   LIVE (Stage 1) dataset — real data from the Colab pipeline (Yahoo Finance via yfinance, v2).
+   The Demo/Live toggle in the top bar switches the whole tool between this and the placeholders.
+   F = [f_val,f_own,f_bs,f_sz]; R = [mktcap_eur,ev_ebitda,ev_rev,nd_ebitda,float_pct]
+   ============================================================ */
+const LIVE_META = { source:"Yahoo Finance via yfinance", retrieved:"2026-06-09 22:38 UTC", version:"stage1-v2" };
+const normKey = t => t.replace(/[-.].*$/,"");
+const METAByKey = {}; DATA.filter(r=>r[1]!=="XXXX").forEach(r=>{ METAByKey[normKey(r[1])]={flag:r[2], note:r[9]}; });
+const LIVE_RAW = [
+  {n:"Fiverr",t:"FVRR",r:"me",s:"internet",F:[98.6,56.8,94.3,93.2],R:[340669111.04,2.373,0.231,-6.4385,0.8444],c:"4/4"},
+  {n:"Truecaller",t:"TRUE-B.ST",r:"nordics",s:"appsw",F:[76.3,70.5,79.3,92.0],R:[352118317.056,6.082,1.733,-1.6672,0.916],c:"4/4"},
+  {n:"Nagarro",t:"NA9.DE",r:"dach",s:"itserv",F:[88.4,96.6,21.8,90.9],R:[467566432.0,5.585,0.761,1.9624,1.0],c:"4/4"},
+  {n:"GB Group",t:"GBG.L",r:"ukie",s:"appsw",F:[65.0,96.6,28.7,89.8],R:[544509688.32,8.91,2.0,1.2844,1.0],c:"4/4"},
+  {n:"Bytes Technology",t:"BYIT.L",r:"ukie",s:"itserv",F:[47.8,72.7,77.0,80.7],R:[1021314153.6,12.226,3.591,-1.492,0.9225],c:"4/4"},
+  {n:"Allfunds",t:"ALLFG.AS",r:"seur",s:"pay",F:[60.0,77.3,95.4,33.0],R:[5144266240.0,6.798,3.861,-6.887,0.9483],c:"4/4"},
+  {n:"Trustpilot",t:"TRST.L",r:"ukie",s:"internet",F:[46.0,69.3,78.2,76.1],R:[1111869607.68,52.266,3.598,-1.6514,0.9133],c:"4/4"},
+  {n:"Alten",t:"ATE.PA",r:"fr",s:"itserv",F:[86.0,58.0,51.7,64.8],R:[2198293248.0,6.683,0.522,-0.1848,0.8508],c:"4/4"},
+  {n:"AMS-OSRAM",t:"AMS.SW",r:"dach",s:"semis",F:[82.8,84.1,10.3,69.3],R:[1825904908.8,6.576,1.017,3.1824,0.9901],c:"4/4"},
+  {n:"Endava",t:"DAVA",r:"ukie",s:"itserv",F:[75.8,71.6,1.1,98.9],R:[139039747.2,11.23,0.463,6.3392,0.9202],c:"4/4"},
+  {n:"Remedy Entertainment",t:"REMEDY.HE",r:"nordics",s:"gaming",F:[54.0,27.3,90.8,95.5],R:[201682288.0,64.595,3.202,-3.7722,0.672],c:"4/4"},
+  {n:"Edenred",t:"EDEN.PA",r:"fr",s:"pay",F:[72.5,96.6,33.3,34.1],R:[5079202816.0,5.863,2.382,1.1252,1.0],c:"4/4"},
+  {n:"Asseco Poland",t:"ACP.WA",r:"cee",s:"appsw",F:[78.3,53.4,67.8,51.1],R:[3477561845.76,7.771,1.045,-1.2638,0.792],c:"4/4"},
+  {n:"Ubisoft",t:"UBI.PA",r:"fr",s:"gaming",F:[92.1,40.9,32.2,86.4],R:[674152512.0,2.728,0.742,1.1839,0.7274],c:"4/4"},
+  {n:"Logitech",t:"LOGN.SW",r:"dach",s:"hw",F:[51.8,86.4,81.6,20.5],R:[13491769804.8,12.921,2.313,-1.9082,0.9972],c:"4/4"},
+  {n:"u-blox",t:"UBXN.SW",r:"dach",s:"semis",F:[52.9,79.5,31.0,78.4],R:[1089557145.6,-15.296,3.217,1.2199,0.97],c:"4/4"},
+  {n:"TeamViewer",t:"TMV.DE",r:"dach",s:"appsw",F:[71.5,73.9,11.5,81.8],R:[900985728.0,6.412,2.364,3.1414,0.9469],c:"4/4"},
+  {n:"Frontier Developments",t:"FDEV.L",r:"ukie",s:"gaming",F:[67.7,14.8,71.3,97.7],R:[190796130.72,9.346,1.476,-1.3252,0.5628],c:"4/4"},
+  {n:"monday.com",t:"MNDY",r:"me",s:"appsw",F:[60.9,42.0,98.9,46.6],R:[3947378319.36,159.127,2.296,-55.1165,0.7422],c:"4/4"},
+  {n:"SUSS MicroTec",t:"SMHN.DE",r:"dach",s:"semieq",F:[23.4,80.7,73.6,70.5],R:[1755762176.0,32.867,3.621,-1.4204,0.9732],c:"4/4"},
+  {n:"Rightmove",t:"RMV.L",r:"ukie",s:"internet",F:[36.0,96.6,49.4,48.9],R:[3791654530.56,11.278,7.689,-0.1232,1.0],c:"4/4"},
+  {n:"Knowit",t:"KNOW.ST",r:"nordics",s:"itserv",F:[83.3,23.9,39.1,94.3],R:[210858272.768,7.803,0.489,0.9556,0.634],c:"4/4"},
+  {n:"Atos",t:"ATO.PA",r:"fr",s:"itserv",F:[95.7,39.8,8.0,85.2],R:[681766784.0,5.462,0.274,3.7736,0.7267],c:"4/4"},
+  {n:"Auto Trader Group",t:"AUTO.L",r:"ukie",s:"internet",F:[42.0,96.6,44.8,43.2],R:[4369098839.04,9.956,6.456,0.4639,1.0],c:"4/4"},
+  {n:"Netcompany",t:"NETC.CO",r:"nordics",s:"itserv",F:[50.0,64.8,50.0,65.9],R:[2045557125.12,null,null,null,0.8919],c:"2/4"},
+  {n:"Capgemini",t:"CAP.PA",r:"fr",s:"itserv",F:[73.8,96.6,19.5,18.2],R:[16797612032.0,8.19,1.056,2.2934,1.0],c:"4/4"},
+  {n:"Comet Holding",t:"COTN.SW",r:"dach",s:"semieq",F:[25.3,87.5,50.6,59.1],R:[2901172108.8,69.128,5.905,-0.1354,0.9977],c:"4/4"},
+  {n:"Ericsson",t:"ERIC-B.ST",r:"nordics",s:"hw",F:[66.3,78.4,57.5,8.0],R:[32570790641.664,9.713,1.508,-0.6635,0.9503],c:"4/4"},
+  {n:"Vitec Software",t:"VIT-B.ST",r:"nordics",s:"appsw",F:[47.6,76.1,14.9,83.0],R:[879102844.928,12.355,3.557,2.6879,0.9483],c:"4/4"},
+  {n:"Kainos",t:"KNOS.L",r:"ukie",s:"itserv",F:[46.7,35.2,72.4,75.0],R:[1113063120.0,15.085,2.077,-1.397,0.7057],c:"4/4"},
+  {n:"Playtech",t:"PTEC.L",r:"ukie",s:"gaming",F:[77.0,33.0,26.4,77.3],R:[1100078104.32,-15.02,1.161,1.4746,0.7023],c:"4/4"},
+  {n:"Stillfront",t:"SF.ST",r:"nordics",s:"gaming",F:[84.2,28.4,9.2,96.6],R:[200393971.712,5.751,1.065,3.5014,0.6804],c:"4/4"},
+  {n:"GN Store Nord",t:"GN.CO",r:"nordics",s:"hw",F:[48.7,89.8,2.3,68.2],R:[1832184461.312,15.641,1.383,6.1997,0.9986],c:"4/4"},
+  {n:"Sopra Steria",t:"SOP.PA",r:"fr",s:"itserv",F:[83.9,36.4,29.9,58.0],R:[2942752000.0,6.911,0.654,1.2614,0.7064],c:"4/4"},
+  {n:"CANCOM",t:"COK.DE",r:"dach",s:"itserv",F:[58.8,31.8,41.4,84.1],R:[761602176.0,16.263,0.469,0.8297,0.6989],c:"4/4"},
+  {n:"Embracer",t:"EMBRAC-B.ST",r:"nordics",s:"gaming",F:[51.5,10.2,92.0,73.9],R:[1217026179.072,13.783,1.841,-4.0207,0.4788],c:"4/4"},
+  {n:"Atea",t:"ATEA.OL",r:"nordics",s:"itserv",F:[71.0,22.7,40.2,71.6],R:[1604234940.416,12.196,0.521,0.8551,0.6284],c:"4/4"},
+  {n:"Reply",t:"REY.MI",r:"seur",s:"itserv",F:[71.2,21.6,66.7,50.0],R:[3786249472.0,8.101,1.381,-1.1007,0.6216],c:"4/4"},
+  {n:"Adyen",t:"ADYEN.AS",r:"benelux",s:"pay",F:[33.6,65.9,96.6,9.1],R:[25957851136.0,12.851,6.473,-8.8348,0.8946],c:"4/4"},
+  {n:"Fortnox",t:"FNOX.ST",r:"nordics",s:"appsw",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"Wavestone",t:"WAVE.PA",r:"fr",s:"itserv",F:[74.2,5.7,48.3,79.5],R:[1076700800.0,7.969,1.13,0.0523,0.3269],c:"4/4"},
+  {n:"Crayon",t:"CRAYN.OL",r:"nordics",s:"itserv",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"Teleperformance",t:"TEP.PA",r:"fr",s:"itserv",F:[91.9,30.7,17.2,54.5],R:[3342126592.0,4.606,0.723,2.4786,0.6933],c:"4/4"},
+  {n:"Sapiens",t:"SPNS",r:"me",s:"appsw",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"Comarch",t:"CMR.WA",r:"cee",s:"appsw",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"Schibsted",t:"SCHA.OL",r:"nordics",s:"internet",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"Team17",t:"TM17.L",r:"ukie",s:"gaming",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"WithSecure",t:"WITH.HE",r:"nordics",s:"cyber",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"Bechtle",t:"BC8.DE",r:"dach",s:"itserv",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"Spectris",t:"SXS.L",r:"ukie",s:"hw",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"CyberArk",t:"CYBR",r:"me",s:"cyber",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
+  {n:"NICE",t:"NICE",r:"me",s:"appsw",F:[3.4,96.6,54.0,42.0],R:[4777452544.0,160.648,45.333,-0.2563,1.0],c:"4/4"},
+  {n:"Wix.com",t:"WIX",r:"me",s:"internet",F:[83.9,34.1,3.4,67.0],R:[1856544808.96,-21.869,0.768,6.0244,0.7044],c:"4/4"},
+  {n:"Computacenter",t:"CCC.L",r:"ukie",s:"itserv",F:[68.6,17.0,75.9,35.2],R:[5076134369.28,13.167,0.425,-1.4366,0.6072],c:"4/4"},
+  {n:"Tower Semiconductor",t:"TSEM",r:"me",s:"semis",F:[12.6,85.2,86.2,11.4],R:[24967895367.68,48.177,15.974,-2.4973,0.997],c:"4/4"},
+  {n:"Amadeus IT",t:"AMS.MC",r:"seur",s:"appsw",F:[51.0,81.8,35.6,13.6],R:[22482810880.0,9.99,3.76,1.0836,0.979],c:"4/4"},
+  {n:"SES",t:"SESG.PA",r:"benelux",s:"hw",F:[63.5,60.2,5.7,52.3],R:[3427223552.0,7.965,3.154,4.9881,0.8726],c:"4/4"},
+  {n:"Jenoptik",t:"JEN.DE",r:"dach",s:"hw",F:[41.4,59.1,23.0,60.2],R:[2497871360.0,15.434,2.735,1.6761,0.8694],c:"4/4"},
+  {n:"Nordic Semiconductor",t:"NOD.OL",r:"nordics",s:"semis",F:[2.3,55.7,87.4,55.7],R:[3212921339.904,855.686,52.967,-2.5921,0.7987],c:"4/4"},
+  {n:"Nova",t:"NVMI",r:"me",s:"semieq",F:[8.0,88.6,65.5,19.3],R:[15054835015.68,55.837,17.561,-1.0511,0.9982],c:"4/4"},
+  {n:"Qt Group",t:"QTCOM.HE",r:"nordics",s:"appsw",F:[24.3,50.0,24.1,87.5],R:[664741952.0,20.325,4.846,1.6477,0.7746],c:"4/4"},
+  {n:"Tietoevry",t:"TIETO.HE",r:"nordics",s:"itserv",F:[63.4,29.5,27.6,62.5],R:[2379280640.0,10.852,1.536,1.4475,0.6869],c:"4/4"},
+  {n:"Wise",t:"WISE.L",r:"ukie",s:"pay",F:[40.6,37.5,85.1,25.0],R:[9151820421.12,12.957,3.926,-2.4609,0.7065],c:"4/4"},
+  {n:"Sinch",t:"SINCH.ST",r:"nordics",s:"infrasw",F:[56.9,44.3,12.6,61.4],R:[2484009730.048,13.291,1.321,2.8859,0.7499],c:"4/4"},
+  {n:"Allegro",t:"ALE.WA",r:"cee",s:"internet",F:[52.4,52.3,36.8,28.4],R:[8098141347.84,11.76,3.257,1.0331,0.7849],c:"4/4"},
+  {n:"Worldline",t:"WLN.PA",r:"fr",s:"pay",F:[80.8,1.1,4.6,88.6],R:[634228288.0,7.263,0.766,5.2082,0.0957],c:"4/4"},
+  {n:"SentinelOne",t:"S",r:"me",s:"cyber",F:[36.8,68.2,16.1,40.9],R:[4806382407.68,-18.276,4.521,2.5311,0.9132],c:"4/4"},
+  {n:"Softcat",t:"SCT.L",r:"ukie",s:"itserv",F:[42.5,26.1,60.9,44.3],R:[4304292894.72,17.435,2.042,-0.8224,0.6686],c:"4/4"},
+  {n:"ASML",t:"ASML.AS",r:"benelux",s:"semieq",F:[10.3,90.9,56.3,0.0],R:[581364023296.0,45.312,17.086,-0.4464,0.9996],c:"4/4"},
+  {n:"Sage Group",t:"SGE.L",r:"ukie",s:"appsw",F:[37.3,75.0,18.4,27.3],R:[8974893358.08,15.157,3.602,2.4026,0.9481],c:"4/4"},
+  {n:"Check Point",t:"CHKP",r:"me",s:"cyber",F:[33.6,46.6,62.1,21.6],R:[12195762585.6,14.589,4.623,-0.9107,0.7605],c:"4/4"},
+  {n:"Paradox Interactive",t:"PDX.ST",r:"nordics",s:"gaming",F:[20.0,4.5,88.5,72.7],R:[1222269616.128,23.937,5.784,-2.6812,0.2823],c:"4/4"},
+  {n:"Cellebrite",t:"CLBT",r:"me",s:"cyber",F:[14.0,11.4,93.1,56.8],R:[2978710466.56,36.493,5.849,-5.1056,0.4897],c:"4/4"},
+  {n:"Mycronic",t:"MYCR.ST",r:"nordics",s:"semieq",F:[17.4,48.9,63.2,36.4],R:[5034845437.952,22.506,6.614,-0.9516,0.7701],c:"4/4"},
+  {n:"SAP",t:"SAP.DE",r:"dach",s:"appsw",F:[29.6,63.6,52.9,1.1],R:[180621377536.0,15.36,4.773,-0.1881,0.8898],c:"4/4"},
+  {n:"Nexi",t:"NEXI.MI",r:"seur",s:"pay",F:[84.0,6.8,13.8,47.7],R:[3923581696.0,5.58,1.237,2.7475,0.3532],c:"4/4"},
+  {n:"Global-e Online",t:"GLBE",r:"me",s:"internet",F:[20.0,20.5,89.7,38.6],R:[5003681751.04,27.654,4.765,-2.9951,0.6214],c:"4/4"},
+  {n:"Nokia",t:"NOKIA.HE",r:"nordics",s:"hw",F:[29.4,54.5,64.4,5.7],R:[66822934528.0,27.42,3.479,-0.9874,0.7957],c:"4/4"},
+  {n:"Infineon",t:"IFX.DE",r:"dach",s:"semis",F:[15.2,92.0,25.3,2.3],R:[98320146432.0,26.005,6.907,1.5288,1.0],c:"4/4"},
+  {n:"Spotify",t:"SPOT",r:"nordics",s:"internet",F:[14.4,47.7,83.9,3.4],R:[93870162575.36,39.917,5.57,-2.3782,0.7642],c:"4/4"},
+  {n:"Indra Sistemas",t:"IDR.MC",r:"seur",s:"itserv",F:[51.1,8.0,70.1,23.9],R:[9538481152.0,14.245,1.562,-1.3217,0.4235],c:"4/4"},
+  {n:"Halma",t:"HLMA.L",r:"ukie",s:"hw",F:[11.5,83.0,34.5,14.8],R:[20451637739.52,31.551,7.514,1.1156,0.9881],c:"4/4"},
+  {n:"VAT Group",t:"VACN.SW",r:"dach",s:"semieq",F:[11.5,67.0,46.0,17.0],R:[19143471513.6,62.137,17.083,0.3635,0.898],c:"4/4"},
+  {n:"Renishaw",t:"RSW.L",r:"ukie",s:"hw",F:[20.9,9.1,80.5,45.5],R:[4231157598.72,27.79,4.599,-1.8541,0.4659],c:"4/4"},
+  {n:"CD Projekt",t:"CDR.WA",r:"cee",s:"gaming",F:[6.9,25.0,82.8,31.8],R:[5181858754.56,43.992,24.558,-1.9333,0.6476],c:"4/4"},
+  {n:"BE Semiconductor",t:"BESI.AS",r:"benelux",s:"semieq",F:[5.7,62.5,55.2,12.5],R:[22742542336.0,108.521,35.848,-0.4422,0.8887],c:"4/4"},
+  {n:"Soitec",t:"SOI.PA",r:"fr",s:"semis",F:[16.1,45.5,43.7,37.5],R:[5006156288.0,45.146,8.541,0.4911,0.7587],c:"4/4"},
+  {n:"Temenos",t:"TEMN.SW",r:"dach",s:"appsw",F:[26.8,43.2,20.7,39.8],R:[4914602649.6,18.053,4.692,2.2327,0.7446],c:"4/4"},
+  {n:"Dassault Systemes",t:"DSY.PA",r:"fr",s:"appsw",F:[38.7,13.6,74.7,10.2],R:[25858717696.0,14.111,3.821,-1.4335,0.5053],c:"4/4"},
+  {n:"STMicroelectronics",t:"STMPA.PA",r:"fr",s:"semis",F:[26.8,38.6,58.6,6.8],R:[54678614016.0,21.403,4.306,-0.7181,0.7175],c:"4/4"},
+  {n:"Camtek",t:"CAMT",r:"me",s:"semieq",F:[13.8,19.3,69.0,30.7],R:[7122988216.32,54.746,15.195,-1.3171,0.6189],c:"4/4"},
+  {n:"Prosus",t:"PRX.AS",r:"benelux",s:"internet",F:[14.9,15.9,97.7,4.5],R:[84929667072.0,201.645,12.282,-10.5481,0.5977],c:"4/4"},
+  {n:"OVHcloud",t:"OVH.PA",r:"fr",s:"infrasw",F:[51.1,2.3,6.9,63.6],R:[2230279424.0,11.917,3.29,4.1644,0.1469],c:"4/4"},
+  {n:"Hexagon",t:"HEXA-B.ST",r:"nordics",s:"infrasw",F:[4.6,51.1,37.9,15.9],R:[19356298379.264,173.419,40.774,1.0,0.7836],c:"4/4"},
+  {n:"JFrog",t:"FROG",r:"me",s:"infrasw",F:[9.2,61.4,0.0,26.1],R:[9054814167.04,-185.261,17.131,13.9125,0.8824],c:"4/4"},
+  {n:"Nemetschek",t:"NEM.DE",r:"dach",s:"appsw",F:[20.7,12.5,47.1,29.5],R:[7213049344.0,21.226,5.981,0.1435,0.4933],c:"4/4"},
+  {n:"Evolution",t:"EVO.ST",r:"nordics",s:"gaming",F:[0.0,18.2,59.8,22.7],R:[12169374728.192,110.297,67.388,-0.8027,0.6158],c:"4/4"},
+  {n:"AutoStore",t:"AUTO.OL",r:"nordics",s:"hw",F:[1.1,3.4,42.5,53.4],R:[3346334425.088,187.667,63.173,0.7877,0.2809],c:"4/4"},
+];
+const liveCompanies = LIVE_RAW.map(o=>{
+  const f={val:o.F[0], o:o.F[1], bs:o.F[2], sz:o.F[3], sc:50, si:50};
+  const m=METAByKey[normKey(o.t)]||{};
+  const raw=compositeRaw(f);
+  return { name:o.n, ticker:o.t, flag:m.flag||"🏳", region:o.r, subsector:o.s,
+    mc:(o.R[0]||0)/1e9, d30:0, f, note:m.note||"Live Stage-1 data point.",
+    scoreRaw:raw, score:Math.round(raw),
+    liveRaw:{mktcap_eur:o.R[0], ev_ebitda:o.R[1], ev_rev:o.R[2], nd_ebitda:o.R[3], float_pct:o.R[4]},
+    coverage:o.c, live:true };
+});
+const DATASETS = { demo:companies, live:liveCompanies };
+
+/* ============================================================
+   LIKELY ACQUIRERS — ranked interest + rationale (illustrative).
+   t: strat = strategic, spons = financial sponsor, state = sovereign/state-linked
+   ============================================================ */
+const A=(n,t,fit,why)=>({n,t,fit,why});
+const ACQUIRERS = {
+  WLN:[
+    A("Global PE consortium (Advent / Bain / Silver Lake)","spons",88,"Payments take-privates are a sponsor sweet-spot: recurring volumes, cash generation and a beaten-down multiple offer clear value-creation through cost-out and re-listing. <span class='ang'>Creative angle:</span> a club deal could carve out the merchant-services arm and retain the financial-services unit as a separate exit."),
+    A("Nexi","strat",80,"A Worldline–Nexi combination is the long-rumoured European payments champion: overlapping terminals estates, cross-border scale and obvious synergy. Shared sponsor registers make a stock-for-stock merger mechanically feasible."),
+    A("Fiserv / Global Payments (US scale)","strat",72,"A US major buying European distribution in one move; FX-weak European assets look cheap in dollar terms. Regulatory and data-sovereignty scrutiny is the main brake."),
+    A("Crédit Agricole","strat",64,"Already a commercial partner and shareholder in a JV. <span class='ang'>Creative angle:</span> rather than a full bid, CA could move from partner to controlling owner, ring-fencing the French merchant base as strategic banking infrastructure."),
+  ],
+  UBI:[
+    A("Tencent","strat",86,"Already a significant minority holder with board rights; the cleanest path is raising the stake to control. Deep balance sheet, clear strategic logic in Western AAA IP, and an existing relationship with the Guillemot family."),
+    A("Guillemot family + PE take-private","spons",78,"Founders have signalled they want to protect independence; a sponsor-backed buyout (with the family rolling equity) removes public-market pressure and lets them restructure the pipeline privately."),
+    A("Savvy Games / PIF (Saudi)","state",70,"Sovereign gaming ambitions and effectively unlimited capital. <span class='ang'>Creative angle:</span> a passive-to-active escalation — PIF already owns gaming stakes and could anchor a take-private rather than bid outright, sidestepping French strategic-asset sensitivities."),
+    A("Microsoft / EA / Take-Two","strat",58,"Marquee IP (Assassin's Creed, Rainbow Six) is strategically attractive, but regulatory fatigue after Activision and French political resistance to a US owner make a clean strategic bid harder."),
+  ],
+  ATO:[
+    A("Daniel Křetínský / EPEI","spons",82,"Already entangled in the restructuring and a natural distressed acquirer of selected assets; opportunistic value play on a broken-up balance sheet."),
+    A("French State / Bpifrance","state",78,"Eviden's Big-Data-&-Security unit is a sovereign-defence asset (supercomputing, cryptography). <span class='ang'>Creative angle:</span> the state takes BDS directly while the rest is sold to sponsors — a politically-driven partial nationalisation."),
+    A("Airbus / Thales","strat",70,"Strategic interest in BDS has surfaced repeatedly; a defence prime could absorb the sovereign-critical unit and leave Tech Foundations to financial buyers."),
+    A("Distressed-debt funds","spons",66,"A debt-to-equity route: creditors converting into ownership through the restructuring is arguably the most probable control change of all."),
+  ],
+  NEXI:[
+    A("Incumbent sponsors (Hellman & Friedman / Advent / Bain)","spons",84,"Large existing holders could take it fully private at a premium to a depressed public multiple — the most direct path given the register."),
+    A("Worldline","strat",76,"Mirror-image of the WLN thesis: a merger of European payments scale players with substantial synergy and overlapping ownership."),
+    A("Global Payments / FIS","strat",66,"US strategic consolidation of European payments scale; sovereignty and antitrust are the constraints."),
+  ],
+  DAVA:[
+    A("Accenture / Capgemini","strat",80,"Digital-engineering scale players actively rolling up mid-cap specialists; Endava's nearshore delivery and client base are an easy tuck-in after the de-rating."),
+    A("EPAM (merger)","strat",72,"Two pure-play digital engineers combining to gain scale and geographic balance — a logical consolidation of the niche."),
+    A("Services-focused PE (e.g. EQT / Bain)","spons",68,"Sponsors have appetite for cash-generative IT-services with offshore margins; a take-private to re-scale away from public scrutiny."),
+  ],
+  TEMN:[
+    A("Thoma Bravo / Vista","spons",84,"Core-banking software is a textbook software-PE target: mission-critical, sticky, high renewal rates. Temenos has been repeatedly linked to exactly these names."),
+    A("Larger banking-software platform","strat",64,"A strategic core-banking or fintech-infrastructure consolidator seeking installed base and cross-sell."),
+  ],
+  WISE:[
+    A("Large-cap bank (JPMorgan / HSBC)","strat",74,"Cross-border rails are strategically scarce; a bank could buy distribution and technology it struggles to build. Founder control is the obstacle."),
+    A("Payments major (PayPal / Visa / Mastercard)","strat",70,"Direct strategic fit in cross-border consumer and SME flows. <span class='ang'>Creative angle:</span> a network operator buys Wise to defend against disintermediation of its own rails."),
+    A("Sponsor (growth-equity led)","spons",52,"Less likely given valuation and control, but a take-private at scale is conceivable if growth slows."),
+  ],
+  SOI:[
+    A("Larger IDM (Infineon / STMicro / NXP)","strat",76,"SOI substrates are strategically pivotal to RF and power; vertical integration secures supply amid reshoring."),
+    A("Asian strategic / foundry","strat",60,"Supply-chain control motive, though French strategic-asset rules would invite scrutiny."),
+    A("Industrial / specialty-materials PE","spons",56,"A sponsor play on a niche materials monopoly with reshoring tailwinds."),
+  ],
+  TRST:[
+    A("Martech / data platform (e.g. Gartner-type)","strat",72,"A profitable category-leading reviews and trust-data asset; attractive to data and B2B-software buyers."),
+    A("Private equity","spons",68,"Clean balance sheet and improving profitability make a take-private straightforward. <span class='ang'>Creative angle:</span> bundle with a complementary review/UGC asset to build a trust-data roll-up."),
+  ],
+  SESG:[
+    A("Satellite strategic (SES–Intelsat dynamics)","strat",74,"Sector consolidation is live; further combination among satellite operators is the base case for the industry's survival economics."),
+    A("Defence / sovereign buyer","state",62,"Spectrum and secure-comms assets carry national-strategic value. <span class='ang'>Creative angle:</span> a government-anchored consortium secures orbital spectrum as critical infrastructure."),
+  ],
+  AMS:[
+    A("Strategic semis acquirer","strat",70,"Photonics/sensor IP is attractive; a stronger balance-sheet peer could absorb selected divisions."),
+    A("Restructuring-focused PE","spons",66,"Leverage and disposals create a break-up opportunity for distressed-asset specialists."),
+  ],
+};
+// subsector archetype fallback
+const ARCHETYPES = {
+  appsw:[A("Software-focused PE (Thoma Bravo / Vista / EQT)","spons",70,"Enterprise software with recurring revenue is the classic sponsor take-private; cost-out and re-acceleration drive returns."),A("Larger enterprise-software platform","strat",60,"A strategic consolidator buying installed base, cross-sell and a vertical foothold."),A("Vertical specialist consolidator","strat",50,"<span class='ang'>Creative angle:</span> an adjacent-vertical leader buys to enter a new end-market via the customer base.")],
+  infrasw:[A("Infrastructure-software PE","spons",70,"Sticky, mission-critical software is a sponsor sweet-spot."),A("Larger cloud / comms platform","strat",58,"Strategic buyer seeking scale and technology."),A("Adjacent-platform consolidator","strat",48,"Roll-up logic within communications / infrastructure software.")],
+  cyber:[A("Security platform (Palo Alto / CrowdStrike / Cisco)","strat",72,"Platform consolidation: large vendors buy point solutions to broaden the suite."),A("Thoma Bravo (cyber roll-up)","spons",70,"The most active financial buyer in cybersecurity by some distance."),A("Defence prime / sovereign buyer","state",52,"<span class='ang'>Creative angle:</span> a defence contractor acquires offensive/forensic capability for government clients.")],
+  semis:[A("Larger IDM (Infineon / STMicro / NXP / TI)","strat",68,"Vertical integration and supply security amid reshoring."),A("Asian strategic / foundry","strat",54,"Capacity and IP motives, subject to strategic-asset review."),A("Industrial / specialty PE","spons",48,"A sponsor play on a niche analog/power franchise.")],
+  semieq:[A("Equipment major (Applied / Lam / ASML / KLA)","strat",66,"Tool-portfolio consolidation and roadmap control."),A("Strategic Asian buyer","strat",48,"Capacity localisation motive, heavy regulatory friction."),A("Specialty-industrial PE","spons",44,"Niche-monopoly cash-flow play.")],
+  itserv:[A("Scale consolidator (Accenture / Capgemini / Cognizant)","strat",70,"Mid-cap IT-services are routinely tucked into the majors for capability and geography."),A("Indian IT major (TCS / Infosys / Wipro)","strat",56,"Onshore presence and client relationships in Europe."),A("Services-focused PE","spons",54,"<span class='ang'>Creative angle:</span> a sponsor builds a nearshore-delivery platform via a buy-and-build.")],
+  pay:[A("Payments major (Fiserv / Global Payments / FIS)","strat",68,"Scale and distribution in one move."),A("Payments-focused PE consortium","spons",66,"Take-private of cash-generative volumes at a depressed multiple."),A("Large-cap bank","strat",52,"<span class='ang'>Creative angle:</span> a bank internalises payment rails it would rather own than rent.")],
+  internet:[A("Larger internet / marketplace platform","strat",66,"Audience, data and category leadership are the prizes."),A("Private equity","spons",60,"Profitable platforms with pricing power suit a take-private."),A("Strategic vertical acquirer","strat",50,"<span class='ang'>Creative angle:</span> an offline incumbent buys the category's digital winner to leapfrog its own transition.")],
+  hw:[A("Larger hardware / networking OEM","strat",62,"Portfolio and supply-chain consolidation."),A("Private equity","spons",54,"Brand and cash-flow play on a mature franchise."),A("Strategic supply-chain buyer","strat",46,"Vertical integration of a key component or brand.")],
+  gaming:[A("Major publisher (Microsoft / EA / Take-Two / Tencent)","strat",70,"AAA IP and studio capacity are scarce and strategically coveted."),A("Savvy Games / PIF (sovereign)","state",62,"Effectively unlimited capital and explicit gaming ambitions."),A("Gaming consolidator / PE","spons",52,"<span class='ang'>Creative angle:</span> a roll-up vehicle assembles mid-cap studios into a publishing platform.")],
+};
+function getAcquirers(c){
+  let list = ACQUIRERS[normKey(c.ticker)];
+  if(!list){
+    list = (ARCHETYPES[c.subsector]||ARCHETYPES.appsw).map(a=>({...a}));
+    // nudge fit by the company's strategic-interest factor so fallback isn't static
+    const tilt=(c.f.si-55)/5;
+    list.forEach(a=>{ a.fit=Math.max(20,Math.min(95,Math.round(a.fit+tilt))); });
+  }
+  return [...list].sort((a,b)=>b.fit-a.fit);
+}
+
+/* ---------- helpers ---------- */
+const fmtMc = v => v>=100? v.toFixed(0) : v.toFixed(1);
+const scoreColor = s => s>=80?"var(--hot)": s>=65?"var(--warm)": s>=50?"var(--gold)": s>=35?"#7fae5a":"var(--cool)";
+const decileColor = d => d>=9?"#ff5b6e": d>=7?"#ff9a52": d>=5?"#e8b84b": d>=3?"#7fae5a":"#3ad0a8";
+const decileBg = d => {
+  const c=decileColor(d);
+  return `color:${c};background:${c}1f;border:1px solid ${c}40;`;
+};
+
+/* ---------- state ---------- */
+const state = { geo:new Set(), sub:new Set(), size:new Set(), q:"", sort:"score", dir:-1, view:"all", sel:null, smin:0, smax:100, dmin:1, dmax:10, dataset:"live" };
+const SIZE_BANDS = [
+  {k:"mega", label:"Mega ≥ €50bn", t:c=>c.mc>=50},
+  {k:"large",label:"Large €10–50bn", t:c=>c.mc>=10&&c.mc<50},
+  {k:"mid",  label:"Mid €2–10bn",  t:c=>c.mc>=2&&c.mc<10},
+  {k:"small",label:"Small < €2bn", t:c=>c.mc<2},
+];
+
+/* ---------- build filters ---------- */
+function countBy(getKey, pool){ const m={}; pool.forEach(c=>{const k=getKey(c); m[k]=(m[k]||0)+1;}); return m; }
+
+function buildFilters(){
+  const geoEl=document.getElementById("geoFilters");
+  const gc=countBy(c=>c.region, companies);
+  geoEl.innerHTML=Object.entries(REGIONS).map(([k,label])=>
+    `<div class="filt" data-type="geo" data-k="${k}"><div class="left">${label}</div><span class="cnt">${gc[k]||0}</span></div>`).join("");
+
+  const subEl=document.getElementById("subFilters");
+  const sc=countBy(c=>c.subsector, companies);
+  subEl.innerHTML=Object.entries(SUBSECTORS).map(([k,o])=>
+    `<div class="filt" data-type="sub" data-k="${k}"><div class="left"><span class="swatch" style="background:${o.c}"></span>${o.label}</div><span class="cnt">${sc[k]||0}</span></div>`).join("");
+
+  const sizeEl=document.getElementById("sizeFilters");
+  sizeEl.innerHTML=SIZE_BANDS.map(b=>
+    `<div class="filt" data-type="size" data-k="${b.k}"><div class="left">${b.label}</div><span class="cnt">${companies.filter(b.t).length}</span></div>`).join("");
+
+  document.querySelectorAll(".filt").forEach(el=>{
+    el.addEventListener("click",()=>{
+      const t=el.dataset.type, k=el.dataset.k;
+      const set = t==="geo"?state.geo : t==="sub"?state.sub : state.size;
+      set.has(k)? set.delete(k) : set.add(k);
+      el.classList.toggle("on", set.has(k));
+      render();
+    });
+  });
+}
+
+/* ---------- filtering ---------- */
+function applyFilters(){
+  let list=companies.filter(c=>{
+    if(c.score<state.smin || c.score>state.smax) return false;
+    if(c.decile<state.dmin || c.decile>state.dmax) return false;
+    if(state.geo.size && !state.geo.has(c.region)) return false;
+    if(state.sub.size && !state.sub.has(c.subsector)) return false;
+    if(state.size.size){
+      const band=SIZE_BANDS.find(b=>b.t(c));
+      if(!band || !state.size.has(band.k)) return false;
+    }
+    if(state.q){
+      const q=state.q.toLowerCase();
+      if(!c.name.toLowerCase().includes(q) && !c.ticker.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+  if(state.view==="top") list=list.filter(c=>c.decile>=9);
+  if(state.view==="movers") list=list.filter(c=>Math.abs(c.d30)>=4);
+  return list;
+}
+
+const sortKey = (c,k)=> k==="name"?c.name.toLowerCase() : k==="subsector"?SUBSECTORS[c.subsector].label : k==="mc"?c.mc : k==="decile"?c.decile : k==="delta"?c.d30 : c.score;
+
+/* ---------- render ---------- */
+function render(){
+  let list=applyFilters();
+  if(state.sort==="rank"){ list.sort((a,b)=>(b.score-a.score)); }
+  else list.sort((a,b)=>{ const x=sortKey(a,state.sort), y=sortKey(b,state.sort); return (x>y?1:x<y?-1:0)*state.dir; });
+
+  // KPIs
+  document.getElementById("kpiCount").textContent=list.length;
+  document.getElementById("kpiHigh").textContent=list.filter(c=>c.score>=70).length;
+  const med = list.length? [...list].map(c=>c.score).sort((a,b)=>a-b)[Math.floor(list.length/2)] : "—";
+  document.getElementById("kpiMed").textContent=med;
+  const mc=list.reduce((s,c)=>s+c.mc,0);
+  document.getElementById("kpiMc").innerHTML = mc>=1000? `${(mc/1000).toFixed(2)}<span class="u"> €tn</span>` : `${mc.toFixed(0)}<span class="u"> €bn</span>`;
+
+  // context label
+  const parts=[];
+  if(state.geo.size) parts.push([...state.geo].map(k=>REGIONS[k]).join(", "));
+  if(state.sub.size) parts.push([...state.sub].map(k=>SUBSECTORS[k].label).join(", "));
+  document.getElementById("ctxLabel").textContent="· "+(parts.length? parts.join(" · ") : "All EMEA");
+
+  // rows (rank by score, always)
+  const ranked=[...applyFilters()].sort((a,b)=>b.score-a.score);
+  const rankMap=new Map(ranked.map((c,i)=>[c,i+1]));
+
+  const tb=document.getElementById("tbody");
+  tb.innerHTML=list.map(c=>{
+    const sc=SUBSECTORS[c.subsector];
+    const col=scoreColor(c.score);
+    const dArr = c.d30>0?`<span class="delta up">▲ ${c.d30}</span>` : c.d30<0?`<span class="delta dn">▼ ${Math.abs(c.d30)}</span>` : `<span style="color:var(--txt-3)">–</span>`;
+    return `<tr data-tk="${c.ticker}" class="${state.sel===c.ticker?'sel':''}">
+      <td class="l rank">${rankMap.get(c)}</td>
+      <td class="l"><div class="co"><span class="flag">${c.flag}</span><div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
+      <td class="l col-sub"><span class="chip" style="color:${sc.c};border-color:${sc.c}55">${sc.label}</span></td>
+      <td class="col-mc num">€${fmtMc(c.mc)}<span style="color:var(--txt-3)">bn</span></td>
+      <td class="col-dec"><span class="dec" style="${decileBg(c.decile)}">D${c.decile}</span></td>
+      <td class="num">${dArr}</td>
+      <td><div class="score"><div class="scorebar"><i style="width:${c.score}%;background:${col}"></i></div><span class="scoreval" style="color:${col}">${c.score}</span></div></td>
+    </tr>`;
+  }).join("");
+
+  document.getElementById("emptyState").style.display=list.length?"none":"block";
+  tb.querySelectorAll("tr").forEach(tr=>tr.addEventListener("click",()=>openDrawer(tr.dataset.tk)));
+
+  // header arrows
+  document.querySelectorAll("thead th").forEach(th=>{
+    const k=th.dataset.k; const base=th.textContent.replace(/[▾▴]/g,"").trim();
+    th.innerHTML = (k===state.sort) ? `${base} <span class="arr">${state.dir<0?"▾":"▴"}</span>` : base;
+  });
+}
+
+/* ---------- drawer ---------- */
+const FACTOR_DEF=[
+  {k:"val",nm:"Valuation gap",w:WEIGHTS.val,desc:"EV/EBITDA & EV/Sales discount vs subsector median — cheap vs peers and private-market value",src:"Prices + fundamentals",url:"https://eodhd.com/financial-apis/",
+    input:"EV/EBITDA & EV/Sales vs subsector median",
+    why:"Cheapness is the strongest single precursor of takeovers — acquirers pursue what trades below peers and private-market value. Joint-highest weight."},
+  {k:"o", nm:"Ownership & float",w:WEIGHTS.o,desc:"Free float, top-holder concentration, activist or sponsor presence on the register",src:"Filings / 13D-G",url:"https://www.sec.gov/cgi-bin/browse-edgar",
+    input:"Free float %, top-holder concentration, sponsor/activist presence",
+    why:"Interest only becomes a deal if control is actually attainable; an open or contestable register is decisive — while founder/state control is a deterrent. Joint-highest weight."},
+  {k:"bs",nm:"Balance-sheet appeal",w:WEIGHTS.bs,desc:"Net cash / low net-debt-to-EBITDA — cheap and easy for an acquirer to finance",src:"Financial statements",url:"https://eodhd.com/financial-apis/stock-etfs-fundamental-data-feeds",
+    input:"Net debt / EBITDA, net cash position",
+    why:"A clean or cash-rich balance sheet widens the financing path for both sponsors and strategics. Important but secondary to price and gettability."},
+  {k:"sz",nm:"Acquirability (size)",w:WEIGHTS.sz,desc:"Market-cap / EV percentile — smaller names have a far larger pool of able acquirers",src:"Market prices",url:"https://stooq.com/",
+    input:"Market-cap / enterprise-value percentile",
+    why:"Smaller targets have a far larger pool of able acquirers; size gates feasibility rather than determining it. Mid weight."},
+  {k:"sc",nm:"Sector consolidation",w:WEIGHTS.sc,desc:"Trailing deal count & value in the subsector — momentum begets more deals",src:"EDGAR tender offers",url:"https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=SC+TO",
+    input:"Trailing 24-month deal count & value in the subsector",
+    why:"M&A clusters — a subsector already consolidating raises every member's odds. Captures the 'wave' effect."},
+  {k:"si",nm:"Strategic interest",w:WEIGHTS.si,desc:"Scarcity, strategic IP and named-buyer / press chatter (qualitative overlay)",src:"News / RNS",url:"https://www.londonstockexchange.com/news",
+    input:"Strategic IP / scarcity & named-buyer / press signal",
+    why:"The qualitative catalyst. Deliberately not over-weighted while judgement-based; rises in importance once NLP-scored from filings & news."},
+];
+// illustrative raw value per factor (flagged demo; production shows the real fetched number)
+function rawDemo(k,c,v){
+  switch(k){
+    case "val": { const d=v-50; return d>=0?`≈${d}% below subsector median EV/EBITDA`:`≈${-d}% above peers (richer)`; }
+    case "o":   return v>=70?"Dispersed float; sponsor/activist present":v>=50?"Mixed register; some concentration":"Tightly held (founder/state control)";
+    case "bs":  { const nd=(50-v)/20; return nd<=0?`Net cash ≈ ${(-nd).toFixed(1)}x EBITDA`:`Net debt ≈ ${nd.toFixed(1)}x EBITDA`; }
+    case "sz":  return `Mkt cap €${fmtMc(c.mc)}bn → smaller = more acquirable`;
+    case "sc":  return `≈ ${Math.max(1,Math.round(v/12))} subsector deals, trailing 24m`;
+    case "si":  return v>=80?"Named-buyer / firm press chatter":v>=60?"Moderate strategic interest":"Limited public chatter";
+  }
+}
+// real fetched values per factor for the Live dataset (shown in the audit panel)
+function liveRawStr(k,c){
+  const r=c.liveRaw||{};
+  switch(k){
+    case "val": return (r.ev_ebitda==null&&r.ev_rev==null)?"no data":`EV/EBITDA ${r.ev_ebitda==null?"n/a":r.ev_ebitda.toFixed(1)}× · EV/Sales ${r.ev_rev==null?"n/a":r.ev_rev.toFixed(1)}×`;
+    case "o":   return r.float_pct==null?"no data":`Free float ${(r.float_pct*100).toFixed(0)}%`;
+    case "bs":  return r.nd_ebitda==null?"no data":`Net debt/EBITDA ${r.nd_ebitda.toFixed(1)}×`;
+    case "sz":  return r.mktcap_eur==null?"no data":`Mkt cap €${(r.mktcap_eur/1e9).toFixed(1)}bn`;
+    case "sc":  return "neutral placeholder (50)";
+    case "si":  return "neutral placeholder (50)";
+  }
+}
+const FACTORS=FACTOR_DEF.map(f=>[f.k,f.nm,f.desc]);
+function openDrawer(tk){
+  const c=companies.find(x=>x.ticker===tk); if(!c) return;
+  state.sel=tk; render();
+  const sc=SUBSECTORS[c.subsector], col=scoreColor(c.score);
+  const ranked=[...applyFilters()].sort((a,b)=>b.score-a.score);
+  const rank=ranked.findIndex(x=>x.ticker===tk)+1;
+  const stats={
+    "Signal rank":`#${rank} / ${ranked.length}`,
+    "Decile":`D${c.decile}`,
+    "Mkt cap (illus.)":`€${fmtMc(c.mc)}bn`,
+    "Subsector":sc.label,
+    "Region":REGIONS[c.region],
+    "30-day Δ":`${c.d30>0?"+":""}${c.d30}`,
+  };
+  document.getElementById("drawer").innerHTML=`
+    <div class="dh">
+      <div class="top">
+        <div>
+          <div class="nm"><span>${c.flag}</span>${c.name}</div>
+          <div class="meta">${c.ticker} · ${sc.label} · ${REGIONS[c.region]}</div>
+        </div>
+        <button class="close" id="closeDrawer">✕</button>
+      </div>
+      <div class="bigscore">
+        <div class="v" style="color:${col}">${c.score}</div>
+        <div class="o">/100 likelihood</div>
+        <div class="badge" style="${decileBg(c.decile)}">Decile ${c.decile}</div>
+      </div>
+    </div>
+    <div class="dbody">
+      <div class="buildwrap">
+        <div class="buildhdr" data-build><span>How this ${c.score}/100 is built — weighting</span><span class="bchev">▸</span></div>
+        <div class="build" id="buildPanel">
+          <div class="edhint">Sub-scores are <b>editable</b> — change any value to model a what-if; the score, decile &amp; ranking update live.</div>
+          <div class="brow bhead"><span>Driver</span><span class="num">Sub ✎</span><span class="num">Wt</span><span class="num">Contrib.</span></div>
+          ${FACTOR_DEF.map(f=>{const v=c.f[f.k];const ws=FKEYS.reduce((s,k)=>s+WEIGHTS[k],0);const ct=WEIGHTS[f.k]*v/ws;return `<div class="brow"><span>${f.nm}</span><span class="num"><input class="ed-sub" type="number" min="0" max="100" step="1" data-k="${f.k}" value="${v}"></span><span class="num">${WEIGHTS[f.k]}%</span><span class="num">${ct.toFixed(1)}</span></div>`;}).join("")}
+          <div class="brow btot"><span>Composite</span><span class="num"></span><span class="num">100%</span><span class="num">${c.scoreRaw.toFixed(1)} → ${c.score}</span></div>
+          <div class="bnote">Composite = Σ (weight × sub-score). Each driver is percentile-ranked 0–100 across the universe. Weights are an interpretable starting point — the backtest will re-estimate them from what actually predicted deals. <span class="methlink">Full weighting rationale ›</span></div>
+        </div>
+      </div>
+      <div class="sech">Signal drivers <span class="methlink" style="float:right;text-transform:none;letter-spacing:0;font-weight:600">methodology ›</span></div>
+      <div class="acqhint">Each driver shows its source — open its <span style="color:var(--accent)">Audit</span> panel to see exactly how the sub-score was derived.</div>
+      ${FACTOR_DEF.map(f=>{
+        const v=c.f[f.k]; const fc=scoreColor(v); const ct=(WEIGHTS[f.k]*v/100);
+        return `<div class="factor" title="${f.desc}">
+          <div class="factor-head" data-audit="${f.k}">
+            <div class="fr"><span class="fn">${f.nm} <span class="fw">·${f.w}%</span></span><span class="fhv"><span class="fv" style="color:${fc}">${v}</span><span class="fchev">▸</span></span></div>
+            <div class="ftrack"><i style="width:${v}%;background:${fc}"></i></div>
+            <div class="prov">${c.live?'<span class="prov-live">● live</span> src: <span class="srctag">Yahoo Finance</span>':'<span class="demo">◆ demo</span> src: <span class="srctag">'+f.src+'</span>'}<span class="prov-hint">click to audit ›</span></div>
+          </div>
+          <div class="audit" id="audit-${f.k}">
+            <div class="arow"><span>Raw input (production)</span><b>${f.input}</b></div>
+            <div class="arow"><span>${c.live?"Live value":"Illustrative value ◆"}</span><b>${c.live?liveRawStr(f.k,c):rawDemo(f.k,c,v)}</b></div>
+            <div class="arow"><span>Transform</span><b>percentile-rank → ${v}/100</b></div>
+            <div class="arow"><span>Weight × sub-score</span><b class="hi">${WEIGHTS[f.k]}% × ${v} = ${ct.toFixed(1)} pts</b></div>
+            <div class="awhy"><b>Why this weight:</b> ${f.why}</div>
+            <div class="asrc">${c.live?'Source: <span class="srctag" style="color:var(--txt-2)">Yahoo Finance via yfinance</span> — retrieved '+LIVE_META.retrieved:'Source: <span class="srctag" style="color:var(--txt-2)">'+f.src+'</span> — in production this resolves to the exact record (filing / price date / news item).'}</div>
+          </div>
+        </div>`;
+      }).join("")}
+      <div class="sech">Who would buy it — ranked interest</div>
+      <div class="acqhint">Tap a buyer to read the rationale. <span style="color:var(--accent)">●</span> strategic · <span style="color:var(--cool)">●</span> sponsor · <span style="color:var(--gold)">●</span> sovereign/state</div>
+      ${getAcquirers(c).map((a,i)=>{
+        const fc = a.fit>=75?"var(--hot)": a.fit>=60?"var(--warm)":"var(--gold)";
+        const tlabel = a.t==="strat"?"Strategic": a.t==="spons"?"Sponsor":"Sovereign";
+        return `<details class="acq" ${i===0?"open":""}>
+          <summary>
+            <span class="arank">${i+1}</span>
+            <div class="ainfo">
+              <div class="an">${a.n} <span class="atype ${a.t}">${tlabel}</span></div>
+              <div class="afitline">
+                <div class="afitbar"><i style="width:${a.fit}%;background:${fc}"></i></div>
+                <span class="afitv">fit ${a.fit}</span>
+              </div>
+            </div>
+            <span class="chev">▶</span>
+          </summary>
+          <div class="why">${a.why}</div>
+        </details>`;
+      }).join("")}
+
+      <div class="sech">Snapshot</div>
+      <div class="stat-grid">
+        ${Object.entries(stats).map(([l,v])=>`<div class="stat"><div class="l">${l}</div><div class="v">${v}</div></div>`).join("")}
+      </div>
+      <div class="sech">Thesis (illustrative)</div>
+      <div class="narr">${c.note}</div>
+      <div class="sech">Share price <span class="sp-demo">◆ illustrative</span></div>
+      <div class="spwrap">
+        <div class="sphead"><span class="spperf" id="spPerf"></span><span class="spmeta" id="spMeta"></span></div>
+        <div class="spchart" id="spChart"></div>
+        <div class="spbtns">${["ID","1W","1M","3M","6M","YTD","1Y","2Y"].map(p=>`<button data-period="${p}" class="${p==='6M'?'on':''}">${p}</button>`).join("")}</div>
+      </div>
+      <div class="sech">Provenance</div>
+      <div class="narr" style="border-left-color:var(--gold)">${c.live?'Scores computed from <b>live Yahoo Finance data</b> ('+LIVE_META.retrieved+', Stage&nbsp;1). Four factors are real (valuation, ownership, balance sheet, size); <b>sector consolidation</b> &amp; <b>strategic interest</b> are neutral placeholders, and ownership uses Yahoo free-float pending EDGAR. The share-price chart below is still illustrative.':'In this prototype the score and drivers are <b>placeholders</b> to show how a company tearsheet will read. The production version will derive each driver from sourced free/open data (e.g. SEC/EDGAR-equivalents, exchange filings, market prices) and surface a backtested composite with full citations.'}</div>
+    </div>`;
+  document.getElementById("closeDrawer").addEventListener("click",closeDrawer);
+  setupChart(c);
+  document.getElementById("drawer").classList.add("show");
+  document.getElementById("scrim").classList.add("show");
+}
+function closeDrawer(){
+  state.sel=null;
+  document.getElementById("drawer").classList.remove("show");
+  document.getElementById("scrim").classList.remove("show");
+  render();
+}
+
+/* ---------- editable drivers (what-if): recompute on edit, keep build panel open ---------- */
+function reopenKeepBuild(tk){
+  openDrawer(tk);
+  const bp=document.getElementById("buildPanel"); if(bp) bp.classList.add("open");
+  const bh=document.querySelector('[data-build]'); if(bh) bh.classList.add("open");
+}
+
+/* ---------- share-price chart (illustrative, seeded per ticker) ---------- */
+const PMAP={ "1W":5,"1M":21,"3M":63,"6M":126,"YTD":110,"1Y":252,"2Y":504 };
+let chart={ ticker:null, daily:[], intraday:[], period:"6M" };
+function seedFromStr(s){ let h=2166136261; for(let i=0;i<s.length;i++) h=Math.imul(h^s.charCodeAt(i),16777619); return h>>>0; }
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function genDaily(ticker){ const rnd=mulberry32(seedFromStr(ticker)); let p=30+rnd()*120; const out=[]; for(let i=0;i<504;i++){ const drift=0.0004-0.0002*Math.sin(i/40); const vol=0.013+0.012*rnd(); p*=(1+drift+(rnd()-0.5)*2*vol); p=Math.max(2,p); out.push(p); } return out; }
+function genIntraday(ticker,last){ const rnd=mulberry32(seedFromStr(ticker+"id")); let p=last*(0.997+rnd()*0.006); const out=[]; for(let i=0;i<78;i++){ p*=(1+(rnd()-0.5)*0.004); out.push(p); } out[out.length-1]=last; return out; }
+function setupChart(c){ chart.ticker=c.ticker; chart.daily=genDaily(c.ticker); chart.intraday=genIntraday(c.ticker, chart.daily[chart.daily.length-1]); chart.period="6M"; renderChart(); }
+function renderChart(){
+  const el=document.getElementById("spChart"); if(!el) return;
+  const w=360,h=120,pad=6;
+  const vals = chart.period==="ID" ? chart.intraday : chart.daily.slice(-PMAP[chart.period]);
+  const min=Math.min(...vals),max=Math.max(...vals),rng=(max-min)||1,n=vals.length;
+  const X=i=> pad + i/(n-1)*(w-2*pad);
+  const Y=v=> pad + (1-(v-min)/rng)*(h-2*pad);
+  let d="M"+X(0).toFixed(1)+" "+Y(vals[0]).toFixed(1);
+  for(let i=1;i<n;i++) d+=" L"+X(i).toFixed(1)+" "+Y(vals[i]).toFixed(1);
+  const area=d+` L${(w-pad).toFixed(1)} ${(h-pad).toFixed(1)} L${pad.toFixed(1)} ${(h-pad).toFixed(1)} Z`;
+  const first=vals[0], last=vals[n-1], perf=(last/first-1)*100, up=perf>=0;
+  const col=up?"#3ad07a":"#ff5b6e", yb=Y(first).toFixed(1);
+  el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:120px;display:block">
+    <defs><linearGradient id="spg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity="0.22"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+    <line x1="${pad}" y1="${yb}" x2="${w-pad}" y2="${yb}" stroke="var(--line-2)" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="${area}" fill="url(#spg)"/>
+    <path d="${d}" fill="none" stroke="${col}" stroke-width="1.7" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+  </svg>`;
+  document.getElementById("spPerf").innerHTML=`<b style="color:${col}">${up?'▲ +':'▼ '}${perf.toFixed(1)}%</b><span>${chart.period}</span>`;
+  document.getElementById("spMeta").textContent="rebased · illustrative series";
+}
+function setChartPeriod(p){ chart.period=p; document.querySelectorAll(".spbtns button").forEach(b=>b.classList.toggle("on", b.dataset.period===p)); renderChart(); }
+
+/* ---------- events ---------- */
+document.querySelectorAll("thead th").forEach(th=>{
+  th.addEventListener("click",()=>{
+    const k=th.dataset.k==="subsector"?"subsector":th.dataset.k;
+    if(state.sort===k) state.dir*=-1; else { state.sort=k; state.dir=(k==="name"||k==="subsector")?1:-1; }
+    render();
+  });
+});
+document.getElementById("searchInput").addEventListener("input",e=>{ state.q=e.target.value.trim(); render(); });
+// Demo / Live dataset toggle
+document.getElementById("dsSeg").querySelectorAll("button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    if(b.classList.contains("on")) return;
+    document.getElementById("dsSeg").querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    state.dataset=b.dataset.ds;
+    companies=DATASETS[state.dataset];
+    state.geo.clear(); state.sub.clear(); state.size.clear();
+    reassignDeciles(); buildFilters();
+    rLo.value=0; rHi.value=100; syncSlider();
+    dLo.value=1; dHi.value=10; syncDSlider();
+    closeDrawer();
+    const sp=document.getElementById("srcPill");
+    if(state.dataset==="live"){ sp.className="pill"; sp.innerHTML='<span class="dot"></span> Live · Yahoo (Stage 1)'; }
+    else { sp.className="pill warn"; sp.innerHTML='⚠ Illustrative data'; }
+    render();
+  });
+});
+document.getElementById("viewSeg").querySelectorAll("button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.getElementById("viewSeg").querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); state.view=b.dataset.v; render();
+  });
+});
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  state.geo.clear(); state.sub.clear(); state.size.clear();
+  document.querySelectorAll(".filt").forEach(el=>el.classList.remove("on"));
+  rLo.value=0; rHi.value=100; syncSlider();
+  dLo.value=1; dHi.value=10; syncDSlider();
+});
+document.getElementById("scrim").addEventListener("click",closeDrawer);
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
+// delegated handlers inside the (re-rendered) drawer: audit toggles, weighting build-up, methodology links
+document.getElementById("drawer").addEventListener("click",e=>{
+  const pb=e.target.closest("[data-period]");
+  if(pb){ setChartPeriod(pb.dataset.period); return; }
+  const a=e.target.closest("[data-audit]");
+  if(a){ const p=document.getElementById("audit-"+a.dataset.audit); if(p){ p.classList.toggle("open"); a.classList.toggle("open"); } return; }
+  if(e.target.closest("[data-build]")){
+    const bp=document.getElementById("buildPanel"), bh=e.target.closest("[data-build]");
+    bp.classList.toggle("open"); bh.classList.toggle("open"); return;
+  }
+  if(e.target.closest(".methlink")){ openMeth(); }
+});
+// editable driver sub-scores → recompute composite, decile & ranking live
+document.getElementById("drawer").addEventListener("change",e=>{
+  const inp=e.target.closest(".ed-sub"); if(!inp) return;
+  const c=companies.find(x=>x.ticker===state.sel); if(!c) return;
+  let v=Math.round(+inp.value); if(isNaN(v)) v=0; v=Math.max(0,Math.min(100,v));
+  c.f[inp.dataset.k]=v; rescore(c); reassignDeciles(); render(); reopenKeepBuild(c.ticker);
+});
+// mobile sidebar
+const side=document.getElementById("side"), backdrop=document.getElementById("backdrop");
+document.getElementById("menuBtn").addEventListener("click",()=>{ side.classList.toggle("show"); backdrop.classList.toggle("show"); });
+backdrop.addEventListener("click",()=>{ side.classList.remove("show"); backdrop.classList.remove("show"); });
+
+/* ---------- range slider ---------- */
+const rLo=document.getElementById("rLo"), rHi=document.getElementById("rHi"),
+      rFill=document.getElementById("rFill"), rMinL=document.getElementById("rMin"), rMaxL=document.getElementById("rMax");
+function syncSlider(){
+  let lo=+rLo.value, hi=+rHi.value;
+  if(lo>hi){ [lo,hi]=[hi,lo]; }
+  state.smin=lo; state.smax=hi;
+  rMinL.textContent=lo; rMaxL.textContent=hi;
+  rFill.style.left=lo+"%"; rFill.style.width=(hi-lo)+"%";
+  render();
+}
+[rLo,rHi].forEach(el=>el.addEventListener("input",()=>{
+  // keep handles from crossing for nicer UX
+  if(+rLo.value > +rHi.value){
+    if(el===rLo) rHi.value=rLo.value; else rLo.value=rHi.value;
+  }
+  syncSlider();
+}));
+
+/* ---------- decile range slider ---------- */
+const dLo=document.getElementById("rDLo"), dHi=document.getElementById("rDHi"),
+      dFill=document.getElementById("rDFill"), dMinL=document.getElementById("rDMin"), dMaxL=document.getElementById("rDMax");
+const dpct = v => (v-1)/9*100;
+function syncDSlider(){
+  let lo=+dLo.value, hi=+dHi.value;
+  if(lo>hi){ [lo,hi]=[hi,lo]; }
+  state.dmin=lo; state.dmax=hi;
+  dMinL.textContent="D"+lo; dMaxL.textContent="D"+hi;
+  dFill.style.left=dpct(lo)+"%"; dFill.style.width=(dpct(hi)-dpct(lo))+"%";
+  render();
+}
+[dLo,dHi].forEach(el=>el.addEventListener("input",()=>{
+  if(+dLo.value > +dHi.value){
+    if(el===dLo) dHi.value=dLo.value; else dLo.value=dHi.value;
+  }
+  syncDSlider();
+}));
+
+/* ---------- methodology modal ---------- */
+const DATA_SOURCES=[
+  {n:"Yahoo Finance (via yfinance)", u:"https://finance.yahoo.com/", d:"Free prices, market cap and basic fundamentals across EMEA tickers. Unofficial but broad; the quickest route to a live v1. Runs on your machine, not in this sandbox."},
+  {n:"EODHD — EOD Historical Data", u:"https://eodhd.com/financial-apis/", d:"70+ exchanges incl. UK/EU; 15–20 yrs of European fundamentals & history. Free tier ~20 calls/day; cheap paid tier for full coverage and point-in-time fundamentals for the backtest."},
+  {n:"Financial Modeling Prep", u:"https://site.financialmodelingprep.com/developer/docs", d:"Strong fundamentals & ratios (best for US, usable for EU ADRs). Generous-ish free tier for prototyping the factor maths."},
+  {n:"SEC EDGAR (full-text + filings)", u:"https://www.sec.gov/cgi-bin/browse-edgar", d:"Free. Foreign private issuers file 20-F/6-K; tender offers as SC TO-T / 14D-9; stake-building as SC 13D/13G. Primary free source for ownership and M&A-event labels."},
+  {n:"Stooq", u:"https://stooq.com/", d:"Free, no-key historical and current prices for global incl. European exchanges. Reliable fallback for the price/size factors."},
+  {n:"LSE RNS / exchange news", u:"https://www.londonstockexchange.com/news", d:"Regulatory News Service announcements — offer, possible-offer (Rule 2.4/2.7) and stake disclosures for UK names; the strategic-interest and event signal."},
+];
+function renderMethodology(){
+  document.getElementById("methBody").innerHTML=`
+    <p class="lead"><b>Huntr</b> ranks EMEA-listed Tech companies by the probability of being acquired within 12 months, on a 0–100 scale, then buckets them into deciles. The design goal: the top decile should be materially more likely to be acquired than the bottom — a property we will <b>prove with a historical backtest</b>, not assume.</p>
+    <p>The engine is <b>hybrid</b>. Stage 1 (this prototype's framework) is a transparent weighted scorecard of six interpretable factors, so every score can be explained and challenged. Stage 2 layers a statistical model trained on historical EMEA Tech deals on top, once the data pipeline and backtest are in place.</p>
+    <div class="fmeth">
+      <div class="row head"><div>Factor · weight</div><div>What it measures</div><div>Primary source</div></div>
+      ${FACTOR_DEF.map(f=>`<div class="row">
+        <div class="fnm">${f.nm} <span class="w">${f.w}%</span></div>
+        <div class="desc">${f.desc}</div>
+        <div class="src"><a href="${f.url}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">${f.src} ↗</a></div>
+      </div>`).join("")}
+    </div>
+    <div class="callout"><b>Why these factors?</b> Acquisitions cluster where a target is cheap (valuation), easy to take control of (ownership/float), easy to finance (balance sheet), small enough to be digestible (size), in a consolidating subsector (sector), and strategically coveted (interest). Weights shown are an interpretable starting point — the backtest will re-estimate them from what actually predicted deals.</div>
+
+    <div class="sech" style="margin-top:20px">Data sources — every datapoint is auditable</div>
+    <p style="margin-top:0">All free / open. In the production tool each factor on a tearsheet links to the <b>exact</b> source record (the specific filing, price date or news item) behind the number — so you can audit any score to its origin. In this prototype those links point to the source <i>homepages</i> and are flagged <span style="color:var(--gold)">◆ demo</span>.</p>
+    <div class="srcs">
+      ${DATA_SOURCES.map(s=>`<div class="srcrow"><div class="sn">${s.n}<a href="${s.u}" target="_blank" rel="noopener">${s.u}</a></div><div class="sd">${s.d}</div></div>`).join("")}
+    </div>
+
+    <div class="sech" style="margin-top:20px">Backtest — how we'll prove it works</div>
+    <p style="margin-top:0">Take the EMEA Tech universe as it stood at past dates (2015–2024), compute each company's score using <b>only information available then</b> (point-in-time, to avoid look-ahead bias), then check who was actually acquired in the following 12 months using EDGAR tender-offer filings and exchange announcements as the outcome label. Success = the top decile shows a deal rate several times the bottom decile, repeatably across years.</p>
+    <div class="callout" style="border-left-color:var(--accent)"><b>Current status:</b> framework defined, scores are illustrative placeholders. Next build: wire real free data for the live ranking → then assemble point-in-time history + deal labels for the backtest. The full spec lives in <span class="num" style="color:var(--txt)">Huntr-Methodology-and-Backtest-Spec.md</span>.</div>
+  `;
+}
+function openMeth(){ renderMethodology(); document.getElementById("methScrim").classList.add("show"); }
+function closeMeth(){ document.getElementById("methScrim").classList.remove("show"); }
+document.getElementById("methBtn").addEventListener("click",openMeth);
+document.getElementById("methClose").addEventListener("click",closeMeth);
+document.getElementById("methScrim").addEventListener("click",e=>{ if(e.target.id==="methScrim") closeMeth(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeMeth(); });
+
+/* ---------- init ---------- */
+if(state.dataset==="live" && typeof DATASETS!=="undefined"){ companies=DATASETS.live; reassignDeciles(); var _sp=document.getElementById("srcPill"); if(_sp){_sp.className="pill"; _sp.innerHTML='<span class="dot"></span> Live \u00b7 Yahoo (Stage 1)';} }
+buildFilters();
+syncSlider();
+syncDSlider();
+render();
+</script>
+</body>
+</html>
