@@ -1,0 +1,99 @@
+name,ticker,region,subsector,status
+Worldline,WLN.PA,fr,pay,active
+Ubisoft,UBI.PA,fr,gaming,active
+Atos,ATO.PA,fr,itserv,active
+Nexi,NEXI.MI,seur,pay,active
+Endava,DAVA,ukie,itserv,active
+SES,SESG.PA,benelux,hw,active
+Trustpilot,TRST.L,ukie,internet,active
+Soitec,SOI.PA,fr,semis,active
+Temenos,TEMN.SW,dach,appsw,active
+Wise,WISE.L,ukie,pay,active
+AMS-OSRAM,AMS.SW,dach,semis,active
+Sinch,SINCH.ST,nordics,infrasw,active
+Nordic Semiconductor,NOD.OL,nordics,semis,active
+Allfunds,ALLFG.AS,seur,pay,active
+CD Projekt,CDR.WA,cee,gaming,active
+Nemetschek,NEM.DE,dach,appsw,active
+Cellebrite,CLBT,me,cyber,active
+Bytes Technology,BYIT.L,ukie,itserv,active
+Kainos,KNOS.L,ukie,itserv,active
+Evolution,EVO.ST,nordics,gaming,active
+Sopra Steria,SOP.PA,fr,itserv,active
+Wix.com,WIX,me,internet,active
+Computacenter,CCC.L,ukie,itserv,active
+Sage Group,SGE.L,ukie,appsw,active
+BE Semiconductor,BESI.AS,benelux,semieq,active
+Logitech,LOGN.SW,dach,hw,active
+NICE,NICE,me,appsw,active
+Auto Trader Group,AUTO.L,ukie,internet,active
+Capgemini,CAP.PA,fr,itserv,active
+CyberArk,CYBR,me,cyber,active
+Adyen,ADYEN.AS,benelux,pay,active
+Dassault Systemes,DSY.PA,fr,appsw,active
+STMicroelectronics,STMPA.PA,fr,semis,active
+Infineon,IFX.DE,dach,semis,active
+Hexagon,HEXA-B.ST,nordics,infrasw,active
+Spotify,SPOT,nordics,internet,active
+Ericsson,ERIC-B.ST,nordics,hw,active
+Nokia,NOKIA.HE,nordics,hw,active
+ASML,ASML.AS,benelux,semieq,active
+SAP,SAP.DE,dach,appsw,active
+TeamViewer,TMV.DE,dach,appsw,active
+Bechtle,BC8.DE,dach,itserv,active
+CANCOM,COK.DE,dach,itserv,active
+Nagarro,NA9.DE,dach,itserv,active
+Jenoptik,JEN.DE,dach,hw,active
+SUSS MicroTec,SMHN.DE,dach,semieq,active
+VAT Group,VACN.SW,dach,semieq,active
+u-blox,UBXN.SW,dach,semis,active
+Comet Holding,COTN.SW,dach,semieq,active
+Reply,REY.MI,seur,itserv,active
+Amadeus IT,AMS.MC,seur,appsw,active
+Indra Sistemas,IDR.MC,seur,itserv,active
+Rightmove,RMV.L,ukie,internet,active
+Halma,HLMA.L,ukie,hw,active
+Renishaw,RSW.L,ukie,hw,active
+Spectris,SXS.L,ukie,hw,active
+Softcat,SCT.L,ukie,itserv,active
+GB Group,GBG.L,ukie,appsw,active
+Playtech,PTEC.L,ukie,gaming,active
+Team17,TM17.L,ukie,gaming,active
+Frontier Developments,FDEV.L,ukie,gaming,active
+Tietoevry,TIETO.HE,nordics,itserv,active
+Qt Group,QTCOM.HE,nordics,appsw,active
+WithSecure,WITH.HE,nordics,cyber,active
+Remedy Entertainment,REMEDY.HE,nordics,gaming,active
+Truecaller,TRUE-B.ST,nordics,appsw,active
+Fortnox,FNOX.ST,nordics,appsw,active
+Mycronic,MYCR.ST,nordics,semieq,active
+Paradox Interactive,PDX.ST,nordics,gaming,active
+Embracer,EMBRAC-B.ST,nordics,gaming,active
+Stillfront,SF.ST,nordics,gaming,active
+Knowit,KNOW.ST,nordics,itserv,active
+Vitec Software,VIT-B.ST,nordics,appsw,active
+Netcompany,NETC.CO,nordics,itserv,active
+GN Store Nord,GN.CO,nordics,hw,active
+Crayon,CRAYN.OL,nordics,itserv,active
+Atea,ATEA.OL,nordics,itserv,active
+Schibsted,SCHA.OL,nordics,internet,active
+AutoStore,AUTO.OL,nordics,hw,active
+Asseco Poland,ACP.WA,cee,appsw,active
+Allegro,ALE.WA,cee,internet,active
+Comarch,CMR.WA,cee,appsw,active
+Check Point,CHKP,me,cyber,active
+Nova,NVMI,me,semieq,active
+Camtek,CAMT,me,semieq,active
+monday.com,MNDY,me,appsw,active
+Global-e Online,GLBE,me,internet,active
+Sapiens,SPNS,me,appsw,active
+Tower Semiconductor,TSEM,me,semis,active
+JFrog,FROG,me,infrasw,active
+Fiverr,FVRR,me,internet,active
+SentinelOne,S,me,cyber,active
+Prosus,PRX.AS,benelux,internet,active
+Teleperformance,TEP.PA,fr,itserv,active
+Edenred,EDEN.PA,fr,pay,active
+OVHcloud,OVH.PA,fr,infrasw,active
+Alten,ATE.PA,fr,itserv,active
+Wavestone,WAVE.PA,fr,itserv,active
