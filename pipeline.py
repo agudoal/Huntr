@@ -65,10 +65,9 @@ def main():
     universe = load_universe()
     fx = fetch_fx()
     print("FX (EUR per unit):", {k: round(v, 4) for k, v in fx.items()})
-    recs = []
-    for i, u in enumerate(universe, 1):
+    def fetch_one(u):
         tk = u["ticker"].strip()
-        # start with an all-blank record so a single bad name can never kill the whole run
+        # start blank so a single bad name can never kill the run
         rec = {"name": u["name"], "ticker": tk, "region": u["region"], "subsector": u["subsector"],
                "ccy": ccy_of(tk), "mktcap_eur": None, "ev_ebitda": None, "ev_rev": None,
                "nd_ebitda": None, "float_pct": None}
@@ -92,9 +91,26 @@ def main():
             })
         except Exception as e:
             print(f'      ! {tk} skipped ({type(e).__name__})')
-        recs.append(rec)
+        return rec
+
+    recs = []
+    for i, u in enumerate(universe, 1):
+        recs.append(fetch_one(u))
         print(f'{i:>3}/{len(universe)}  {u["name"]}')
-        time.sleep(0.3)
+        time.sleep(0.8)   # gentler pacing — Yahoo throttles cloud IPs (GitHub) harder than home/Colab
+
+    # second pass: retry the blanks once after a cooldown (most blanks are rate-limiting, not bad tickers)
+    missing = [j for j, r in enumerate(recs) if r["mktcap_eur"] is None]
+    if missing:
+        print(f"Retrying {len(missing)} names after a 45s cooldown (likely rate-limited)...")
+        time.sleep(45)
+        for j in missing:
+            r2 = fetch_one(universe[j])
+            if r2["mktcap_eur"] is not None:
+                recs[j] = r2
+            time.sleep(1.2)
+        still = sum(1 for j in missing if recs[j]["mktcap_eur"] is None)
+        print(f"After retry: {len(missing)-still} recovered, {still} still blank.")
 
     df = pd.DataFrame(recs)
     for col in ["mktcap_eur", "ev_ebitda", "ev_rev", "nd_ebitda", "float_pct"]:
