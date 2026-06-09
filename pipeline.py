@@ -68,27 +68,37 @@ def main():
     recs = []
     for i, u in enumerate(universe, 1):
         tk = u["ticker"].strip()
-        info = get_info(tk)
-        td, tc = info.get("totalDebt"), info.get("totalCash")
-        net_debt = (td - tc) if (td is not None and tc is not None) else None
-        ccy = ccy_of(tk)
-        mc = info.get("marketCap")
-        mc_eur = mc * fx.get(ccy, 1.0) if mc else None
-        fl, sh = info.get("floatShares"), info.get("sharesOutstanding")
-        flp = (fl / sh) if (fl and sh) else None
-        if flp is not None:
-            flp = min(flp, 1.0)
-        recs.append({
-            "name": u["name"], "ticker": tk, "region": u["region"], "subsector": u["subsector"],
-            "ccy": ccy, "mktcap_eur": mc_eur,
-            "ev_ebitda": info.get("enterpriseToEbitda"), "ev_rev": info.get("enterpriseToRevenue"),
-            "nd_ebitda": (net_debt / info["ebitda"]) if info.get("ebitda") else None,
-            "float_pct": flp,
-        })
+        # start with an all-blank record so a single bad name can never kill the whole run
+        rec = {"name": u["name"], "ticker": tk, "region": u["region"], "subsector": u["subsector"],
+               "ccy": ccy_of(tk), "mktcap_eur": None, "ev_ebitda": None, "ev_rev": None,
+               "nd_ebitda": None, "float_pct": None}
+        try:
+            info = get_info(tk)
+            td, tc = info.get("totalDebt"), info.get("totalCash")
+            net_debt = (td - tc) if (td is not None and tc is not None) else None
+            mc = info.get("marketCap")
+            ebitda = info.get("ebitda")
+            fl, sh = info.get("floatShares"), info.get("sharesOutstanding")
+            flp = (fl / sh) if (fl and sh) else None
+            if flp is not None:
+                flp = min(flp, 1.0)
+            rec.update({
+                "mktcap_eur": mc * fx.get(rec["ccy"], 1.0) if mc else None,
+                "ev_ebitda": info.get("enterpriseToEbitda"),
+                "ev_rev": info.get("enterpriseToRevenue"),
+                # guard: only divide when BOTH net debt and EBITDA are real numbers
+                "nd_ebitda": (net_debt / ebitda) if (net_debt is not None and ebitda) else None,
+                "float_pct": flp,
+            })
+        except Exception as e:
+            print(f'      ! {tk} skipped ({type(e).__name__})')
+        recs.append(rec)
         print(f'{i:>3}/{len(universe)}  {u["name"]}')
         time.sleep(0.3)
 
     df = pd.DataFrame(recs)
+    for col in ["mktcap_eur", "ev_ebitda", "ev_rev", "nd_ebitda", "float_pct"]:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
     CAP = 40.0
     ev_ebitda_clean = df["ev_ebitda"].where((df["ev_ebitda"] > 0) & (df["ev_ebitda"] <= CAP))
     ev_rev_clean = df["ev_rev"].where(df["ev_rev"] > 0)
