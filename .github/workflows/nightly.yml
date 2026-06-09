@@ -1,0 +1,32 @@
+# Huntr nightly automation.
+# IMPORTANT: in the GitHub repo this file must live at:  .github/workflows/nightly.yml
+name: Huntr nightly
+on:
+  schedule:
+    - cron: "0 2 * * *"     # 02:00 UTC = 03:00 UK in summer (BST), 02:00 UK in winter (GMT)
+  workflow_dispatch: {}      # lets you trigger it by hand from the Actions tab (use this to test)
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install yfinance pandas numpy
+      - name: Run the scoring pipeline
+        env:
+          EODHD_API_KEY: ${{ secrets.EODHD_API_KEY }}
+        run: python pipeline.py
+      - name: Build the hosted tool
+        run: python build_index.py
+      - name: Commit the refreshed data + tool
+        run: |
+          git config user.name "huntr-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add huntr_scored.json index.html
+          git commit -m "Nightly refresh $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          git push
