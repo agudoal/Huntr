@@ -638,15 +638,15 @@ reassignDeciles();
    The Demo/Live toggle in the top bar switches the whole tool between this and the placeholders.
    F = [f_val,f_own,f_bs,f_sz]; R = [mktcap_eur,ev_ebitda,ev_rev,nd_ebitda,float_pct]
    ============================================================ */
-const LIVE_META = { source:"Yahoo Finance via yfinance", retrieved:"2026-06-10 20:51 UTC", version:"stage1-v2" };
+const LIVE_META = { source:"Yahoo Finance via yfinance", retrieved:"2026-06-10 21:02 UTC", version:"stage1-v2" };
 const normKey = t => t.replace(/[-.].*$/,"");
 const METAByKey = {}; DATA.filter(r=>r[1]!=="XXXX").forEach(r=>{ METAByKey[normKey(r[1])]={flag:r[2], note:r[9]}; });
 const LIVE_RAW = [
   {n:"Fiverr",t:"FVRR",r:"me",s:"internet",F:[98.7,57.8,94.4,93.3],R:[333061903.36,2.416,0.236,-6.4385,0.8426],c:"4/4"},
   {n:"Truecaller",t:"TRUE-B.ST",r:"nordics",s:"appsw",F:[75.6,70.0,79.8,92.2],R:[342893776.896,6.082,1.733,-1.6672,0.916],c:"4/4"},
-  {n:"Nagarro",t:"NA9.DE",r:"dach",s:"itserv",F:[89.5,96.7,21.3,90.0],R:[445784640.0,5.393,0.735,1.9624,1.0],c:"4/4"},
+  {n:"Nagarro",t:"NA9.DE",r:"dach",s:"itserv",F:[90.0,96.7,21.3,90.0],R:[445784640.0,5.233,0.713,1.9624,1.0],c:"4/4"},
   {n:"GB Group",t:"GBG.L",r:"ukie",s:"appsw",F:[64.0,96.7,28.1,88.9],R:[548993989.44,8.817,1.979,1.2844,1.0],c:"4/4"},
-  {n:"Bytes Technology",t:"BYIT.L",r:"ukie",s:"itserv",F:[47.3,73.3,77.5,80.0],R:[1019665071.36,12.065,3.544,-1.492,0.9225],c:"4/4"},
+  {n:"Bytes Technology",t:"BYIT.L",r:"ukie",s:"itserv",F:[46.5,73.3,77.5,80.0],R:[1019665071.36,12.043,3.538,-1.492,0.9225],c:"4/4"},
   {n:"Alten",t:"ATE.PA",r:"fr",s:"itserv",F:[85.7,58.9,51.7,64.4],R:[2151074560.0,6.683,0.522,-0.1848,0.8508],c:"4/4"},
   {n:"Allfunds",t:"ALLFG.AS",r:"seur",s:"pay",F:[59.1,77.8,95.5,31.1],R:[5138185728.0,6.798,3.861,-6.887,0.9483],c:"4/4"},
   {n:"Trustpilot",t:"TRST.L",r:"ukie",s:"internet",F:[43.8,68.9,78.7,76.7],R:[1112774307.84,52.266,3.598,-1.6514,0.9133],c:"4/4"},
@@ -660,23 +660,23 @@ const LIVE_RAW = [
   {n:"monday.com",t:"MNDY",r:"me",s:"appsw",F:[59.6,43.3,98.9,47.8],R:[3874814136.32,157.771,2.277,-55.1165,0.7422],c:"4/4"},
   {n:"TeamViewer",t:"TMV.DE",r:"dach",s:"appsw",F:[70.3,74.4,11.2,81.1],R:[873516672.0,6.412,2.364,3.1414,0.9469],c:"4/4"},
   {n:"u-blox",t:"UBXN.SW",r:"dach",s:"semis",F:[51.7,80.0,30.3,77.8],R:[1089557145.6,-15.296,3.217,1.2199,0.97],c:"4/4"},
-  {n:"Knowit",t:"KNOW.ST",r:"nordics",s:"itserv",F:[83.8,24.4,38.2,95.6],R:[206545264.64,7.711,0.483,0.9556,0.634],c:"4/4"},
+  {n:"Knowit",t:"KNOW.ST",r:"nordics",s:"itserv",F:[83.8,24.4,38.2,95.6],R:[206545264.64,7.573,0.475,0.9556,0.634],c:"4/4"},
   {n:"Frontier Developments",t:"FDEV.L",r:"ukie",s:"gaming",F:[67.2,14.4,71.9,97.8],R:[181449347.04,9.346,1.476,-1.3252,0.5628],c:"4/4"},
   {n:"SUSS MicroTec",t:"SMHN.DE",r:"dach",s:"semieq",F:[22.9,81.1,74.2,68.9],R:[1709884800.0,32.867,3.621,-1.4204,0.9732],c:"4/4"},
   {n:"Rightmove",t:"RMV.L",r:"ukie",s:"internet",F:[35.7,96.7,49.4,48.9],R:[3787385771.52,11.275,7.688,-0.1232,1.0],c:"4/4"},
   {n:"Everplay Group",t:"EVPL.L",r:"ukie",s:"gaming",F:[79.0,15.6,57.3,91.1],R:[415576661.76,4.736,1.94,-0.4719,0.5793],c:"4/4"},
   {n:"Auto Trader Group",t:"AUTO.L",r:"ukie",s:"internet",F:[41.5,96.7,44.9,42.2],R:[4386874452.48,9.83,6.374,0.4763,1.0],c:"4/4"},
   {n:"Atos",t:"ATO.PA",r:"fr",s:"itserv",F:[94.3,41.1,7.9,84.4],R:[661189568.0,5.462,0.274,3.7736,0.7267],c:"4/4"},
+  {n:"Vitec Software",t:"VIT-B.ST",r:"nordics",s:"appsw",F:[48.6,76.7,14.6,82.2],R:[849845911.552,11.859,3.414,2.6879,0.9483],c:"4/4"},
   {n:"Netcompany",t:"NETC.CO",r:"nordics",s:"itserv",F:[50.0,65.6,50.0,65.6],R:[2007075035.136,null,null,null,0.8919],c:"2/4"},
-  {n:"Capgemini",t:"CAP.PA",r:"fr",s:"itserv",F:[72.7,96.7,19.1,17.8],R:[16647185408.0,8.19,1.056,2.2934,1.0],c:"4/4"},
   {n:"Comet Holding",t:"COTN.SW",r:"dach",s:"semieq",F:[23.6,87.8,50.6,57.8],R:[2955018393.6,70.64,6.034,-0.1354,0.9977],c:"4/4"},
-  {n:"Vitec Software",t:"VIT-B.ST",r:"nordics",s:"appsw",F:[47.1,76.7,14.6,82.2],R:[849845911.552,12.174,3.505,2.6879,0.9483],c:"4/4"},
+  {n:"Capgemini",t:"CAP.PA",r:"fr",s:"itserv",F:[72.7,96.7,19.1,17.8],R:[16647185408.0,8.19,1.056,2.2934,1.0],c:"4/4"},
   {n:"Stillfront",t:"SF.ST",r:"nordics",s:"gaming",F:[84.1,30.0,9.0,96.7],R:[188179965.952,5.642,1.045,3.5014,0.6804],c:"4/4"},
   {n:"Ericsson",t:"ERIC-B.ST",r:"nordics",s:"hw",F:[65.9,78.9,58.4,7.8],R:[32614629769.216,9.713,1.508,-0.6635,0.9503],c:"4/4"},
   {n:"Kainos",t:"KNOS.L",r:"ukie",s:"itserv",F:[44.7,36.7,73.0,75.6],R:[1117779511.68,15.085,2.077,-1.397,0.7057],c:"4/4"},
   {n:"GN Store Nord",t:"GN.CO",r:"nordics",s:"hw",F:[48.1,90.0,2.2,66.7],R:[1805257605.12,15.52,1.372,6.1997,0.9986],c:"4/4"},
   {n:"Sopra Steria",t:"SOP.PA",r:"fr",s:"itserv",F:[83.0,37.8,29.2,58.9],R:[2894446848.0,6.904,0.653,1.2614,0.7064],c:"4/4"},
-  {n:"Playtech",t:"PTEC.L",r:"ukie",s:"gaming",F:[76.4,34.4,25.8,74.4],R:[1133236540.8,-14.78,1.142,1.4746,0.7023],c:"4/4"},
+  {n:"Playtech",t:"PTEC.L",r:"ukie",s:"gaming",F:[76.4,34.4,25.8,74.4],R:[1133236540.8,-15.27,1.18,1.4746,0.7023],c:"4/4"},
   {n:"Embracer",t:"EMBRAC-B.ST",r:"nordics",s:"gaming",F:[50.8,10.0,92.1,73.3],R:[1234445279.232,13.63,1.821,-4.0207,0.4793],c:"4/4"},
   {n:"CANCOM",t:"COK.DE",r:"dach",s:"itserv",F:[58.6,33.3,40.4,83.3],R:[747232320.0,16.263,0.469,0.8297,0.6989],c:"4/4"},
   {n:"Reply",t:"REY.MI",r:"seur",s:"itserv",F:[72.1,22.2,67.4,50.0],R:[3749238272.0,7.898,1.346,-1.1007,0.6216],c:"4/4"},
@@ -684,7 +684,7 @@ const LIVE_RAW = [
   {n:"CyberArk",t:"CYBR",r:"me",s:"cyber",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
   {n:"Wavestone",t:"WAVE.PA",r:"fr",s:"itserv",F:[72.9,5.6,48.3,78.9],R:[1042324928.0,7.969,1.13,0.0523,0.3269],c:"4/4"},
   {n:"Fortnox",t:"FNOX.ST",r:"nordics",s:"appsw",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
-  {n:"Teleperformance",t:"TEP.PA",r:"fr",s:"itserv",F:[91.5,32.2,16.9,53.3],R:[3323520512.0,4.564,0.717,2.4786,0.6933],c:"4/4"},
+  {n:"Teleperformance",t:"TEP.PA",r:"fr",s:"itserv",F:[91.0,32.2,16.9,53.3],R:[3323520512.0,4.552,0.715,2.4786,0.6933],c:"4/4"},
   {n:"Sapiens",t:"SPNS",r:"me",s:"appsw",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
   {n:"WithSecure",t:"WITH.HE",r:"nordics",s:"cyber",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
   {n:"Schibsted",t:"SCHA.OL",r:"nordics",s:"internet",F:[50.0,50.0,50.0,50.0],R:[null,null,null,null,null],c:"0/4"},
@@ -702,38 +702,38 @@ const LIVE_RAW = [
   {n:"Bechtle",t:"BC8.DE",r:"dach",s:"itserv",F:[73.7,26.7,42.7,46.7],R:[3921120000.0,10.208,0.65,0.6318,0.6495],c:"4/4"},
   {n:"Nordic Semiconductor",t:"NOD.OL",r:"nordics",s:"semis",F:[2.2,56.7,87.6,55.6],R:[3041407188.992,855.686,52.967,-2.5921,0.7987],c:"4/4"},
   {n:"Nova",t:"NVMI",r:"me",s:"semieq",F:[7.9,88.9,66.3,18.9],R:[14875169054.72,56.568,17.791,-1.0511,0.9982],c:"4/4"},
-  {n:"Qt Group",t:"QTCOM.HE",r:"nordics",s:"appsw",F:[23.7,51.1,23.6,87.8],R:[635288128.0,20.325,4.846,1.6477,0.7746],c:"4/4"},
+  {n:"Qt Group",t:"QTCOM.HE",r:"nordics",s:"appsw",F:[26.5,51.1,23.6,87.8],R:[635288128.0,18.494,4.409,1.6477,0.7746],c:"4/4"},
   {n:"Tietoevry",t:"TIETO.HE",r:"nordics",s:"itserv",F:[62.3,31.1,27.0,62.2],R:[2354018048.0,10.771,1.525,1.4475,0.6847],c:"4/4"},
   {n:"Wise",t:"WISE.L",r:"ukie",s:"pay",F:[39.6,38.9,85.4,24.4],R:[9268851271.68,12.957,3.926,-2.4609,0.7065],c:"4/4"},
   {n:"Sinch",t:"SINCH.ST",r:"nordics",s:"infrasw",F:[56.0,45.6,12.4,61.1],R:[2419072319.488,13.291,1.321,2.8859,0.7499],c:"4/4"},
-  {n:"Worldline",t:"WLN.PA",r:"fr",s:"pay",F:[80.0,1.1,4.5,86.7],R:[651845696.0,7.255,0.765,5.2082,0.0957],c:"4/4"},
+  {n:"Worldline",t:"WLN.PA",r:"fr",s:"pay",F:[80.0,1.1,4.5,86.7],R:[651845696.0,7.261,0.766,5.2082,0.0957],c:"4/4"},
   {n:"Softcat",t:"SCT.L",r:"ukie",s:"itserv",F:[41.5,27.8,61.8,43.3],R:[4306589614.08,17.435,2.042,-0.8224,0.6686],c:"4/4"},
   {n:"Allegro",t:"ALE.WA",r:"cee",s:"internet",F:[50.5,53.3,36.0,27.8],R:[8070176645.12,11.76,3.257,1.0331,0.7849],c:"4/4"},
   {n:"SentinelOne",t:"S",r:"me",s:"cyber",F:[36.0,71.1,15.7,40.0],R:[4646478929.92,-17.602,4.355,2.5311,0.9174],c:"4/4"},
-  {n:"Check Point",t:"CHKP",r:"me",s:"cyber",F:[33.3,47.8,62.9,22.2],R:[12029234872.32,14.367,4.552,-0.9107,0.7605],c:"4/4"},
-  {n:"Sage Group",t:"SGE.L",r:"ukie",s:"appsw",F:[37.6,75.6,18.0,25.6],R:[8962244029.44,14.998,3.564,2.4026,0.9481],c:"4/4"},
+  {n:"Check Point",t:"CHKP",r:"me",s:"cyber",F:[32.8,47.8,62.9,22.2],R:[12029234872.32,14.367,4.552,-0.9107,0.7605],c:"4/4"},
+  {n:"Sage Group",t:"SGE.L",r:"ukie",s:"appsw",F:[37.6,75.6,18.0,25.6],R:[8962244029.44,14.98,3.56,2.4026,0.9481],c:"4/4"},
   {n:"Paradox Interactive",t:"PDX.ST",r:"nordics",s:"gaming",F:[19.0,4.4,88.8,72.2],R:[1244577202.176,23.937,5.784,-2.6812,0.2823],c:"4/4"},
   {n:"Nokia",t:"NOKIA.HE",r:"nordics",s:"hw",F:[30.6,55.6,65.2,5.6],R:[65538949120.0,25.436,3.227,-0.9874,0.7957],c:"4/4"},
   {n:"ASML",t:"ASML.AS",r:"benelux",s:"semieq",F:[9.0,91.1,56.2,0.0],R:[580901470208.0,45.312,17.086,-0.4464,0.9996],c:"4/4"},
   {n:"Mycronic",t:"MYCR.ST",r:"nordics",s:"semieq",F:[16.9,50.0,64.0,32.2],R:[5103580348.416,22.506,6.614,-0.9516,0.7701],c:"4/4"},
   {n:"Cellebrite",t:"CLBT",r:"me",s:"cyber",F:[14.2,11.1,93.3,56.7],R:[2981005373.44,35.099,5.626,-5.1056,0.4897],c:"4/4"},
   {n:"Nexi",t:"NEXI.MI",r:"seur",s:"pay",F:[82.3,6.7,13.5,45.6],R:[3951382016.0,5.58,1.237,2.7475,0.3896],c:"4/4"},
-  {n:"SAP",t:"SAP.DE",r:"dach",s:"appsw",F:[28.6,64.4,52.8,1.1],R:[174783578112.0,15.36,4.773,-0.1881,0.8898],c:"4/4"},
-  {n:"Global-e Online",t:"GLBE",r:"me",s:"internet",F:[18.2,21.1,89.9,35.6],R:[5057767034.88,27.874,4.803,-2.9951,0.6214],c:"4/4"},
+  {n:"SAP",t:"SAP.DE",r:"dach",s:"appsw",F:[28.0,64.4,52.8,1.1],R:[174783578112.0,15.36,4.773,-0.1881,0.8898],c:"4/4"},
+  {n:"Global-e Online",t:"GLBE",r:"me",s:"internet",F:[17.6,21.1,89.9,35.6],R:[5057767034.88,27.874,4.803,-2.9951,0.6214],c:"4/4"},
   {n:"Indra Sistemas",t:"IDR.MC",r:"seur",s:"itserv",F:[50.4,7.8,70.8,23.3],R:[9443971072.0,14.245,1.562,-1.3217,0.4235],c:"4/4"},
   {n:"Spotify",t:"SPOT",r:"nordics",s:"internet",F:[14.0,48.9,84.3,3.3],R:[95171657400.32,39.336,5.489,-2.3782,0.7642],c:"4/4"},
   {n:"Halma",t:"HLMA.L",r:"ukie",s:"hw",F:[11.3,83.3,33.7,14.4],R:[20513506590.72,31.551,7.514,1.1156,0.9881],c:"4/4"},
   {n:"Soitec",t:"SOI.PA",r:"fr",s:"semis",F:[15.7,46.7,43.8,41.1],R:[4477500416.0,45.146,8.541,0.4911,0.7587],c:"4/4"},
   {n:"VAT Group",t:"VACN.SW",r:"dach",s:"semieq",F:[10.1,67.8,46.1,15.6],R:[19810534195.2,62.137,17.083,0.3635,0.898],c:"4/4"},
-  {n:"Renishaw",t:"RSW.L",r:"ukie",s:"hw",F:[20.6,8.9,80.9,44.4],R:[4293280742.4,27.79,4.599,-1.8541,0.4659],c:"4/4"},
+  {n:"Renishaw",t:"RSW.L",r:"ukie",s:"hw",F:[20.1,8.9,80.9,44.4],R:[4293280742.4,27.79,4.599,-1.8541,0.4659],c:"4/4"},
   {n:"Infineon",t:"IFX.DE",r:"dach",s:"semis",F:[14.1,92.2,24.7,2.2],R:[97592418304.0,26.005,6.907,1.5288,1.0],c:"4/4"},
   {n:"BE Semiconductor",t:"BESI.AS",r:"benelux",s:"semieq",F:[5.6,63.3,55.1,12.2],R:[22877206528.0,108.521,35.848,-0.4422,0.8887],c:"4/4"},
   {n:"CD Projekt",t:"CDR.WA",r:"cee",s:"gaming",F:[6.7,25.6,83.1,33.3],R:[5087642746.88,43.992,24.558,-1.9333,0.6476],c:"4/4"},
-  {n:"Temenos",t:"TEMN.SW",r:"dach",s:"appsw",F:[26.1,44.4,20.2,36.7],R:[4874764876.8,18.053,4.692,2.2327,0.7446],c:"4/4"},
+  {n:"Temenos",t:"TEMN.SW",r:"dach",s:"appsw",F:[25.6,44.4,20.2,36.7],R:[4874764876.8,18.053,4.692,2.2327,0.7446],c:"4/4"},
   {n:"Dassault Systemes",t:"DSY.PA",r:"fr",s:"appsw",F:[37.6,13.3,75.3,10.0],R:[25392498688.0,14.111,3.821,-1.4335,0.5053],c:"4/4"},
   {n:"STMicroelectronics",t:"STMPA.PA",r:"fr",s:"semis",F:[26.1,40.0,59.6,6.7],R:[54509744128.0,21.403,4.306,-0.7181,0.7175],c:"4/4"},
   {n:"Prosus",t:"PRX.AS",r:"benelux",s:"internet",F:[14.6,16.7,97.8,4.4],R:[85057576960.0,203.362,12.386,-10.5481,0.5977],c:"4/4"},
-  {n:"OVHcloud",t:"OVH.PA",r:"fr",s:"infrasw",F:[49.2,2.2,6.7,63.3],R:[2237753600.0,11.917,3.29,4.1644,0.1469],c:"4/4"},
+  {n:"OVHcloud",t:"OVH.PA",r:"fr",s:"infrasw",F:[48.4,2.2,6.7,63.3],R:[2237753600.0,11.917,3.29,4.1644,0.1469],c:"4/4"},
   {n:"Camtek",t:"CAMT",r:"me",s:"semieq",F:[12.4,20.0,69.7,30.0],R:[7061141606.4,54.573,15.147,-1.3171,0.6189],c:"4/4"},
   {n:"Hexagon",t:"HEXA-B.ST",r:"nordics",s:"infrasw",F:[4.5,52.2,37.1,16.7],R:[19053930086.4,173.419,40.774,1.0,0.7836],c:"4/4"},
   {n:"JFrog",t:"FROG",r:"me",s:"infrasw",F:[11.2,62.2,0.0,26.7],R:[8954526924.8,-175.008,16.183,13.9125,0.8824],c:"4/4"},
@@ -742,13 +742,14 @@ const LIVE_RAW = [
   {n:"AutoStore",t:"AUTO.OL",r:"nordics",s:"hw",F:[1.1,3.3,41.6,54.4],R:[3302950928.384,187.667,63.173,0.7877,0.2809],c:"4/4"},
 ];
 const liveCompanies = LIVE_RAW.map(o=>{
-  const f={val:o.F[0], o:o.F[1], bs:o.F[2], sz:o.F[3], sc:50, si:50};
+  const f={val:o.F[0], o:o.F[1], bs:o.F[2], sz:o.F[3], sc:o.F[4]??50, si:o.F[5]??50};
   const m=METAByKey[normKey(o.t)]||{};
   const raw=compositeRaw(f);
   return { name:o.n, ticker:o.t, flag:m.flag||"🏳", region:o.r, subsector:o.s,
-    mc:(o.R[0]||0)/1e9, d30:0, f, note:m.note||"Live Stage-1 data point.",
+    mc:(o.R[0]||0)/1e9, d30:0, f, note:m.note||"Live Stage-1 + EDGAR data.",
     scoreRaw:raw, score:Math.round(raw),
-    liveRaw:{mktcap_eur:o.R[0], ev_ebitda:o.R[1], ev_rev:o.R[2], nd_ebitda:o.R[3], float_pct:o.R[4]},
+    liveRaw:{mktcap_eur:o.R[0], ev_ebitda:o.R[1], ev_rev:o.R[2], nd_ebitda:o.R[3], float_pct:o.R[4],
+             sc_deals:o.R[5], si_flags:o.R[6]||null},
     coverage:o.c, live:true };
 });
 const DATASETS = { demo:companies, live:liveCompanies };
@@ -843,6 +844,10 @@ const fmtMc = v => v>=100? v.toFixed(0) : v.toFixed(1);
 /* circular matte SVG flags — emoji flags don't render on Windows, so we draw our own.
    Muted palette for a matte finish; unknown country -> neutral disc. */
 const cc = f => { const L=[...(f||"")].map(ch=>ch.codePointAt(0)-0x1F1E6+65).filter(n=>n>=65&&n<=90).map(n=>String.fromCharCode(n)).join(""); return /^[A-Z]{2}$/.test(L)?L:""; };
+/* country resolution for names without curated metadata: emoji -> Yahoo ticker suffix -> region default */
+const SUFFIX_CC = {L:"GB",PA:"FR",DE:"DE",F:"DE",AS:"NL",MI:"IT",SW:"CH",ST:"SE",OL:"NO",HE:"FI",CO:"DK",WA:"PL",VI:"AT",MC:"ES",LS:"PT",BR:"BE",IR:"IE",PR:"CZ",BD:"HU",AT:"GR",TA:"IL"};
+const REGION_CC = {fr:"FR",ukie:"GB",dach:"DE",benelux:"NL",nordics:"SE",seur:"ES",me:"IL",cee:"PL"};
+const ccOf = c => cc(c.flag||"") || SUFFIX_CC[((c.ticker||"").match(/[.\-]([A-Z]+)$/)||[])[1]] || REGION_CC[c.region] || "";
 const FLAG_SHAPES = {
   FR:'<rect width="6.7" height="20" fill="#3D69BA"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
   IT:'<rect width="6.7" height="20" fill="#3F9E5F"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
@@ -867,7 +872,7 @@ const FLAG_SHAPES = {
   GR:'<rect width="20" height="20" fill="#3E6DB5"/><rect y="4.4" width="20" height="2.2" fill="#F4F1EA"/><rect y="8.8" width="20" height="2.2" fill="#F4F1EA"/><rect y="13.2" width="20" height="2.2" fill="#F4F1EA"/><rect y="17.6" width="20" height="2.2" fill="#F4F1EA"/><rect width="8" height="8" fill="#3E6DB5"/><rect x="3" width="2" height="8" fill="#F4F1EA"/><rect y="3" width="8" height="2" fill="#F4F1EA"/>',
 };
 const flagHTML = e => {
-  const k = cc(e), s = FLAG_SHAPES[k];
+  const k = /^[A-Z]{2}$/.test(e||"")? e : cc(e), s = FLAG_SHAPES[k];
   const body = s || '<rect width="20" height="20" fill="#27374d"/><circle cx="10" cy="10" r="3" fill="none" stroke="#6a7c93" stroke-width="1.2"/>';
   return `<span class="flag" title="${k||"—"}"><svg viewBox="0 0 20 20" aria-hidden="true">${body}<circle cx="10" cy="10" r="9.6" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="0.8"/></svg></span>`;
 };
@@ -971,7 +976,7 @@ function render(){
     const dArr = c.d30>0?`<span class="delta up">▲ ${c.d30}</span>` : c.d30<0?`<span class="delta dn">▼ ${Math.abs(c.d30)}</span>` : `<span style="color:var(--txt-3)">–</span>`;
     return `<tr data-tk="${c.ticker}" class="${state.sel===c.ticker?'sel':''}">
       <td class="l rank">${rankMap.get(c)}</td>
-      <td class="l"><div class="co">${flagHTML(c.flag)}<div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
+      <td class="l"><div class="co">${flagHTML(ccOf(c))}<div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
       <td class="l col-sub"><span class="chip" style="color:${sc.c};border-color:${sc.c}55">${sc.label}</span></td>
       <td class="col-mc num">€${fmtMc(c.mc)}<span style="color:var(--txt-3)">bn</span></td>
       <td class="col-dec"><span class="dec" style="${decileBg(c.decile)}">D${c.decile}</span></td>
@@ -1030,8 +1035,8 @@ function liveRawStr(k,c){
     case "o":   return r.float_pct==null?"no data":`Free float ${(r.float_pct*100).toFixed(0)}%`;
     case "bs":  return r.nd_ebitda==null?"no data":`Net debt/EBITDA ${r.nd_ebitda.toFixed(1)}×`;
     case "sz":  return r.mktcap_eur==null?"no data":`Mkt cap €${(r.mktcap_eur/1e9).toFixed(1)}bn`;
-    case "sc":  return "neutral placeholder (50)";
-    case "si":  return "neutral placeholder (50)";
+    case "sc":  return c.liveRaw?.sc_deals!=null?`${c.liveRaw.sc_deals} deals in sector (last 24m · EDGAR SC TO-T + DEFM14A)`:"n/a";
+    case "si":  return c.liveRaw?.si_flags?c.liveRaw.si_flags:"No EDGAR signals — neutral baseline";
   }
 }
 const FACTORS=FACTOR_DEF.map(f=>[f.k,f.nm,f.desc]);
@@ -1053,7 +1058,7 @@ function openDrawer(tk){
     <div class="dh">
       <div class="top">
         <div>
-          <div class="nm">${flagHTML(c.flag)}${c.name}</div>
+          <div class="nm">${flagHTML(ccOf(c))}${c.name}</div>
           <div class="meta">${c.ticker} · ${sc.label} · ${REGIONS[c.region]}</div>
         </div>
         <button class="close" id="closeDrawer">✕</button>
@@ -1083,7 +1088,7 @@ function openDrawer(tk){
           <div class="factor-head" data-audit="${f.k}">
             <div class="fr"><span class="fn">${f.nm} <span class="fw">·${f.w}%</span></span><span class="fhv"><span class="fv" style="color:${fc}">${v}</span><span class="fchev">▸</span></span></div>
             <div class="ftrack"><i style="width:${v}%;background:${fc}"></i></div>
-            <div class="prov">${c.live?'<span class="prov-live">● live</span> src: <span class="srctag">Yahoo Finance</span>':'<span class="demo">◆ demo</span> src: <span class="srctag">'+f.src+'</span>'}<span class="prov-hint">click to audit ›</span></div>
+            <div class="prov">${c.live?'<span class="prov-live">● live</span> src: <span class="srctag">'+(f.k==='sc'||f.k==='si'?'EDGAR EFTS':'Yahoo Finance')+'</span>':'<span class="demo">◆ demo</span> src: <span class="srctag">'+f.src+'</span>'}<span class="prov-hint">click to audit ›</span></div>
           </div>
           <div class="audit" id="audit-${f.k}">
             <div class="arow"><span>Raw input (production)</span><b>${f.input}</b></div>
@@ -1091,7 +1096,7 @@ function openDrawer(tk){
             <div class="arow"><span>Transform</span><b>percentile-rank → ${v}/100</b></div>
             <div class="arow"><span>Weight × sub-score</span><b class="hi">${WEIGHTS[f.k]}% × ${v} = ${ct.toFixed(1)} pts</b></div>
             <div class="awhy"><b>Why this weight:</b> ${f.why}</div>
-            <div class="asrc">${c.live?'Source: <span class="srctag" style="color:var(--txt-2)">Yahoo Finance via yfinance</span> — retrieved '+LIVE_META.retrieved:'Source: <span class="srctag" style="color:var(--txt-2)">'+f.src+'</span> — in production this resolves to the exact record (filing / price date / news item).'}</div>
+            <div class="asrc">${c.live?'Source: <span class="srctag" style="color:var(--txt-2)">'+(f.k==='sc'||f.k==='si'?'SEC EDGAR EFTS (free, no key) — efts.sec.gov':'Yahoo Finance via yfinance')+'</span> — retrieved '+LIVE_META.retrieved:'Source: <span class="srctag" style="color:var(--txt-2)">'+f.src+'</span> — in production this resolves to the exact record (filing / price date / news item).'}</div>
           </div>
         </div>`;
       }).join("")}
