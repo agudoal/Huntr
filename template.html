@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>HUNTR — EMEA Tech M&A Target Signal</title>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="%230a0e14"/><path d="M16 10H10V16M32 10H38V16M10 32V38H16M38 32V38H32" stroke="%23e6edf6" stroke-width="3.4" fill="none"/><circle cx="24" cy="24" r="3.4" fill="%234da3ff"/></svg>'>
 <style>
   :root {
     --bg:#0a0e14;
@@ -51,14 +52,17 @@
     z-index:40;
   }
   .brand { display:flex; align-items:center; gap:10px; cursor:default; }
-  .brand .mark {
-    width:26px; height:26px; border-radius:7px;
-    background:linear-gradient(135deg,var(--accent),#2f6fd0);
-    display:grid; place-items:center; font-weight:800; color:#04101f; font-size:15px;
-    box-shadow:0 0 0 1px rgba(77,163,255,.4), 0 6px 16px rgba(77,163,255,.25);
+  .brand .mark { width:26px; height:26px; display:block; flex:none; }
+  .brand .name { font-weight:700; letter-spacing:.30em; font-size:14px; }
+  .brand .name .r {
+    display:inline-block; letter-spacing:0; padding:1px 4px; margin-left:1px; border-radius:3px;
+    animation:r-blink 1.2s steps(1) infinite;
   }
-  .brand .name { font-weight:700; letter-spacing:.14em; font-size:14px; }
-  .brand .name b { color:var(--accent); }
+  @keyframes r-blink {
+    0%,60% { background:var(--accent); color:#04101f; box-shadow:0 0 10px rgba(77,163,255,.4); }
+    61%,100% { background:transparent; color:var(--txt); box-shadow:none; }
+  }
+  @media (prefers-reduced-motion:reduce){ .brand .name .r { animation:none; background:var(--accent); color:#04101f; } }
   .brand .tag {
     font-size:9.5px; letter-spacing:.18em; color:var(--txt-3);
     border-left:1px solid var(--line-2); padding-left:10px; margin-left:2px;
@@ -287,8 +291,11 @@
   td { padding:9px 14px; text-align:right; white-space:nowrap; }
   td.l { text-align:left; }
   .rank { color:var(--txt-3); font-family:var(--mono); font-size:11.5px; width:34px; }
-  .co { display:flex; align-items:center; gap:10px; }
-  .co .flag { font-size:15px; line-height:1; }
+  .co { display:flex; align-items:center; gap:13px; }
+  .flag { width:16px; height:16px; border-radius:50%; overflow:hidden; flex:none; display:block;
+    box-shadow:0 0 0 1px rgba(255,255,255,.10), inset 0 0 0 1px rgba(0,0,0,.18); }
+  .flag svg { display:block; width:100%; height:100%; }
+  .dh .nm .flag { width:18px; height:18px; }
   .co .nm { font-weight:600; }
   .co .tk { color:var(--txt-3); font-family:var(--mono); font-size:10.5px; margin-top:1px; }
   .sub { color:var(--txt-2); }
@@ -319,7 +326,7 @@
   .drawer.show { transform:translateX(0); }
   .dh { padding:18px 18px 14px; border-bottom:1px solid var(--line); }
   .dh .top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
-  .dh .nm { font-size:18px; font-weight:700; display:flex; align-items:center; gap:9px; }
+  .dh .nm { font-size:18px; font-weight:700; display:flex; align-items:center; gap:12px; }
   .dh .meta { color:var(--txt-3); font-size:11.5px; margin-top:3px; font-family:var(--mono); }
   .dh .close { border:0; background:var(--panel-2); color:var(--txt-2); width:30px; height:30px; border-radius:7px; cursor:pointer; font-size:16px; }
   .dh .close:hover { color:var(--txt); }
@@ -406,10 +413,12 @@
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </div>
     <div class="brand">
-      <div class="mark">H</div>
-      <div>
-        <div class="name"><b>HUNT</b>R</div>
-      </div>
+      <svg class="mark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Huntr">
+        <path d="M15 9 H9 V15 M33 9 H39 V15 M9 33 V39 H15 M39 33 V39 H33" fill="none" stroke="#e6edf6" stroke-width="2.4"/>
+        <circle cx="24" cy="24" r="7" fill="none" stroke="rgba(77,163,255,.4)" stroke-width="1"/>
+        <circle cx="24" cy="24" r="2.2" fill="#4da3ff"/>
+      </svg>
+      <div class="name">HUNT<span class="r">R</span></div>
       <div class="tag">EMEA · TECH · M&amp;A TARGET SIGNAL</div>
     </div>
     <div class="search">
@@ -773,6 +782,37 @@ function getAcquirers(c){
 
 /* ---------- helpers ---------- */
 const fmtMc = v => v>=100? v.toFixed(0) : v.toFixed(1);
+/* circular matte SVG flags — emoji flags don't render on Windows, so we draw our own.
+   Muted palette for a matte finish; unknown country -> neutral disc. */
+const cc = f => { const L=[...(f||"")].map(ch=>ch.codePointAt(0)-0x1F1E6+65).filter(n=>n>=65&&n<=90).map(n=>String.fromCharCode(n)).join(""); return /^[A-Z]{2}$/.test(L)?L:""; };
+const FLAG_SHAPES = {
+  FR:'<rect width="6.7" height="20" fill="#3D69BA"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
+  IT:'<rect width="6.7" height="20" fill="#3F9E5F"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
+  IE:'<rect width="6.7" height="20" fill="#3F9E5F"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#EC8C33"/>',
+  BE:'<rect width="6.7" height="20" fill="#33302D"/><rect x="6.7" width="6.6" height="20" fill="#EFBE3D"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
+  DE:'<rect width="20" height="6.7" fill="#33302D"/><rect y="6.7" width="20" height="6.6" fill="#D64550"/><rect y="13.3" width="20" height="6.7" fill="#EFBE3D"/>',
+  AT:'<rect width="20" height="6.7" fill="#D64550"/><rect y="6.7" width="20" height="6.6" fill="#F4F1EA"/><rect y="13.3" width="20" height="6.7" fill="#D64550"/>',
+  LU:'<rect width="20" height="6.7" fill="#D64550"/><rect y="6.7" width="20" height="6.6" fill="#F4F1EA"/><rect y="13.3" width="20" height="6.7" fill="#7FB3E8"/>',
+  NL:'<rect width="20" height="6.7" fill="#D64550"/><rect y="6.7" width="20" height="6.6" fill="#F4F1EA"/><rect y="13.3" width="20" height="6.7" fill="#3D69BA"/>',
+  HU:'<rect width="20" height="6.7" fill="#D64550"/><rect y="6.7" width="20" height="6.6" fill="#F4F1EA"/><rect y="13.3" width="20" height="6.7" fill="#3F9E5F"/>',
+  PL:'<rect width="20" height="10" fill="#F4F1EA"/><rect y="10" width="20" height="10" fill="#D64550"/>',
+  ES:'<rect width="20" height="20" fill="#D64550"/><rect y="5" width="20" height="10" fill="#EFBE3D"/>',
+  PT:'<rect width="8" height="20" fill="#3F9E5F"/><rect x="8" width="12" height="20" fill="#D64550"/><circle cx="8" cy="10" r="2.6" fill="#EFBE3D"/>',
+  CH:'<rect width="20" height="20" fill="#D64550"/><rect x="8.2" y="4.5" width="3.6" height="11" fill="#F4F1EA"/><rect x="4.5" y="8.2" width="11" height="3.6" fill="#F4F1EA"/>',
+  SE:'<rect width="20" height="20" fill="#3E6DB5"/><rect x="6" width="3.2" height="20" fill="#EFBE3D"/><rect y="8.4" width="20" height="3.2" fill="#EFBE3D"/>',
+  FI:'<rect width="20" height="20" fill="#F4F1EA"/><rect x="6" width="3.2" height="20" fill="#3D69BA"/><rect y="8.4" width="20" height="3.2" fill="#3D69BA"/>',
+  DK:'<rect width="20" height="20" fill="#D64550"/><rect x="6" width="3.2" height="20" fill="#F4F1EA"/><rect y="8.4" width="20" height="3.2" fill="#F4F1EA"/>',
+  NO:'<rect width="20" height="20" fill="#D64550"/><rect x="5.4" width="4.4" height="20" fill="#F4F1EA"/><rect y="7.8" width="20" height="4.4" fill="#F4F1EA"/><rect x="6.5" width="2.2" height="20" fill="#2F4F94"/><rect y="8.9" width="20" height="2.2" fill="#2F4F94"/>',
+  GB:'<rect width="20" height="20" fill="#3D69BA"/><path d="M0 0L20 20M20 0L0 20" stroke="#F4F1EA" stroke-width="4"/><path d="M0 0L20 20M20 0L0 20" stroke="#D64550" stroke-width="1.7"/><rect x="7.4" width="5.2" height="20" fill="#F4F1EA"/><rect y="7.4" width="20" height="5.2" fill="#F4F1EA"/><rect x="8.6" width="2.8" height="20" fill="#D64550"/><rect y="8.6" width="20" height="2.8" fill="#D64550"/>',
+  IL:'<rect width="20" height="20" fill="#F4F1EA"/><rect y="3" width="20" height="2.4" fill="#4B7CC4"/><rect y="14.6" width="20" height="2.4" fill="#4B7CC4"/><path d="M10 6.6L12.9 11.6H7.1Z" fill="none" stroke="#4B7CC4" stroke-width="1.1"/><path d="M10 13.4L7.1 8.4H12.9Z" fill="none" stroke="#4B7CC4" stroke-width="1.1"/>',
+  CZ:'<rect width="20" height="10" fill="#F4F1EA"/><rect y="10" width="20" height="10" fill="#D64550"/><path d="M0 0L10 10L0 20Z" fill="#3D69BA"/>',
+  GR:'<rect width="20" height="20" fill="#3E6DB5"/><rect y="4.4" width="20" height="2.2" fill="#F4F1EA"/><rect y="8.8" width="20" height="2.2" fill="#F4F1EA"/><rect y="13.2" width="20" height="2.2" fill="#F4F1EA"/><rect y="17.6" width="20" height="2.2" fill="#F4F1EA"/><rect width="8" height="8" fill="#3E6DB5"/><rect x="3" width="2" height="8" fill="#F4F1EA"/><rect y="3" width="8" height="2" fill="#F4F1EA"/>',
+};
+const flagHTML = e => {
+  const k = cc(e), s = FLAG_SHAPES[k];
+  const body = s || '<rect width="20" height="20" fill="#27374d"/><circle cx="10" cy="10" r="3" fill="none" stroke="#6a7c93" stroke-width="1.2"/>';
+  return `<span class="flag" title="${k||"—"}"><svg viewBox="0 0 20 20" aria-hidden="true">${body}<circle cx="10" cy="10" r="9.6" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="0.8"/></svg></span>`;
+};
 const scoreColor = s => s>=80?"var(--hot)": s>=65?"var(--warm)": s>=50?"var(--gold)": s>=35?"#7fae5a":"var(--cool)";
 const decileColor = d => d>=9?"#ff5b6e": d>=7?"#ff9a52": d>=5?"#e8b84b": d>=3?"#7fae5a":"#3ad0a8";
 const decileBg = d => {
@@ -873,7 +913,7 @@ function render(){
     const dArr = c.d30>0?`<span class="delta up">▲ ${c.d30}</span>` : c.d30<0?`<span class="delta dn">▼ ${Math.abs(c.d30)}</span>` : `<span style="color:var(--txt-3)">–</span>`;
     return `<tr data-tk="${c.ticker}" class="${state.sel===c.ticker?'sel':''}">
       <td class="l rank">${rankMap.get(c)}</td>
-      <td class="l"><div class="co"><span class="flag">${c.flag}</span><div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
+      <td class="l"><div class="co">${flagHTML(c.flag)}<div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
       <td class="l col-sub"><span class="chip" style="color:${sc.c};border-color:${sc.c}55">${sc.label}</span></td>
       <td class="col-mc num">€${fmtMc(c.mc)}<span style="color:var(--txt-3)">bn</span></td>
       <td class="col-dec"><span class="dec" style="${decileBg(c.decile)}">D${c.decile}</span></td>
@@ -955,7 +995,7 @@ function openDrawer(tk){
     <div class="dh">
       <div class="top">
         <div>
-          <div class="nm"><span>${c.flag}</span>${c.name}</div>
+          <div class="nm">${flagHTML(c.flag)}${c.name}</div>
           <div class="meta">${c.ticker} · ${sc.label} · ${REGIONS[c.region]}</div>
         </div>
         <button class="close" id="closeDrawer">✕</button>
