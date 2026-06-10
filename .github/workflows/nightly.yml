@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install yfinance pandas numpy
+        run: pip install yfinance pandas numpy requests
       - name: Run the scoring pipeline
         env:
           EODHD_API_KEY: ${{ secrets.EODHD_API_KEY }}
