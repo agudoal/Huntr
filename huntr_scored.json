@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "Yahoo Finance via yfinance",
-    "retrieved": "2026-06-10 06:31 UTC",
+    "retrieved": "2026-06-10 08:45 UTC",
     "version": "stage1-auto",
     "weights": {
       "f_val": 20,
@@ -37,7 +37,7 @@
         "ev_ebitda": 2.416,
         "ev_rev": 0.236,
         "nd_ebitda": -6.4385069547344775,
-        "float_pct": 0.8444015653869373
+        "float_pct": 0.8425705315341597
       }
     },
     {
@@ -59,7 +59,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 352118317.056,
+        "mktcap_eur": 346208839.68,
         "ev_ebitda": 6.082,
         "ev_rev": 1.733,
         "nd_ebitda": -1.6671862623853526,
@@ -85,7 +85,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 467566432.0,
+        "mktcap_eur": 452962720.0,
         "ev_ebitda": 5.393,
         "ev_rev": 0.735,
         "nd_ebitda": 1.962384113609983,
@@ -111,7 +111,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 543598473.6,
+        "mktcap_eur": 546296250.24,
         "ev_ebitda": 8.817,
         "ev_rev": 1.979,
         "nd_ebitda": 1.2843613746112612,
@@ -137,7 +137,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1021314153.5999999,
+        "mktcap_eur": 1016366906.88,
         "ev_ebitda": 12.065,
         "ev_rev": 3.544,
         "nd_ebitda": -1.4920355621411372,
@@ -145,25 +145,51 @@
       }
     },
     {
+      "name": "Alten",
+      "ticker": "ATE.PA",
+      "region": "fr",
+      "subsector": "itserv",
+      "score": 61,
+      "decile": 10,
+      "rank": 6,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 85.5,
+        "f_own": 58.4,
+        "f_bs": 51.1,
+        "f_sz": 62.9,
+        "f_sc": 50.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 2165065472.0,
+        "ev_ebitda": 6.683,
+        "ev_rev": 0.522,
+        "nd_ebitda": -0.1847940808878668,
+        "float_pct": 0.8507833029889535
+      }
+    },
+    {
       "name": "Allfunds",
       "ticker": "ALLFG.AS",
       "region": "seur",
       "subsector": "pay",
-      "score": 62,
+      "score": 61,
       "decile": 10,
-      "rank": 6,
+      "rank": 7,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
         "f_val": 59.1,
         "f_own": 77.5,
         "f_bs": 95.5,
-        "f_sz": 32.6,
+        "f_sz": 31.5,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5144266240.0,
+        "mktcap_eur": 5153387520.0,
         "ev_ebitda": 6.798,
         "ev_rev": 3.861,
         "nd_ebitda": -6.887023357900363,
@@ -177,19 +203,19 @@
       "subsector": "internet",
       "score": 61,
       "decile": 10,
-      "rank": 7,
+      "rank": 8,
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
         "f_val": 44.3,
         "f_own": 69.7,
         "f_bs": 78.4,
-        "f_sz": 75.3,
+        "f_sz": 77.5,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1111869607.6799998,
+        "mktcap_eur": 1084417102.08,
         "ev_ebitda": 52.266,
         "ev_rev": 3.598,
         "nd_ebitda": -1.6513633834168058,
@@ -197,29 +223,29 @@
       }
     },
     {
-      "name": "Alten",
-      "ticker": "ATE.PA",
+      "name": "Edenred",
+      "ticker": "EDEN.PA",
       "region": "fr",
-      "subsector": "itserv",
-      "score": 61,
+      "subsector": "pay",
+      "score": 60,
       "decile": 10,
-      "rank": 8,
+      "rank": 9,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 85.5,
-        "f_own": 58.4,
-        "f_bs": 51.1,
-        "f_sz": 64.0,
+        "f_val": 71.5,
+        "f_own": 96.6,
+        "f_bs": 33.0,
+        "f_sz": 40.4,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2198293248.0,
-        "ev_ebitda": 6.683,
-        "ev_rev": 0.522,
-        "nd_ebitda": -0.1847940808878668,
-        "float_pct": 0.8507833029889535
+        "mktcap_eur": 4739429376.0,
+        "ev_ebitda": 5.863,
+        "ev_rev": 2.382,
+        "nd_ebitda": 1.1252251675675675,
+        "float_pct": 1.0
       }
     },
     {
@@ -229,7 +255,7 @@
       "subsector": "semis",
       "score": 60,
       "decile": 10,
-      "rank": 9,
+      "rank": 10,
       "coverage": "4/4",
       "currency": "CHF",
       "factors": {
@@ -241,37 +267,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1825904908.8000002,
+        "mktcap_eur": 1755878745.6000001,
         "ev_ebitda": 6.576,
         "ev_rev": 1.017,
         "nd_ebitda": 3.182353066666667,
         "float_pct": 0.9900916635050276
-      }
-    },
-    {
-      "name": "Endava",
-      "ticker": "DAVA",
-      "region": "ukie",
-      "subsector": "itserv",
-      "score": 59,
-      "decile": 9,
-      "rank": 10,
-      "coverage": "4/4",
-      "currency": "USD",
-      "factors": {
-        "f_val": 74.7,
-        "f_own": 71.9,
-        "f_bs": 1.1,
-        "f_sz": 98.9,
-        "f_sc": 50.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 139039747.20000002,
-        "ev_ebitda": 11.317,
-        "ev_rev": 0.467,
-        "nd_ebitda": 6.339231563864174,
-        "float_pct": 0.9202469145328571
       }
     },
     {
@@ -293,37 +293,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 201682288.0,
+        "mktcap_eur": 207118464.0,
         "ev_ebitda": 64.595,
         "ev_rev": 3.202,
         "nd_ebitda": -3.7722033898305085,
         "float_pct": 0.671969973623392
-      }
-    },
-    {
-      "name": "Edenred",
-      "ticker": "EDEN.PA",
-      "region": "fr",
-      "subsector": "pay",
-      "score": 59,
-      "decile": 9,
-      "rank": 12,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 71.5,
-        "f_own": 96.6,
-        "f_bs": 33.0,
-        "f_sz": 33.7,
-        "f_sc": 50.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 5079202816.0,
-        "ev_ebitda": 5.863,
-        "ev_rev": 2.382,
-        "nd_ebitda": 1.1252251675675675,
-        "float_pct": 1.0
       }
     },
     {
@@ -333,7 +307,7 @@
       "subsector": "appsw",
       "score": 59,
       "decile": 9,
-      "rank": 13,
+      "rank": 12,
       "coverage": "4/4",
       "currency": "PLN",
       "factors": {
@@ -345,11 +319,37 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3477561845.76,
+        "mktcap_eur": 3423861166.08,
         "ev_ebitda": 7.771,
         "ev_rev": 1.045,
         "nd_ebitda": -1.2637906508728343,
         "float_pct": 0.7919599945815624
+      }
+    },
+    {
+      "name": "Endava",
+      "ticker": "DAVA",
+      "region": "ukie",
+      "subsector": "itserv",
+      "score": 59,
+      "decile": 9,
+      "rank": 13,
+      "coverage": "4/4",
+      "currency": "USD",
+      "factors": {
+        "f_val": 74.7,
+        "f_own": 71.9,
+        "f_bs": 1.1,
+        "f_sz": 98.9,
+        "f_sc": 50.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 139039747.20000002,
+        "ev_ebitda": 11.317,
+        "ev_rev": 0.467,
+        "nd_ebitda": 6.339231563864174,
+        "float_pct": 0.9202469145328571
       }
     },
     {
@@ -358,7 +358,7 @@
       "region": "fr",
       "subsector": "gaming",
       "score": 59,
-      "decile": 10,
+      "decile": 9,
       "rank": 14,
       "coverage": "4/4",
       "currency": "EUR",
@@ -371,7 +371,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 674152512.0,
+        "mktcap_eur": 662325248.0,
         "ev_ebitda": 2.728,
         "ev_rev": 0.742,
         "nd_ebitda": 1.1839261343873517,
@@ -397,7 +397,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 13491769804.800001,
+        "mktcap_eur": 13350101452.800001,
         "ev_ebitda": 12.921,
         "ev_rev": 2.313,
         "nd_ebitda": -1.9081785565189182,
@@ -423,7 +423,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 900985728.0,
+        "mktcap_eur": 873516672.0,
         "ev_ebitda": 6.412,
         "ev_rev": 2.364,
         "nd_ebitda": 3.141364150586518,
@@ -449,7 +449,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 190796130.72,
+        "mktcap_eur": 188425280.16,
         "ev_ebitda": 9.346,
         "ev_rev": 1.476,
         "nd_ebitda": -1.3251952524444992,
@@ -496,7 +496,7 @@
         "f_val": 60.2,
         "f_own": 42.7,
         "f_bs": 98.9,
-        "f_sz": 46.1,
+        "f_sz": 47.2,
         "f_sc": 50.0,
         "f_si": 50.0
       },
@@ -527,7 +527,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1755762176.0,
+        "mktcap_eur": 1717531008.0,
         "ev_ebitda": 32.867,
         "ev_rev": 3.621,
         "nd_ebitda": -1.4203917433163435,
@@ -548,7 +548,7 @@
         "f_val": 51.1,
         "f_own": 79.8,
         "f_bs": 30.7,
-        "f_sz": 77.5,
+        "f_sz": 76.4,
         "f_sc": 50.0,
         "f_si": 50.0
       },
@@ -579,7 +579,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3790870686.72,
+        "mktcap_eur": 3779544038.3999996,
         "ev_ebitda": 11.275,
         "ev_rev": 7.688,
         "nd_ebitda": -0.12323752605230676,
@@ -605,7 +605,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 411361853.76,
+        "mktcap_eur": 414227923.2,
         "ev_ebitda": 4.736,
         "ev_rev": 1.94,
         "nd_ebitda": -0.47189487368097194,
@@ -631,10 +631,10 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 4369098839.04,
-        "ev_ebitda": 9.956,
-        "ev_rev": 6.456,
-        "nd_ebitda": 0.46393280632411066,
+        "mktcap_eur": 4382196848.639999,
+        "ev_ebitda": 9.83,
+        "ev_rev": 6.374,
+        "nd_ebitda": 0.4762845849802372,
         "float_pct": 1.0
       }
     },
@@ -657,7 +657,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 681766784.0,
+        "mktcap_eur": 670507584.0,
         "ev_ebitda": 5.462,
         "ev_rev": 0.274,
         "nd_ebitda": 3.7736316815920397,
@@ -683,11 +683,37 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2045557125.1200001,
+        "mktcap_eur": 2004669913.088,
         "ev_ebitda": null,
         "ev_rev": null,
         "nd_ebitda": null,
         "float_pct": 0.8919222463069425
+      }
+    },
+    {
+      "name": "Stillfront",
+      "ticker": "SF.ST",
+      "region": "nordics",
+      "subsector": "gaming",
+      "score": 54,
+      "decile": 8,
+      "rank": 27,
+      "coverage": "4/4",
+      "currency": "SEK",
+      "factors": {
+        "f_val": 84.5,
+        "f_own": 29.2,
+        "f_bs": 9.1,
+        "f_sz": 96.6,
+        "f_sc": 50.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 193318287.35999998,
+        "ev_ebitda": 5.642,
+        "ev_rev": 1.045,
+        "nd_ebitda": 3.5013795031386494,
+        "float_pct": 0.6803804175539957
       }
     },
     {
@@ -696,8 +722,8 @@
       "region": "nordics",
       "subsector": "hw",
       "score": 54,
-      "decile": 7,
-      "rank": 27,
+      "decile": 8,
+      "rank": 28,
       "coverage": "4/4",
       "currency": "SEK",
       "factors": {
@@ -709,37 +735,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 32570790641.663998,
+        "mktcap_eur": 32775366508.544,
         "ev_ebitda": 9.713,
         "ev_rev": 1.508,
         "nd_ebitda": -0.663507139852311,
         "float_pct": 0.9502949032768387
-      }
-    },
-    {
-      "name": "Comet Holding",
-      "ticker": "COTN.SW",
-      "region": "dach",
-      "subsector": "semieq",
-      "score": 54,
-      "decile": 8,
-      "rank": 28,
-      "coverage": "4/4",
-      "currency": "CHF",
-      "factors": {
-        "f_val": 23.9,
-        "f_own": 87.6,
-        "f_bs": 50.0,
-        "f_sz": 58.4,
-        "f_sc": 50.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 2901172108.8,
-        "ev_ebitda": 70.64,
-        "ev_rev": 6.034,
-        "nd_ebitda": -0.13542867389021235,
-        "float_pct": 0.9976800589444693
       }
     },
     {
@@ -761,37 +761,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 879102844.928,
+        "mktcap_eur": 863081201.6639999,
         "ev_ebitda": 12.174,
         "ev_rev": 3.505,
         "nd_ebitda": 2.687873526246969,
         "float_pct": 0.948330216033704
-      }
-    },
-    {
-      "name": "Stillfront",
-      "ticker": "SF.ST",
-      "region": "nordics",
-      "subsector": "gaming",
-      "score": 54,
-      "decile": 8,
-      "rank": 30,
-      "coverage": "4/4",
-      "currency": "SEK",
-      "factors": {
-        "f_val": 84.5,
-        "f_own": 29.2,
-        "f_bs": 9.1,
-        "f_sz": 96.6,
-        "f_sc": 50.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 200393971.71199998,
-        "ev_ebitda": 5.642,
-        "ev_rev": 1.045,
-        "nd_ebitda": 3.5013795031386494,
-        "float_pct": 0.6803804175539957
       }
     },
     {
@@ -801,7 +775,7 @@
       "subsector": "itserv",
       "score": 54,
       "decile": 8,
-      "rank": 31,
+      "rank": 30,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
@@ -813,7 +787,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 16797612032.0,
+        "mktcap_eur": 16607072256.0,
         "ev_ebitda": 8.19,
         "ev_rev": 1.056,
         "nd_ebitda": 2.2934069350286657,
@@ -827,7 +801,7 @@
       "subsector": "itserv",
       "score": 53,
       "decile": 7,
-      "rank": 32,
+      "rank": 31,
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
@@ -839,37 +813,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1113063120.0,
+        "mktcap_eur": 1113158741.76,
         "ev_ebitda": 15.085,
         "ev_rev": 2.077,
         "nd_ebitda": -1.3970380105135463,
         "float_pct": 0.7056795592548096
-      }
-    },
-    {
-      "name": "Playtech",
-      "ticker": "PTEC.L",
-      "region": "ukie",
-      "subsector": "gaming",
-      "score": 53,
-      "decile": 7,
-      "rank": 33,
-      "coverage": "4/4",
-      "currency": "GBP",
-      "factors": {
-        "f_val": 77.3,
-        "f_own": 33.7,
-        "f_bs": 26.1,
-        "f_sz": 76.4,
-        "f_sc": 50.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 1100078104.32,
-        "ev_ebitda": -14.78,
-        "ev_rev": 1.142,
-        "nd_ebitda": 1.4745762711864407,
-        "float_pct": 0.7023457858475446
       }
     },
     {
@@ -879,7 +827,7 @@
       "subsector": "hw",
       "score": 53,
       "decile": 7,
-      "rank": 34,
+      "rank": 32,
       "coverage": "4/4",
       "currency": "DKK",
       "factors": {
@@ -891,7 +839,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1832184461.312,
+        "mktcap_eur": 1799404107.776,
         "ev_ebitda": 15.52,
         "ev_rev": 1.372,
         "nd_ebitda": 6.199726715213013,
@@ -899,29 +847,81 @@
       }
     },
     {
-      "name": "CANCOM",
-      "ticker": "COK.DE",
+      "name": "Comet Holding",
+      "ticker": "COTN.SW",
       "region": "dach",
-      "subsector": "itserv",
-      "score": 52,
+      "subsector": "semieq",
+      "score": 53,
       "decile": 7,
-      "rank": 35,
+      "rank": 33,
       "coverage": "4/4",
-      "currency": "EUR",
+      "currency": "CHF",
       "factors": {
-        "f_val": 58.7,
-        "f_own": 32.6,
-        "f_bs": 40.9,
-        "f_sz": 83.1,
+        "f_val": 23.9,
+        "f_own": 87.6,
+        "f_bs": 50.0,
+        "f_sz": 57.3,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 761602176.0,
-        "ev_ebitda": 16.263,
-        "ev_rev": 0.469,
-        "nd_ebitda": 0.8297335062408818,
-        "float_pct": 0.6988800127823172
+        "mktcap_eur": 2951754624.0,
+        "ev_ebitda": 70.64,
+        "ev_rev": 6.034,
+        "nd_ebitda": -0.13542867389021235,
+        "float_pct": 0.9976800589444693
+      }
+    },
+    {
+      "name": "Sopra Steria",
+      "ticker": "SOP.PA",
+      "region": "fr",
+      "subsector": "itserv",
+      "score": 52,
+      "decile": 7,
+      "rank": 34,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 83.3,
+        "f_own": 37.1,
+        "f_bs": 29.5,
+        "f_sz": 58.4,
+        "f_sc": 50.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 2894446848.0,
+        "ev_ebitda": 6.904,
+        "ev_rev": 0.653,
+        "nd_ebitda": 1.261414730538922,
+        "float_pct": 0.7064119514292306
+      }
+    },
+    {
+      "name": "Playtech",
+      "ticker": "PTEC.L",
+      "region": "ukie",
+      "subsector": "gaming",
+      "score": 52,
+      "decile": 7,
+      "rank": 35,
+      "coverage": "4/4",
+      "currency": "GBP",
+      "factors": {
+        "f_val": 77.3,
+        "f_own": 33.7,
+        "f_bs": 26.1,
+        "f_sz": 75.3,
+        "f_sc": 50.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 1094876789.76,
+        "ev_ebitda": -14.78,
+        "ev_rev": 1.142,
+        "nd_ebitda": 1.4745762711864407,
+        "float_pct": 0.7023457858475446
       }
     },
     {
@@ -943,7 +943,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1215640707.072,
+        "mktcap_eur": 1210939473.9199998,
         "ev_ebitda": 13.63,
         "ev_rev": 1.821,
         "nd_ebitda": -4.020726225974513,
@@ -951,9 +951,9 @@
       }
     },
     {
-      "name": "Sopra Steria",
-      "ticker": "SOP.PA",
-      "region": "fr",
+      "name": "CANCOM",
+      "ticker": "COK.DE",
+      "region": "dach",
       "subsector": "itserv",
       "score": 52,
       "decile": 7,
@@ -961,19 +961,19 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 83.3,
-        "f_own": 37.1,
-        "f_bs": 29.5,
-        "f_sz": 57.3,
+        "f_val": 58.7,
+        "f_own": 32.6,
+        "f_bs": 40.9,
+        "f_sz": 83.1,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2942752000.0,
-        "ev_ebitda": 6.904,
-        "ev_rev": 0.653,
-        "nd_ebitda": 1.261414730538922,
-        "float_pct": 0.7064119514292306
+        "mktcap_eur": 755854208.0,
+        "ev_ebitda": 16.263,
+        "ev_rev": 0.469,
+        "nd_ebitda": 0.8297335062408818,
+        "float_pct": 0.6988800127823172
       }
     },
     {
@@ -995,7 +995,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3786249472.0,
+        "mktcap_eur": 3699272960.0,
         "ev_ebitda": 7.898,
         "ev_rev": 1.346,
         "nd_ebitda": -1.1007118196689294,
@@ -1021,7 +1021,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 25957851136.0,
+        "mktcap_eur": 25506875392.0,
         "ev_ebitda": 12.851,
         "ev_rev": 6.473,
         "nd_ebitda": -8.834752579550878,
@@ -1047,7 +1047,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1604234940.416,
+        "mktcap_eur": 1588901765.12,
         "ev_ebitda": 12.196,
         "ev_rev": 0.521,
         "nd_ebitda": 0.8550910088473542,
@@ -1073,7 +1073,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1076700800.0,
+        "mktcap_eur": 1050918912.0,
         "ev_ebitda": 7.969,
         "ev_rev": 1.13,
         "nd_ebitda": 0.05230833601063949,
@@ -1120,12 +1120,12 @@
         "f_val": 92.0,
         "f_own": 31.5,
         "f_bs": 17.0,
-        "f_sz": 53.9,
+        "f_sz": 52.8,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3342126592.0,
+        "mktcap_eur": 3333986304.0,
         "ev_ebitda": 4.564,
         "ev_rev": 0.717,
         "nd_ebitda": 2.4786324881878095,
@@ -1354,7 +1354,7 @@
         "f_val": 3.4,
         "f_own": 96.6,
         "f_bs": 53.4,
-        "f_sz": 41.6,
+        "f_sz": 39.3,
         "f_sc": 50.0,
         "f_si": 50.0
       },
@@ -1406,12 +1406,12 @@
         "f_val": 68.3,
         "f_own": 18.0,
         "f_bs": 76.1,
-        "f_sz": 34.8,
+        "f_sz": 33.7,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5076134369.28,
+        "mktcap_eur": 5071222241.28,
         "ev_ebitda": 13.167,
         "ev_rev": 0.425,
         "nd_ebitda": -1.4365534567485696,
@@ -1441,7 +1441,7 @@
         "ev_ebitda": 45.254,
         "ev_rev": 15.005,
         "nd_ebitda": -2.4973439276255096,
-        "float_pct": 0.9969788241153481
+        "float_pct": 0.99613078469598
       }
     },
     {
@@ -1463,7 +1463,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 22482810880.0,
+        "mktcap_eur": 22206736384.0,
         "ev_ebitda": 9.99,
         "ev_rev": 3.76,
         "nd_ebitda": 1.0836266159631232,
@@ -1489,7 +1489,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3427223552.0,
+        "mktcap_eur": 3382906112.0,
         "ev_ebitda": 7.965,
         "ev_rev": 3.154,
         "nd_ebitda": 4.988075175468484,
@@ -1515,7 +1515,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2497871360.0,
+        "mktcap_eur": 2471541760.0,
         "ev_ebitda": 15.334,
         "ev_rev": 2.718,
         "nd_ebitda": 1.676072442439623,
@@ -1541,7 +1541,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3212921339.904,
+        "mktcap_eur": 3066879524.864,
         "ev_ebitda": 855.686,
         "ev_rev": 52.967,
         "nd_ebitda": -2.592085061527533,
@@ -1593,7 +1593,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 664741952.0,
+        "mktcap_eur": 645952448.0,
         "ev_ebitda": 19.275,
         "ev_rev": 4.595,
         "nd_ebitda": 1.6477029864013768,
@@ -1619,11 +1619,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2379280640.0,
+        "mktcap_eur": 2360907776.0,
         "ev_ebitda": 10.771,
         "ev_rev": 1.525,
         "nd_ebitda": 1.447490223938224,
-        "float_pct": 0.6869285462049819
+        "float_pct": 0.6847261716543956
       }
     },
     {
@@ -1645,7 +1645,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 9151820421.119999,
+        "mktcap_eur": 9170569175.039999,
         "ev_ebitda": 12.957,
         "ev_rev": 3.926,
         "nd_ebitda": -2.4609330005759262,
@@ -1671,7 +1671,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2484009730.048,
+        "mktcap_eur": 2417811292.16,
         "ev_ebitda": 13.291,
         "ev_rev": 1.321,
         "nd_ebitda": 2.8858635287934598,
@@ -1697,7 +1697,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 634228288.0,
+        "mktcap_eur": 635583424.0,
         "ev_ebitda": 7.255,
         "ev_rev": 0.765,
         "nd_ebitda": 5.2081864596565515,
@@ -1718,12 +1718,12 @@
         "f_val": 42.0,
         "f_own": 27.0,
         "f_bs": 61.4,
-        "f_sz": 43.8,
+        "f_sz": 44.9,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 4304292894.719999,
+        "mktcap_eur": 4233090401.2799997,
         "ev_ebitda": 17.435,
         "ev_rev": 2.042,
         "nd_ebitda": -0.8224138994029734,
@@ -1749,7 +1749,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 8098141347.84,
+        "mktcap_eur": 8027064238.08,
         "ev_ebitda": 11.76,
         "ev_rev": 3.257,
         "nd_ebitda": 1.0330550718986107,
@@ -1770,7 +1770,7 @@
         "f_val": 33.8,
         "f_own": 47.2,
         "f_bs": 62.5,
-        "f_sz": 21.3,
+        "f_sz": 22.5,
         "f_sc": 50.0,
         "f_si": 50.0
       },
@@ -1801,7 +1801,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1222269616.128,
+        "mktcap_eur": 1236211834.8799999,
         "ev_ebitda": 23.937,
         "ev_rev": 5.784,
         "nd_ebitda": -2.6811924764337394,
@@ -1827,7 +1827,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 8974893358.08,
+        "mktcap_eur": 8787257856.0,
         "ev_ebitda": 14.998,
         "ev_rev": 3.564,
         "nd_ebitda": 2.402555910543131,
@@ -1848,7 +1848,7 @@
         "f_val": 36.4,
         "f_own": 68.5,
         "f_bs": 15.9,
-        "f_sz": 40.4,
+        "f_sz": 38.2,
         "f_sc": 50.0,
         "f_si": 50.0
       },
@@ -1879,7 +1879,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 66822934528.0,
+        "mktcap_eur": 64952786944.0,
         "ev_ebitda": 25.436,
         "ev_rev": 3.227,
         "nd_ebitda": -0.9873867777661623,
@@ -1905,7 +1905,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 581364023296.0,
+        "mktcap_eur": 577663991808.0,
         "ev_ebitda": 45.312,
         "ev_rev": 17.086,
         "nd_ebitda": -0.44635715662281195,
@@ -1926,12 +1926,12 @@
         "f_val": 17.2,
         "f_own": 49.4,
         "f_bs": 63.6,
-        "f_sz": 36.0,
+        "f_sz": 34.8,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5034845437.952,
+        "mktcap_eur": 5031408566.271999,
         "ev_ebitda": 22.506,
         "ev_rev": 6.614,
         "nd_ebitda": -0.9516194387438933,
@@ -1978,12 +1978,12 @@
         "f_val": 82.7,
         "f_own": 6.7,
         "f_bs": 13.6,
-        "f_sz": 47.2,
+        "f_sz": 46.1,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3923581696.0,
+        "mktcap_eur": 3996414720.0,
         "ev_ebitda": 5.58,
         "ev_rev": 1.237,
         "nd_ebitda": 2.747481876258993,
@@ -2009,7 +2009,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 180621377536.0,
+        "mktcap_eur": 174573436928.0,
         "ev_ebitda": 15.36,
         "ev_rev": 4.773,
         "nd_ebitda": -0.18812475009996002,
@@ -2030,7 +2030,7 @@
         "f_val": 17.8,
         "f_own": 21.3,
         "f_bs": 89.8,
-        "f_sz": 38.2,
+        "f_sz": 36.0,
         "f_sc": 50.0,
         "f_si": 50.0
       },
@@ -2061,7 +2061,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 9538481152.0,
+        "mktcap_eur": 9671494656.0,
         "ev_ebitda": 14.245,
         "ev_rev": 1.562,
         "nd_ebitda": -1.32168062160671,
@@ -2113,7 +2113,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 20451637739.52,
+        "mktcap_eur": 20363255377.92,
         "ev_ebitda": 31.551,
         "ev_rev": 7.514,
         "nd_ebitda": 1.1156392058516196,
@@ -2121,9 +2121,9 @@
       }
     },
     {
-      "name": "Infineon",
-      "ticker": "IFX.DE",
-      "region": "dach",
+      "name": "Soitec",
+      "ticker": "SOI.PA",
+      "region": "fr",
       "subsector": "semis",
       "score": 40,
       "decile": 2,
@@ -2131,19 +2131,19 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 14.3,
-        "f_own": 92.1,
-        "f_bs": 25.0,
-        "f_sz": 2.2,
+        "f_val": 15.9,
+        "f_own": 46.1,
+        "f_bs": 43.2,
+        "f_sz": 41.6,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 98320146432.0,
-        "ev_ebitda": 26.005,
-        "ev_rev": 6.907,
-        "nd_ebitda": 1.5287528727508548,
-        "float_pct": 0.9999899999973759
+        "mktcap_eur": 4422134784.0,
+        "ev_ebitda": 45.146,
+        "ev_rev": 8.541,
+        "nd_ebitda": 0.49107142857142855,
+        "float_pct": 0.7587291182740599
       }
     },
     {
@@ -2160,12 +2160,12 @@
         "f_val": 10.2,
         "f_own": 67.4,
         "f_bs": 45.5,
-        "f_sz": 16.9,
+        "f_sz": 15.7,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 19143471513.600002,
+        "mktcap_eur": 19508469657.600002,
         "ev_ebitda": 62.137,
         "ev_rev": 17.083,
         "nd_ebitda": 0.36354915783741015,
@@ -2186,12 +2186,12 @@
         "f_val": 20.3,
         "f_own": 9.0,
         "f_bs": 80.7,
-        "f_sz": 44.9,
+        "f_sz": 43.8,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 4231157598.72,
+        "mktcap_eur": 4236264115.2,
         "ev_ebitda": 27.79,
         "ev_rev": 4.599,
         "nd_ebitda": -1.8541184493074339,
@@ -2199,29 +2199,29 @@
       }
     },
     {
-      "name": "CD Projekt",
-      "ticker": "CDR.WA",
-      "region": "cee",
-      "subsector": "gaming",
-      "score": 39,
+      "name": "Infineon",
+      "ticker": "IFX.DE",
+      "region": "dach",
+      "subsector": "semis",
+      "score": 40,
       "decile": 2,
       "rank": 85,
       "coverage": "4/4",
-      "currency": "PLN",
+      "currency": "EUR",
       "factors": {
-        "f_val": 6.8,
-        "f_own": 25.8,
-        "f_bs": 83.0,
-        "f_sz": 31.5,
+        "f_val": 14.3,
+        "f_own": 92.1,
+        "f_bs": 25.0,
+        "f_sz": 2.2,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5181858754.56,
-        "ev_ebitda": 43.992,
-        "ev_rev": 24.558,
-        "nd_ebitda": -1.9333094437553047,
-        "float_pct": 0.6475996569329894
+        "mktcap_eur": 99229794304.0,
+        "ev_ebitda": 26.005,
+        "ev_rev": 6.907,
+        "nd_ebitda": 1.5287528727508548,
+        "float_pct": 0.9999899999973759
       }
     },
     {
@@ -2243,7 +2243,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 22742542336.0,
+        "mktcap_eur": 22647482368.0,
         "ev_ebitda": 108.521,
         "ev_rev": 35.848,
         "nd_ebitda": -0.4421908328942957,
@@ -2251,29 +2251,29 @@
       }
     },
     {
-      "name": "Soitec",
-      "ticker": "SOI.PA",
-      "region": "fr",
-      "subsector": "semis",
+      "name": "CD Projekt",
+      "ticker": "CDR.WA",
+      "region": "cee",
+      "subsector": "gaming",
       "score": 39,
       "decile": 2,
       "rank": 87,
       "coverage": "4/4",
-      "currency": "EUR",
+      "currency": "PLN",
       "factors": {
-        "f_val": 15.9,
-        "f_own": 46.1,
-        "f_bs": 43.2,
-        "f_sz": 37.1,
+        "f_val": 6.8,
+        "f_own": 25.8,
+        "f_bs": 83.0,
+        "f_sz": 32.6,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5006156288.0,
-        "ev_ebitda": 45.146,
-        "ev_rev": 8.541,
-        "nd_ebitda": 0.49107142857142855,
-        "float_pct": 0.7587291182740599
+        "mktcap_eur": 5131303915.52,
+        "ev_ebitda": 43.992,
+        "ev_rev": 24.558,
+        "nd_ebitda": -1.9333094437553047,
+        "float_pct": 0.6475996569329894
       }
     },
     {
@@ -2290,12 +2290,12 @@
         "f_val": 25.9,
         "f_own": 43.8,
         "f_bs": 20.5,
-        "f_sz": 39.3,
+        "f_sz": 37.1,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 4914602649.6,
+        "mktcap_eur": 4838547840.0,
         "ev_ebitda": 18.053,
         "ev_rev": 4.692,
         "nd_ebitda": 2.2326642900764897,
@@ -2321,7 +2321,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 25858717696.0,
+        "mktcap_eur": 25477863424.0,
         "ev_ebitda": 14.111,
         "ev_rev": 3.821,
         "nd_ebitda": -1.4334869164792166,
@@ -2347,7 +2347,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 54678614016.0,
+        "mktcap_eur": 55700725760.0,
         "ev_ebitda": 21.403,
         "ev_rev": 4.306,
         "nd_ebitda": -0.7180722232583312,
@@ -2368,12 +2368,12 @@
         "f_val": 53.4,
         "f_own": 2.2,
         "f_bs": 6.8,
-        "f_sz": 62.9,
+        "f_sz": 64.0,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2230279424.0,
+        "mktcap_eur": 2152548352.0,
         "ev_ebitda": 11.385,
         "ev_rev": 3.143,
         "nd_ebitda": 4.16436997375328,
@@ -2399,7 +2399,7 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 84929667072.0,
+        "mktcap_eur": 85398659072.0,
         "ev_ebitda": 203.362,
         "ev_rev": 12.386,
         "nd_ebitda": -10.548076307692307,
@@ -2420,7 +2420,7 @@
         "f_val": 12.5,
         "f_own": 20.2,
         "f_bs": 69.3,
-        "f_sz": 30.3,
+        "f_sz": 29.2,
         "f_sc": 50.0,
         "f_si": 50.0
       },
@@ -2446,12 +2446,12 @@
         "f_val": 4.5,
         "f_own": 51.7,
         "f_bs": 37.5,
-        "f_sz": 15.7,
+        "f_sz": 16.9,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 19356298379.264,
+        "mktcap_eur": 19058653396.992,
         "ev_ebitda": 173.419,
         "ev_rev": 40.774,
         "nd_ebitda": 1.0000001003213392,
@@ -2498,12 +2498,12 @@
         "f_val": 21.0,
         "f_own": 12.4,
         "f_bs": 46.6,
-        "f_sz": 29.2,
+        "f_sz": 30.3,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 7213049344.0,
+        "mktcap_eur": 7011084288.0,
         "ev_ebitda": 21.226,
         "ev_rev": 5.981,
         "nd_ebitda": 0.14352201033312656,
@@ -2524,12 +2524,12 @@
         "f_val": 0.0,
         "f_own": 19.1,
         "f_bs": 60.2,
-        "f_sz": 22.5,
+        "f_sz": 21.3,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 12169374728.192,
+        "mktcap_eur": 12301235257.344,
         "ev_ebitda": 110.297,
         "ev_rev": 67.388,
         "nd_ebitda": -0.8026516508798397,
@@ -2550,12 +2550,12 @@
         "f_val": 1.1,
         "f_own": 3.4,
         "f_bs": 42.0,
-        "f_sz": 52.8,
+        "f_sz": 53.9,
         "f_sc": 50.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3346334425.088,
+        "mktcap_eur": 3300058554.3679996,
         "ev_ebitda": 187.667,
         "ev_rev": 63.173,
         "nd_ebitda": 0.7877041306436119,
