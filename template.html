@@ -684,13 +684,14 @@ const LIVE_RAW = [
   {n:"Evolution",t:"EVO.ST",r:"nordics",s:"gaming",F:[0.0,17.9,61.5,33.3],R:[12068742692.86,109.378,66.827,-0.803,0.616],c:"4/4"},
 ];
 const liveCompanies = LIVE_RAW.map(o=>{
-  const f={val:o.F[0], o:o.F[1], bs:o.F[2], sz:o.F[3], sc:50, si:50};
+  const f={val:o.F[0], o:o.F[1], bs:o.F[2], sz:o.F[3], sc:o.F[4]??50, si:o.F[5]??50};
   const m=METAByKey[normKey(o.t)]||{};
   const raw=compositeRaw(f);
   return { name:o.n, ticker:o.t, flag:m.flag||"🏳", region:o.r, subsector:o.s,
-    mc:(o.R[0]||0)/1e9, d30:0, f, note:m.note||"Live Stage-1 data point.",
+    mc:(o.R[0]||0)/1e9, d30:0, f, note:m.note||"Live Stage-1 + EDGAR data.",
     scoreRaw:raw, score:Math.round(raw),
-    liveRaw:{mktcap_eur:o.R[0], ev_ebitda:o.R[1], ev_rev:o.R[2], nd_ebitda:o.R[3], float_pct:o.R[4]},
+    liveRaw:{mktcap_eur:o.R[0], ev_ebitda:o.R[1], ev_rev:o.R[2], nd_ebitda:o.R[3], float_pct:o.R[4],
+             sc_deals:o.R[5], si_flags:o.R[6]||null},
     coverage:o.c, live:true };
 });
 const DATASETS = { demo:companies, live:liveCompanies };
@@ -785,6 +786,10 @@ const fmtMc = v => v>=100? v.toFixed(0) : v.toFixed(1);
 /* circular matte SVG flags — emoji flags don't render on Windows, so we draw our own.
    Muted palette for a matte finish; unknown country -> neutral disc. */
 const cc = f => { const L=[...(f||"")].map(ch=>ch.codePointAt(0)-0x1F1E6+65).filter(n=>n>=65&&n<=90).map(n=>String.fromCharCode(n)).join(""); return /^[A-Z]{2}$/.test(L)?L:""; };
+/* country resolution for names without curated metadata: emoji -> Yahoo ticker suffix -> region default */
+const SUFFIX_CC = {L:"GB",PA:"FR",DE:"DE",F:"DE",AS:"NL",MI:"IT",SW:"CH",ST:"SE",OL:"NO",HE:"FI",CO:"DK",WA:"PL",VI:"AT",MC:"ES",LS:"PT",BR:"BE",IR:"IE",PR:"CZ",BD:"HU",AT:"GR",TA:"IL"};
+const REGION_CC = {fr:"FR",ukie:"GB",dach:"DE",benelux:"NL",nordics:"SE",seur:"ES",me:"IL",cee:"PL"};
+const ccOf = c => cc(c.flag||"") || SUFFIX_CC[((c.ticker||"").match(/[.\-]([A-Z]+)$/)||[])[1]] || REGION_CC[c.region] || "";
 const FLAG_SHAPES = {
   FR:'<rect width="6.7" height="20" fill="#3D69BA"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
   IT:'<rect width="6.7" height="20" fill="#3F9E5F"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
@@ -809,7 +814,7 @@ const FLAG_SHAPES = {
   GR:'<rect width="20" height="20" fill="#3E6DB5"/><rect y="4.4" width="20" height="2.2" fill="#F4F1EA"/><rect y="8.8" width="20" height="2.2" fill="#F4F1EA"/><rect y="13.2" width="20" height="2.2" fill="#F4F1EA"/><rect y="17.6" width="20" height="2.2" fill="#F4F1EA"/><rect width="8" height="8" fill="#3E6DB5"/><rect x="3" width="2" height="8" fill="#F4F1EA"/><rect y="3" width="8" height="2" fill="#F4F1EA"/>',
 };
 const flagHTML = e => {
-  const k = cc(e), s = FLAG_SHAPES[k];
+  const k = /^[A-Z]{2}$/.test(e||"")? e : cc(e), s = FLAG_SHAPES[k];
   const body = s || '<rect width="20" height="20" fill="#27374d"/><circle cx="10" cy="10" r="3" fill="none" stroke="#6a7c93" stroke-width="1.2"/>';
   return `<span class="flag" title="${k||"—"}"><svg viewBox="0 0 20 20" aria-hidden="true">${body}<circle cx="10" cy="10" r="9.6" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="0.8"/></svg></span>`;
 };
@@ -913,7 +918,7 @@ function render(){
     const dArr = c.d30>0?`<span class="delta up">▲ ${c.d30}</span>` : c.d30<0?`<span class="delta dn">▼ ${Math.abs(c.d30)}</span>` : `<span style="color:var(--txt-3)">–</span>`;
     return `<tr data-tk="${c.ticker}" class="${state.sel===c.ticker?'sel':''}">
       <td class="l rank">${rankMap.get(c)}</td>
-      <td class="l"><div class="co">${flagHTML(c.flag)}<div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
+      <td class="l"><div class="co">${flagHTML(ccOf(c))}<div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
       <td class="l col-sub"><span class="chip" style="color:${sc.c};border-color:${sc.c}55">${sc.label}</span></td>
       <td class="col-mc num">€${fmtMc(c.mc)}<span style="color:var(--txt-3)">bn</span></td>
       <td class="col-dec"><span class="dec" style="${decileBg(c.decile)}">D${c.decile}</span></td>
@@ -972,8 +977,8 @@ function liveRawStr(k,c){
     case "o":   return r.float_pct==null?"no data":`Free float ${(r.float_pct*100).toFixed(0)}%`;
     case "bs":  return r.nd_ebitda==null?"no data":`Net debt/EBITDA ${r.nd_ebitda.toFixed(1)}×`;
     case "sz":  return r.mktcap_eur==null?"no data":`Mkt cap €${(r.mktcap_eur/1e9).toFixed(1)}bn`;
-    case "sc":  return "neutral placeholder (50)";
-    case "si":  return "neutral placeholder (50)";
+    case "sc":  return c.liveRaw?.sc_deals!=null?`${c.liveRaw.sc_deals} deals in sector (last 24m · EDGAR SC TO-T + DEFM14A)`:"n/a";
+    case "si":  return c.liveRaw?.si_flags?c.liveRaw.si_flags:"No EDGAR signals — neutral baseline";
   }
 }
 const FACTORS=FACTOR_DEF.map(f=>[f.k,f.nm,f.desc]);
@@ -995,7 +1000,7 @@ function openDrawer(tk){
     <div class="dh">
       <div class="top">
         <div>
-          <div class="nm">${flagHTML(c.flag)}${c.name}</div>
+          <div class="nm">${flagHTML(ccOf(c))}${c.name}</div>
           <div class="meta">${c.ticker} · ${sc.label} · ${REGIONS[c.region]}</div>
         </div>
         <button class="close" id="closeDrawer">✕</button>
@@ -1025,7 +1030,7 @@ function openDrawer(tk){
           <div class="factor-head" data-audit="${f.k}">
             <div class="fr"><span class="fn">${f.nm} <span class="fw">·${f.w}%</span></span><span class="fhv"><span class="fv" style="color:${fc}">${v}</span><span class="fchev">▸</span></span></div>
             <div class="ftrack"><i style="width:${v}%;background:${fc}"></i></div>
-            <div class="prov">${c.live?'<span class="prov-live">● live</span> src: <span class="srctag">Yahoo Finance</span>':'<span class="demo">◆ demo</span> src: <span class="srctag">'+f.src+'</span>'}<span class="prov-hint">click to audit ›</span></div>
+            <div class="prov">${c.live?'<span class="prov-live">● live</span> src: <span class="srctag">'+(f.k==='sc'||f.k==='si'?'EDGAR EFTS':'Yahoo Finance')+'</span>':'<span class="demo">◆ demo</span> src: <span class="srctag">'+f.src+'</span>'}<span class="prov-hint">click to audit ›</span></div>
           </div>
           <div class="audit" id="audit-${f.k}">
             <div class="arow"><span>Raw input (production)</span><b>${f.input}</b></div>
@@ -1033,7 +1038,7 @@ function openDrawer(tk){
             <div class="arow"><span>Transform</span><b>percentile-rank → ${v}/100</b></div>
             <div class="arow"><span>Weight × sub-score</span><b class="hi">${WEIGHTS[f.k]}% × ${v} = ${ct.toFixed(1)} pts</b></div>
             <div class="awhy"><b>Why this weight:</b> ${f.why}</div>
-            <div class="asrc">${c.live?'Source: <span class="srctag" style="color:var(--txt-2)">Yahoo Finance via yfinance</span> — retrieved '+LIVE_META.retrieved:'Source: <span class="srctag" style="color:var(--txt-2)">'+f.src+'</span> — in production this resolves to the exact record (filing / price date / news item).'}</div>
+            <div class="asrc">${c.live?'Source: <span class="srctag" style="color:var(--txt-2)">'+(f.k==='sc'||f.k==='si'?'SEC EDGAR EFTS (free, no key) — efts.sec.gov':'Yahoo Finance via yfinance')+'</span> — retrieved '+LIVE_META.retrieved:'Source: <span class="srctag" style="color:var(--txt-2)">'+f.src+'</span> — in production this resolves to the exact record (filing / price date / news item).'}</div>
           </div>
         </div>`;
       }).join("")}
