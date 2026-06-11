@@ -162,11 +162,23 @@ def main():
     # -----------------------------------------------------------------------
     print("\n-- EDGAR enrichment --")
 
-    print("Fetching sector consolidation scores (EDGAR)...")
-    sc_scores, sc_audit = edgar_data.get_sector_sc_scores()
+    # Defaults — used if EDGAR is unreachable (graceful fallback to neutral 50)
+    _floor = {s: 50 for s in edgar_data.ALL_SUBS}
+    _floor_audit = {s: {"count": 0, "score": 50} for s in edgar_data.ALL_SUBS}
+    sc_scores, sc_audit = _floor, _floor_audit
+    si_results: dict = {}
 
-    print("Fetching per-company strategic-interest signals (EDGAR)...")
-    si_results = edgar_data.get_company_si_scores(universe)
+    try:
+        print("Fetching sector consolidation scores (EDGAR)...")
+        sc_scores, sc_audit = edgar_data.get_sector_sc_scores()
+    except Exception as exc:
+        print(f"  [EDGAR f_sc] ERROR (using floor=50): {exc}")
+
+    try:
+        print("Fetching per-company strategic-interest signals (EDGAR)...")
+        si_results = edgar_data.get_company_si_scores(universe)
+    except Exception as exc:
+        print(f"  [EDGAR f_si] ERROR (using neutral=50): {exc}")
 
     # -----------------------------------------------------------------------
     # Scoring

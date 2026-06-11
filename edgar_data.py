@@ -77,7 +77,7 @@ def _get(url: str, params: dict | None = None, sleep: float = 0.25, tries: int =
             if attempt < tries - 1:
                 time.sleep(wait)
             else:
-                print(f"    [EDGAR] ✗ {url[:70]}… → {exc}")
+                print(f"    [EDGAR] FAIL {url[:70]}... -> {exc}")
     return None
 
 
@@ -266,7 +266,7 @@ def get_company_si_scores(universe: list[dict]) -> dict:
         results[ticker] = {"score": float(final), "flags": flags}
 
         status = f"  [{flags[0]}]" if flags else ""
-        print(f"  [EDGAR f_si] {i:>3}/{len(universe)}  {name}: raw_pts={raw_pts} → {final}{status}")
+        print(f"  [EDGAR f_si] {i:>3}/{len(universe)}  {name}: raw_pts={raw_pts} -> {final}{status}")
         time.sleep(0.05)   # light between-company pacing; each EFTS call already sleeps
 
     return results
