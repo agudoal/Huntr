@@ -210,6 +210,31 @@
   .awhy b { color:var(--txt); }
   .asrc { font-size:10px; color:var(--txt-3); margin-top:7px; }
   .asrc a { color:var(--accent); text-decoration:none; }
+  /* peer-set fold-out inside the valuation audit */
+  .peers-head { display:flex; align-items:center; justify-content:space-between; margin-top:8px; padding:6px 9px;
+    background:var(--panel-2); border:1px solid var(--line); border-radius:6px; cursor:pointer; user-select:none;
+    font-size:10.5px; font-weight:600; color:var(--txt-2); transition:border-color .12s,color .12s; }
+  .peers-head:hover { color:var(--txt); border-color:var(--accent); }
+  .peers-head .pchev { font-size:10px; color:var(--txt-3); transition:transform .2s; }
+  .peers-head.open { color:var(--txt); border-color:var(--accent); }
+  .peers-head.open .pchev { transform:rotate(90deg); color:var(--accent); }
+  .peers { display:none; margin-top:6px; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .peers.open { display:block; }
+  .prow { display:grid; grid-template-columns:1fr 64px 60px; gap:6px; padding:5px 9px; font-size:10.5px;
+    border-bottom:1px solid var(--line); align-items:center; }
+  .prow:last-of-type { border-bottom:0; }
+  .prow .pn { color:var(--txt-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .prow .pv { text-align:right; font-family:var(--mono); color:var(--txt-2); }
+  .prow.phead { background:var(--bg-2); font-size:8.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; }
+  .prow.phead .pn, .prow.phead .pv { color:var(--txt-3); }
+  .prow.pself { background:rgba(77,163,255,.07); }
+  .prow.pself .pn, .prow.pself .pv { color:var(--txt); font-weight:600; }
+  .prow.pmed { background:var(--panel-2); border-top:1px solid var(--line-2); }
+  .prow.pmed .pn, .prow.pmed .pv { color:var(--gold); font-weight:700; }
+  .peer-row { cursor:pointer; }
+  .peer-row:hover { background:var(--panel); }
+  .peer-row:hover .pn { color:var(--accent); }
+  .pnote { font-size:9.5px; color:var(--txt-3); padding:6px 9px; background:var(--bg-2); line-height:1.45; border-top:1px solid var(--line); }
   /* score build-up */
   .buildwrap { border:1px solid var(--line-2); border-radius:10px; overflow:hidden; margin-bottom:16px; }
   .buildhdr { display:flex; align-items:center; justify-content:space-between; padding:10px 13px; cursor:pointer; background:var(--panel-2); font-weight:600; font-size:12px; }
@@ -827,6 +852,26 @@ const decileBg = d => {
   return `color:${c};background:${c}1f;border:1px solid ${c}40;`;
 };
 
+/* peer set & subsector median for the Valuation-gap audit */
+const median = a => { if(!a.length) return null; const s=[...a].sort((x,y)=>x-y), m=Math.floor(s.length/2); return s.length%2? s[m] : (s[m-1]+s[m])/2; };
+const fmtX = v => v==null? "—" : v.toFixed(1)+"×";
+function peerTable(c){
+  const pool = companies.filter(x=>x.subsector===c.subsector);
+  const evE = pool.map(x=>x.liveRaw?x.liveRaw.ev_ebitda:null).filter(v=>v!=null);
+  const evS = pool.map(x=>x.liveRaw?x.liveRaw.ev_rev:null).filter(v=>v!=null);
+  const peers = pool.filter(x=>x.ticker!==c.ticker);
+  const live = !!c.live;
+  const rows = peers.map(p=>`<div class="prow peer-row" data-tk="${p.ticker}"><span class="pn">${p.name}</span><span class="pv">${live?fmtX(p.liveRaw&&p.liveRaw.ev_ebitda):"—"}</span><span class="pv">${live?fmtX(p.liveRaw&&p.liveRaw.ev_rev):"—"}</span></div>`).join("");
+  return `<div class="peers-head" data-peers><span>Peer set &amp; subsector median · ${SUBSECTORS[c.subsector].label} (${pool.length})</span><span class="pchev">▸</span></div>
+          <div class="peers">
+            <div class="prow phead"><span class="pn">Company</span><span class="pv">EV/EBITDA</span><span class="pv">EV/Sales</span></div>
+            <div class="prow pself"><span class="pn">${c.name} — this company</span><span class="pv">${live?fmtX(c.liveRaw&&c.liveRaw.ev_ebitda):"—"}</span><span class="pv">${live?fmtX(c.liveRaw&&c.liveRaw.ev_rev):"—"}</span></div>
+            ${rows}
+            <div class="prow pmed"><span class="pn">Subsector median</span><span class="pv">${live?fmtX(median(evE)):"—"}</span><span class="pv">${live?fmtX(median(evS)):"—"}</span></div>
+            <div class="pnote">${live?"Median across all "+SUBSECTORS[c.subsector].label+" names with data in the live universe (incl. this company). Depressed-EBITDA outliers are visible here; the f_val sub-score uses the cross-universe percentile rank, so one extreme multiple cannot dominate. Click a peer to open its tearsheet.":"◆ Demo dataset — peer multiples are not populated here; switch to <b>Live</b> (top bar) for real EV/EBITDA &amp; EV/Sales per peer and the computed median. Click a peer to open its tearsheet."}</div>
+          </div>`;
+}
+
 /* ---------- state ---------- */
 const state = { geo:new Set(), sub:new Set(), size:new Set(), q:"", sort:"score", dir:-1, view:"all", sel:null, smin:0, smax:100, dmin:1, dmax:10, dataset:"demo" };
 const SIZE_BANDS = [
@@ -1039,6 +1084,7 @@ function openDrawer(tk){
             <div class="arow"><span>${c.live?"Live value":"Illustrative value ◆"}</span><b>${c.live?liveRawStr(f.k,c):rawDemo(f.k,c,v)}</b></div>
             <div class="arow"><span>Transform</span><b>percentile-rank → ${v}/100</b></div>
             <div class="arow"><span>Weight × sub-score</span><b class="hi">${WEIGHTS[f.k]}% × ${v} = ${ct.toFixed(1)} pts</b></div>
+            ${f.k==="val"? peerTable(c) : ""}
             <div class="awhy"><b>Why this weight:</b> ${f.why}</div>
             <div class="asrc">${c.live?'Source: <span class="srctag" style="color:var(--txt-2)">'+(f.k==='sc'||f.k==='si'?'SEC EDGAR EFTS (free, no key) — efts.sec.gov':'Yahoo Finance via yfinance')+'</span> — retrieved '+LIVE_META.retrieved:'Source: <span class="srctag" style="color:var(--txt-2)">'+f.src+'</span> — in production this resolves to the exact record (filing / price date / news item).'}</div>
           </div>
@@ -1176,6 +1222,10 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
 document.getElementById("drawer").addEventListener("click",e=>{
   const pb=e.target.closest("[data-period]");
   if(pb){ setChartPeriod(pb.dataset.period); return; }
+  const pr=e.target.closest(".peer-row");
+  if(pr){ openDrawer(pr.dataset.tk); return; }
+  const ph=e.target.closest("[data-peers]");
+  if(ph){ ph.classList.toggle("open"); const pp=ph.nextElementSibling; if(pp) pp.classList.toggle("open"); return; }
   const a=e.target.closest("[data-audit]");
   if(a){ const p=document.getElementById("audit-"+a.dataset.audit); if(p){ p.classList.toggle("open"); a.classList.toggle("open"); } return; }
   if(e.target.closest("[data-build]")){
