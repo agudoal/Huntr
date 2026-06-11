@@ -687,7 +687,7 @@ const liveCompanies = LIVE_RAW.map(o=>{
   const f={val:o.F[0], o:o.F[1], bs:o.F[2], sz:o.F[3], sc:o.F[4]??50, si:o.F[5]??50};
   const m=METAByKey[normKey(o.t)]||{};
   const raw=compositeRaw(f);
-  return { name:o.n, ticker:o.t, flag:m.flag||"🏳", region:o.r, subsector:o.s,
+  return { name:o.n, ticker:o.t, flag:m.flag||"🏳", region:o.r, country:o.co||"", subsector:o.s,
     mc:(o.R[0]||0)/1e9, d30:0, f, note:m.note||"Live Stage-1 + EDGAR data.",
     scoreRaw:raw, score:Math.round(raw),
     liveRaw:{mktcap_eur:o.R[0], ev_ebitda:o.R[1], ev_rev:o.R[2], nd_ebitda:o.R[3], float_pct:o.R[4],
@@ -786,10 +786,11 @@ const fmtMc = v => v>=100? v.toFixed(0) : v.toFixed(1);
 /* circular matte SVG flags — emoji flags don't render on Windows, so we draw our own.
    Muted palette for a matte finish; unknown country -> neutral disc. */
 const cc = f => { const L=[...(f||"")].map(ch=>ch.codePointAt(0)-0x1F1E6+65).filter(n=>n>=65&&n<=90).map(n=>String.fromCharCode(n)).join(""); return /^[A-Z]{2}$/.test(L)?L:""; };
-/* country resolution for names without curated metadata: emoji -> Yahoo ticker suffix -> region default */
+/* country resolution: explicit CSV field first, then emoji, ticker suffix, region default */
+const COUNTRY_CC = {"France":"FR","Germany":"DE","Switzerland":"CH","Austria":"AT","Italy":"IT","Spain":"ES","Netherlands":"NL","Belgium":"BE","Luxembourg":"LU","UK":"GB","Sweden":"SE","Finland":"FI","Norway":"NO","Denmark":"DK","Poland":"PL","Israel":"IL","US":"US","Ireland":"IE","Czech Republic":"CZ","Greece":"GR","Portugal":"PT","Hungary":"HU"};
 const SUFFIX_CC = {L:"GB",PA:"FR",DE:"DE",F:"DE",AS:"NL",MI:"IT",SW:"CH",ST:"SE",OL:"NO",HE:"FI",CO:"DK",WA:"PL",VI:"AT",MC:"ES",LS:"PT",BR:"BE",IR:"IE",PR:"CZ",BD:"HU",AT:"GR",TA:"IL"};
 const REGION_CC = {fr:"FR",ukie:"GB",dach:"DE",benelux:"NL",nordics:"SE",seur:"ES",me:"IL",cee:"PL"};
-const ccOf = c => cc(c.flag||"") || SUFFIX_CC[((c.ticker||"").match(/[.\-]([A-Z]+)$/)||[])[1]] || REGION_CC[c.region] || "";
+const ccOf = c => COUNTRY_CC[c.country||""] || cc(c.flag||"") || SUFFIX_CC[((c.ticker||"").match(/[.\-]([A-Z]+)$/)||[])[1]] || REGION_CC[c.region] || "";
 const FLAG_SHAPES = {
   FR:'<rect width="6.7" height="20" fill="#3D69BA"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
   IT:'<rect width="6.7" height="20" fill="#3F9E5F"/><rect x="6.7" width="6.6" height="20" fill="#F4F1EA"/><rect x="13.3" width="6.7" height="20" fill="#D64550"/>',
@@ -812,6 +813,7 @@ const FLAG_SHAPES = {
   IL:'<rect width="20" height="20" fill="#F4F1EA"/><rect y="3" width="20" height="2.4" fill="#4B7CC4"/><rect y="14.6" width="20" height="2.4" fill="#4B7CC4"/><path d="M10 6.6L12.9 11.6H7.1Z" fill="none" stroke="#4B7CC4" stroke-width="1.1"/><path d="M10 13.4L7.1 8.4H12.9Z" fill="none" stroke="#4B7CC4" stroke-width="1.1"/>',
   CZ:'<rect width="20" height="10" fill="#F4F1EA"/><rect y="10" width="20" height="10" fill="#D64550"/><path d="M0 0L10 10L0 20Z" fill="#3D69BA"/>',
   GR:'<rect width="20" height="20" fill="#3E6DB5"/><rect y="4.4" width="20" height="2.2" fill="#F4F1EA"/><rect y="8.8" width="20" height="2.2" fill="#F4F1EA"/><rect y="13.2" width="20" height="2.2" fill="#F4F1EA"/><rect y="17.6" width="20" height="2.2" fill="#F4F1EA"/><rect width="8" height="8" fill="#3E6DB5"/><rect x="3" width="2" height="8" fill="#F4F1EA"/><rect y="3" width="8" height="2" fill="#F4F1EA"/>',
+  US:'<rect width="20" height="20" fill="#D64550"/><rect y="1.54" width="20" height="1.54" fill="#F4F1EA"/><rect y="4.62" width="20" height="1.54" fill="#F4F1EA"/><rect y="7.69" width="20" height="1.54" fill="#F4F1EA"/><rect y="10.77" width="20" height="1.54" fill="#F4F1EA"/><rect y="13.85" width="20" height="1.54" fill="#F4F1EA"/><rect y="16.92" width="20" height="1.54" fill="#F4F1EA"/><rect width="9" height="10.77" fill="#3D69BA"/>',
 };
 const flagHTML = e => {
   const k = /^[A-Z]{2}$/.test(e||"")? e : cc(e), s = FLAG_SHAPES[k];

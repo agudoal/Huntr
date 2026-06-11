@@ -114,6 +114,7 @@ def main():
         rec = {
             "name": u["name"], "ticker": tk,
             "region": u["region"], "subsector": u["subsector"],
+            "country": u.get("country", ""),
             "ccy": ccy_of(tk),
             "mktcap_eur": None, "ev_ebitda": None, "ev_rev": None,
             "nd_ebitda": None, "float_pct": None,
@@ -238,6 +239,7 @@ def main():
             "name": r["name"],
             "ticker": tk,
             "region": r["region"],
+            "country": r.get("country", ""),
             "subsector": sub,
             "score": int(r["score"]),
             "decile": int(r["decile"]),

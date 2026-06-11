@@ -100,7 +100,7 @@ def _sic_for_cik(cik_raw: str) -> str:
         return _sic_cache[key]
     try:
         data = _get(_SUBM.format(int(key)), sleep=0.20)
-        sic  = str(data.get("sic") or "") if data else ""
+        sic  = str(data.get("sic") or "") if isinstance(data, dict) else ""
     except Exception:
         sic = ""
     _sic_cache[key] = sic
@@ -112,7 +112,10 @@ def _cik_from_hit(hit: dict) -> str:
     cik = src.get("entity_id", "")
     if not cik:
         for dn in src.get("display_names", []):
-            cik = dn.get("id", "")
+            # display_names items are dicts in most EFTS records,
+            # but can be bare strings in some filing types — guard both.
+            if isinstance(dn, dict):
+                cik = dn.get("id", "")
             if cik:
                 break
     return cik

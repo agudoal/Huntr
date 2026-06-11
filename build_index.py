@@ -25,8 +25,8 @@ for c in data["companies"]:
     r_serial = (",".join(num(x) for x in R_nums) + "," + num(ed.get("sc_deals"))
                 + "," + js_str(ed.get("si_flag_str")))
     name = c["name"].replace("\\","\\\\").replace('"','\\"')
-    lines.append('  {n:"%s",t:"%s",r:"%s",s:"%s",F:[%s],R:[%s],c:"%s"},' % (
-        name, c["ticker"], c["region"], c["subsector"],
+    lines.append('  {n:"%s",t:"%s",r:"%s",co:"%s",s:"%s",F:[%s],R:[%s],c:"%s"},' % (
+        name, c["ticker"], c["region"], c.get("country",""), c["subsector"],
         ",".join(str(x) for x in F), r_serial, c["coverage"]))
 
 block = "const LIVE_RAW = [\n" + "\n".join(lines) + "\n];"
