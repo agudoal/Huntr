@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "Yahoo Finance (yfinance) + SEC EDGAR EFTS",
-    "retrieved": "2026-06-11 08:30 UTC",
+    "retrieved": "2026-06-12 07:00 UTC",
     "version": "workstream-a",
     "weights": {
       "f_val": 20,
@@ -34,9 +34,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 333061903.36,
-        "ev_ebitda": 2.219,
-        "ev_rev": 0.216,
+        "mktcap_eur": 326116241.92,
+        "ev_ebitda": 2.038,
+        "ev_rev": 0.199,
         "nd_ebitda": -6.4385069547344775,
         "float_pct": 0.875939995
       },
@@ -62,7 +62,7 @@
       "coverage": "4/4",
       "currency": "SEK",
       "factors": {
-        "f_val": 75.8,
+        "f_val": 79.8,
         "f_own": 69.7,
         "f_bs": 79.5,
         "f_sz": 93.3,
@@ -70,9 +70,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 332083761.152,
-        "ev_ebitda": 5.879,
-        "ev_rev": 1.675,
+        "mktcap_eur": 320841320.44799995,
+        "ev_ebitda": 5.393,
+        "ev_rev": 1.537,
         "nd_ebitda": -1.6671862623853526,
         "float_pct": 0.97809
       },
@@ -96,17 +96,17 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 94.2,
+        "f_val": 93.5,
         "f_own": 73.0,
         "f_bs": 8.0,
-        "f_sz": 85.4,
+        "f_sz": 84.3,
         "f_sc": 20.0,
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 655754048.0,
-        "ev_ebitda": 5.411,
-        "ev_rev": 0.272,
+        "mktcap_eur": 656530560.0,
+        "ev_ebitda": 5.399,
+        "ev_rev": 0.271,
         "nd_ebitda": 3.7736316815920397,
         "float_pct": 0.9834
       },
@@ -132,7 +132,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 90.5,
+        "f_val": 89.3,
         "f_own": 98.3,
         "f_bs": 21.6,
         "f_sz": 89.9,
@@ -140,9 +140,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 441329248.0,
-        "ev_ebitda": 5.233,
-        "ev_rev": 0.713,
+        "mktcap_eur": 443804480.0,
+        "ev_ebitda": 5.218,
+        "ev_rev": 0.711,
         "nd_ebitda": 1.962384113609983,
         "float_pct": 1.0
       },
@@ -174,9 +174,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 204867987.456,
-        "ev_ebitda": 7.573,
-        "ev_rev": 0.475,
+        "mktcap_eur": 202471864.32,
+        "ev_ebitda": 7.442,
+        "ev_rev": 0.466,
         "nd_ebitda": 0.9555928495781032,
         "float_pct": 0.91811
       },
@@ -194,23 +194,23 @@
       "region": "dach",
       "country": "Austria",
       "subsector": "semis",
-      "score": 59,
+      "score": 58,
       "decile": 10,
       "rank": 6,
       "coverage": "4/4",
       "currency": "CHF",
       "factors": {
-        "f_val": 82.2,
+        "f_val": 81.5,
         "f_own": 98.3,
         "f_bs": 10.2,
-        "f_sz": 69.7,
+        "f_sz": 67.4,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1746472224.0,
-        "ev_ebitda": 6.34,
-        "ev_rev": 0.98,
+        "mktcap_eur": 1762149849.6000001,
+        "ev_ebitda": 6.458,
+        "ev_rev": 0.998,
         "nd_ebitda": 3.182353066666667,
         "float_pct": 1.0
       },
@@ -223,42 +223,6 @@
       }
     },
     {
-      "name": "Edenred",
-      "ticker": "EDEN.PA",
-      "region": "fr",
-      "country": "France",
-      "subsector": "pay",
-      "score": 58,
-      "decile": 10,
-      "rank": 7,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 74.2,
-        "f_own": 92.1,
-        "f_bs": 33.0,
-        "f_sz": 41.6,
-        "f_sc": 20.0,
-        "f_si": 70.0
-      },
-      "raw": {
-        "mktcap_eur": 4664053760.0,
-        "ev_ebitda": 5.499,
-        "ev_rev": 2.234,
-        "nd_ebitda": 1.1252251675675675,
-        "float_pct": 0.99908
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
-      }
-    },
-    {
       "name": "Trustpilot",
       "ticker": "TRST.L",
       "region": "ukie",
@@ -266,21 +230,21 @@
       "subsector": "internet",
       "score": 57,
       "decile": 10,
-      "rank": 8,
+      "rank": 7,
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
         "f_val": 43.2,
         "f_own": 59.6,
         "f_bs": 78.4,
-        "f_sz": 74.2,
+        "f_sz": 75.3,
         "f_sc": 20.0,
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 1125440035.2,
-        "ev_ebitda": 52.31,
-        "ev_rev": 3.601,
+        "mktcap_eur": 1110964907.52,
+        "ev_ebitda": 52.222,
+        "ev_rev": 3.595,
         "nd_ebitda": -1.6513633834168058,
         "float_pct": 0.913272532127259
       },
@@ -302,11 +266,11 @@
       "subsector": "hw",
       "score": 57,
       "decile": 10,
-      "rank": 9,
+      "rank": 8,
       "coverage": "4/4",
       "currency": "CHF",
       "factors": {
-        "f_val": 50.5,
+        "f_val": 51.1,
         "f_own": 88.8,
         "f_bs": 81.8,
         "f_sz": 20.2,
@@ -314,11 +278,47 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 13274744985.6,
-        "ev_ebitda": 12.719,
-        "ev_rev": 2.277,
+        "mktcap_eur": 13039633152.0,
+        "ev_ebitda": 12.424,
+        "ev_rev": 2.224,
         "nd_ebitda": -1.9081785565189182,
         "float_pct": 0.99805
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
+      "name": "Edenred",
+      "ticker": "EDEN.PA",
+      "region": "fr",
+      "country": "France",
+      "subsector": "pay",
+      "score": 57,
+      "decile": 10,
+      "rank": 9,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 72.1,
+        "f_own": 92.1,
+        "f_bs": 33.0,
+        "f_sz": 38.2,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": 4698842624.0,
+        "ev_ebitda": 5.515,
+        "ev_rev": 2.241,
+        "nd_ebitda": 1.1252251675675675,
+        "float_pct": 0.99908
       },
       "edgar": {
         "sc_deals": 0,
@@ -342,7 +342,7 @@
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 46.6,
+        "f_val": 47.3,
         "f_own": 62.9,
         "f_bs": 77.3,
         "f_sz": 79.8,
@@ -350,9 +350,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1003724317.4399999,
-        "ev_ebitda": 12.043,
-        "ev_rev": 3.538,
+        "mktcap_eur": 989432421.1199999,
+        "ev_ebitda": 11.642,
+        "ev_rev": 3.42,
         "nd_ebitda": -1.4920355621411372,
         "float_pct": 0.9225365150745005
       },
@@ -365,6 +365,42 @@
       }
     },
     {
+      "name": "Wix.com",
+      "ticker": "WIX",
+      "region": "me",
+      "country": "Israel",
+      "subsector": "internet",
+      "score": 56,
+      "decile": 9,
+      "rank": 11,
+      "coverage": "4/4",
+      "currency": "USD",
+      "factors": {
+        "f_val": 88.6,
+        "f_own": 67.4,
+        "f_bs": 3.4,
+        "f_sz": 69.7,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": 1696763330.5600002,
+        "ev_ebitda": -19.474,
+        "ev_rev": 0.684,
+        "nd_ebitda": 6.0244165353242085,
+        "float_pct": 0.95103
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
       "name": "TeamViewer",
       "ticker": "TMV.DE",
       "region": "dach",
@@ -372,7 +408,7 @@
       "subsector": "appsw",
       "score": 56,
       "decile": 9,
-      "rank": 11,
+      "rank": 12,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
@@ -384,9 +420,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 857820096.0,
-        "ev_ebitda": 6.312,
-        "ev_rev": 2.327,
+        "mktcap_eur": 842123392.0,
+        "ev_ebitda": 6.198,
+        "ev_rev": 2.285,
         "nd_ebitda": 3.141364150586518,
         "float_pct": 0.98127
       },
@@ -408,11 +444,11 @@
       "subsector": "appsw",
       "score": 56,
       "decile": 9,
-      "rank": 12,
+      "rank": 13,
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 63.4,
+        "f_val": 63.6,
         "f_own": 75.8,
         "f_bs": 28.4,
         "f_sz": 88.8,
@@ -420,45 +456,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 545352013.4399999,
+        "mktcap_eur": 548993989.4399999,
         "ev_ebitda": 8.891,
         "ev_rev": 1.996,
         "nd_ebitda": 1.2843613746112612,
         "float_pct": 0.98952
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
-      "name": "Everplay Group",
-      "ticker": "EVPL.L",
-      "region": "ukie",
-      "country": "UK",
-      "subsector": "gaming",
-      "score": 56,
-      "decile": 9,
-      "rank": 13,
-      "coverage": "4/4",
-      "currency": "GBP",
-      "factors": {
-        "f_val": 79.3,
-        "f_own": 34.8,
-        "f_bs": 56.8,
-        "f_sz": 91.0,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 416419585.91999996,
-        "ev_ebitda": 4.789,
-        "ev_rev": 1.962,
-        "nd_ebitda": -0.47189487368097194,
-        "float_pct": 0.76648001
       },
       "edgar": {
         "sc_deals": 0,
@@ -480,7 +482,7 @@
       "coverage": "4/4",
       "currency": "USD",
       "factors": {
-        "f_val": 75.4,
+        "f_val": 74.1,
         "f_own": 77.5,
         "f_bs": 1.1,
         "f_sz": 98.9,
@@ -488,9 +490,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 133692074.24000001,
-        "ev_ebitda": 11.126,
-        "ev_rev": 0.459,
+        "mktcap_eur": 135150531.84,
+        "ev_ebitda": 11.178,
+        "ev_rev": 0.461,
         "nd_ebitda": 6.339231563864174,
         "float_pct": 0.98979
       },
@@ -503,39 +505,37 @@
       }
     },
     {
-      "name": "Wix.com",
-      "ticker": "WIX",
-      "region": "me",
-      "country": "Israel",
-      "subsector": "internet",
+      "name": "Everplay Group",
+      "ticker": "EVPL.L",
+      "region": "ukie",
+      "country": "UK",
+      "subsector": "gaming",
       "score": 55,
       "decile": 9,
       "rank": 15,
       "coverage": "4/4",
-      "currency": "USD",
+      "currency": "GBP",
       "factors": {
-        "f_val": 86.4,
-        "f_own": 67.4,
-        "f_bs": 3.4,
-        "f_sz": 67.4,
+        "f_val": 78.7,
+        "f_own": 34.8,
+        "f_bs": 56.8,
+        "f_sz": 91.0,
         "f_sc": 20.0,
-        "f_si": 70.0
+        "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1779156587.52,
-        "ev_ebitda": -20.712,
-        "ev_rev": 0.727,
-        "nd_ebitda": 6.0244165353242085,
-        "float_pct": 0.95103
+        "mktcap_eur": 418948508.15999997,
+        "ev_ebitda": 4.832,
+        "ev_rev": 1.98,
+        "nd_ebitda": -0.47189487368097194,
+        "float_pct": 0.76648001
       },
       "edgar": {
         "sc_deals": 0,
         "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
       }
     },
     {
@@ -558,9 +558,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 633437696.0,
-        "ev_ebitda": 7.261,
-        "ev_rev": 0.766,
+        "mktcap_eur": 630162688.0,
+        "ev_ebitda": 7.254,
+        "ev_rev": 0.765,
         "nd_ebitda": 5.2081864596565515,
         "float_pct": 0.90006
       },
@@ -580,13 +580,13 @@
       "region": "seur",
       "country": "Spain",
       "subsector": "pay",
-      "score": 55,
+      "score": 54,
       "decile": 9,
       "rank": 17,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 59.1,
+        "f_val": 58.3,
         "f_own": 66.3,
         "f_bs": 95.5,
         "f_sz": 31.5,
@@ -594,9 +594,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5159468032.0,
-        "ev_ebitda": 6.782,
-        "ev_rev": 3.851,
+        "mktcap_eur": 5153387520.0,
+        "ev_ebitda": 6.822,
+        "ev_rev": 3.874,
         "nd_ebitda": -6.887023357900363,
         "float_pct": 0.9486600000000001
       },
@@ -620,7 +620,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 86.0,
+        "f_val": 86.8,
         "f_own": 44.9,
         "f_bs": 51.1,
         "f_sz": 64.0,
@@ -628,9 +628,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2103856000.0,
-        "ev_ebitda": 6.536,
-        "ev_rev": 0.51,
+        "mktcap_eur": 2061883776.0,
+        "ev_ebitda": 6.257,
+        "ev_rev": 0.489,
         "nd_ebitda": -0.1847940808878668,
         "float_pct": 0.8507833029889535
       },
@@ -654,7 +654,7 @@
       "coverage": "4/4",
       "currency": "SEK",
       "factors": {
-        "f_val": 65.7,
+        "f_val": 64.5,
         "f_own": 89.9,
         "f_bs": 58.0,
         "f_sz": 7.9,
@@ -662,9 +662,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 32906875240.447998,
-        "ev_ebitda": 9.727,
-        "ev_rev": 1.511,
+        "mktcap_eur": 32936100364.288,
+        "ev_ebitda": 9.83,
+        "ev_rev": 1.526,
         "nd_ebitda": -0.663507139852311,
         "float_pct": 0.99902
       },
@@ -690,17 +690,17 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 72.3,
+        "f_val": 73.1,
         "f_own": 14.6,
         "f_bs": 67.0,
-        "f_sz": 49.4,
+        "f_sz": 48.3,
         "f_sc": 20.0,
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 3712227072.0,
-        "ev_ebitda": 7.81,
-        "ev_rev": 1.331,
+        "mktcap_eur": 3673365248.0,
+        "ev_ebitda": 7.63,
+        "ev_rev": 1.301,
         "nd_ebitda": -1.1007118196689294,
         "float_pct": 0.62917998
       },
@@ -736,11 +736,115 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3874814136.32,
-        "ev_ebitda": 153.858,
-        "ev_rev": 2.22,
+        "mktcap_eur": 3774268293.1200004,
+        "ev_ebitda": 148.435,
+        "ev_rev": 2.142,
         "nd_ebitda": -55.11654908645395,
         "float_pct": 0.84638
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
+      "name": "Kainos",
+      "ticker": "KNOS.L",
+      "region": "ukie",
+      "country": "UK",
+      "subsector": "itserv",
+      "score": 53,
+      "decile": 9,
+      "rank": 22,
+      "coverage": "4/4",
+      "currency": "GBP",
+      "factors": {
+        "f_val": 44.5,
+        "f_own": 19.1,
+        "f_bs": 72.7,
+        "f_sz": 76.4,
+        "f_sc": 20.0,
+        "f_si": 100.0
+      },
+      "raw": {
+        "mktcap_eur": 1098913944.96,
+        "ev_ebitda": 14.876,
+        "ev_rev": 2.048,
+        "nd_ebitda": -1.3970380105135463,
+        "float_pct": 0.6915198952845624
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 100.0,
+        "si_flags": [
+          "SC TO-T tender offer (2025-07-02)"
+        ],
+        "si_flag_str": "SC TO-T tender offer (2025-07-02)"
+      }
+    },
+    {
+      "name": "Ubisoft",
+      "ticker": "UBI.PA",
+      "region": "fr",
+      "country": "France",
+      "subsector": "gaming",
+      "score": 52,
+      "decile": 8,
+      "rank": 23,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 91.1,
+        "f_own": 27.0,
+        "f_bs": 31.8,
+        "f_sz": 85.4,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 648730688.0,
+        "ev_ebitda": 2.663,
+        "ev_rev": 0.724,
+        "nd_ebitda": 1.1839261343873517,
+        "float_pct": 0.73212
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
+      "name": "CANCOM",
+      "ticker": "COK.DE",
+      "region": "dach",
+      "country": "Germany",
+      "subsector": "itserv",
+      "score": 52,
+      "decile": 8,
+      "rank": 24,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 59.3,
+        "f_own": 55.1,
+        "f_bs": 40.9,
+        "f_sz": 83.1,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 732862464.0,
+        "ev_ebitda": 15.681,
+        "ev_rev": 0.452,
+        "nd_ebitda": 0.8297335062408818,
+        "float_pct": 0.89732
       },
       "edgar": {
         "sc_deals": 0,
@@ -756,13 +860,13 @@
       "region": "dach",
       "country": "Switzerland",
       "subsector": "semis",
-      "score": 53,
+      "score": 52,
       "decile": 8,
-      "rank": 22,
+      "rank": 25,
       "coverage": "4/4",
       "currency": "CHF",
       "factors": {
-        "f_val": 51.1,
+        "f_val": 50.0,
         "f_own": 78.7,
         "f_bs": 30.7,
         "f_sz": 77.5,
@@ -785,76 +889,6 @@
       }
     },
     {
-      "name": "Kainos",
-      "ticker": "KNOS.L",
-      "region": "ukie",
-      "country": "UK",
-      "subsector": "itserv",
-      "score": 53,
-      "decile": 9,
-      "rank": 23,
-      "coverage": "4/4",
-      "currency": "GBP",
-      "factors": {
-        "f_val": 43.8,
-        "f_own": 20.2,
-        "f_bs": 72.7,
-        "f_sz": 76.4,
-        "f_sc": 20.0,
-        "f_si": 100.0
-      },
-      "raw": {
-        "mktcap_eur": 1108346803.2,
-        "ev_ebitda": 15.155,
-        "ev_rev": 2.086,
-        "nd_ebitda": -1.3970380105135463,
-        "float_pct": 0.6915198952845624
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 100.0,
-        "si_flags": [
-          "SC TO-T tender offer (2025-07-02)"
-        ],
-        "si_flag_str": "SC TO-T tender offer (2025-07-02)"
-      }
-    },
-    {
-      "name": "Ubisoft",
-      "ticker": "UBI.PA",
-      "region": "fr",
-      "country": "France",
-      "subsector": "gaming",
-      "score": 52,
-      "decile": 8,
-      "rank": 24,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 91.1,
-        "f_own": 27.0,
-        "f_bs": 31.8,
-        "f_sz": 84.3,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 658110976.0,
-        "ev_ebitda": 2.682,
-        "ev_rev": 0.729,
-        "nd_ebitda": 1.1839261343873517,
-        "float_pct": 0.73212
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
       "name": "Remedy Entertainment",
       "ticker": "REMEDY.HE",
       "region": "nordics",
@@ -862,11 +896,11 @@
       "subsector": "gaming",
       "score": 52,
       "decile": 8,
-      "rank": 25,
+      "rank": 26,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 48.9,
+        "f_val": 51.1,
         "f_own": 18.0,
         "f_bs": 90.9,
         "f_sz": 94.4,
@@ -874,45 +908,11 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 205215808.0,
-        "ev_ebitda": 66.714,
-        "ev_rev": 3.307,
+        "mktcap_eur": 202497712.0,
+        "ev_ebitda": 64.871,
+        "ev_rev": 3.216,
         "nd_ebitda": -3.7722033898305085,
         "float_pct": 0.671969973623392
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
-      "name": "CANCOM",
-      "ticker": "COK.DE",
-      "region": "dach",
-      "country": "Germany",
-      "subsector": "itserv",
-      "score": 52,
-      "decile": 8,
-      "rank": 26,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 58.7,
-        "f_own": 55.1,
-        "f_bs": 40.9,
-        "f_sz": 83.1,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 734299392.0,
-        "ev_ebitda": 15.972,
-        "ev_rev": 0.461,
-        "nd_ebitda": 0.8297335062408818,
-        "float_pct": 0.89732
       },
       "edgar": {
         "sc_deals": 0,
@@ -934,7 +934,7 @@
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 40.8,
+        "f_val": 42.9,
         "f_own": 84.3,
         "f_bs": 44.3,
         "f_sz": 42.7,
@@ -942,9 +942,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 4339160616.96,
-        "ev_ebitda": 9.868,
-        "ev_rev": 6.398,
+        "mktcap_eur": 4248410849.2799997,
+        "ev_ebitda": 9.571,
+        "ev_rev": 6.206,
         "nd_ebitda": 0.4762845849802372,
         "float_pct": 0.99519
       },
@@ -959,30 +959,30 @@
       }
     },
     {
-      "name": "SUSS MicroTec",
-      "ticker": "SMHN.DE",
-      "region": "dach",
-      "country": "Germany",
-      "subsector": "semieq",
+      "name": "GN Store Nord",
+      "ticker": "GN.CO",
+      "region": "nordics",
+      "country": "Denmark",
+      "subsector": "hw",
       "score": 51,
       "decile": 7,
       "rank": 28,
       "coverage": "4/4",
-      "currency": "EUR",
+      "currency": "DKK",
       "factors": {
-        "f_val": 24.8,
-        "f_own": 68.5,
-        "f_bs": 73.9,
+        "f_val": 49.4,
+        "f_own": 98.3,
+        "f_bs": 2.3,
         "f_sz": 68.5,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1770098816.0,
-        "ev_ebitda": 31.971,
-        "ev_rev": 3.522,
-        "nd_ebitda": -1.4203917433163435,
-        "float_pct": 0.9731699939598875
+        "mktcap_eur": 1752965273.6000001,
+        "ev_ebitda": 15.117,
+        "ev_rev": 1.336,
+        "nd_ebitda": 6.199726715213013,
+        "float_pct": 1.0
       },
       "edgar": {
         "sc_deals": 0,
@@ -999,22 +999,22 @@
       "country": "Luxembourg",
       "subsector": "hw",
       "score": 51,
-      "decile": 7,
+      "decile": 8,
       "rank": 29,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 61.9,
+        "f_val": 61.1,
         "f_own": 98.3,
         "f_bs": 5.7,
-        "f_sz": 51.7,
+        "f_sz": 50.6,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3397678592.0,
-        "ev_ebitda": 7.89,
-        "ev_rev": 3.124,
+        "mktcap_eur": 3418782208.0,
+        "ev_ebitda": 7.958,
+        "ev_rev": 3.151,
         "nd_ebitda": 4.988075175468484,
         "float_pct": 1.0
       },
@@ -1033,7 +1033,7 @@
       "country": "Israel",
       "subsector": "appsw",
       "score": 51,
-      "decile": 7,
+      "decile": 8,
       "rank": 30,
       "coverage": "4/4",
       "currency": "USD",
@@ -1041,14 +1041,14 @@
         "f_val": 3.4,
         "f_own": 94.4,
         "f_bs": 53.4,
-        "f_sz": 38.2,
+        "f_sz": 37.1,
         "f_sc": 20.0,
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 4763435806.72,
-        "ev_ebitda": 155.382,
-        "ev_rev": 43.846,
+        "mktcap_eur": 4748341329.92,
+        "ev_ebitda": 154.889,
+        "ev_rev": 43.707,
         "nd_ebitda": -0.256322808557475,
         "float_pct": 0.999969999999
       },
@@ -1065,77 +1065,6 @@
       }
     },
     {
-      "name": "Nova",
-      "ticker": "NVMI",
-      "region": "me",
-      "country": "Israel",
-      "subsector": "semieq",
-      "score": 51,
-      "decile": 8,
-      "rank": 31,
-      "coverage": "4/4",
-      "currency": "USD",
-      "factors": {
-        "f_val": 9.1,
-        "f_own": 91.0,
-        "f_bs": 65.9,
-        "f_sz": 19.1,
-        "f_sc": 20.0,
-        "f_si": 100.0
-      },
-      "raw": {
-        "mktcap_eur": 14875169054.720001,
-        "ev_ebitda": 55.88,
-        "ev_rev": 17.575,
-        "nd_ebitda": -1.0511347533561008,
-        "float_pct": 0.99903999997
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 100.0,
-        "si_flags": [
-          "SC TO-T tender offer (2026-04-13)",
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "SC TO-T tender offer (2026-04-13) | Merger proxy / going-private filing"
-      }
-    },
-    {
-      "name": "Frontier Developments",
-      "ticker": "FDEV.L",
-      "region": "ukie",
-      "country": "UK",
-      "subsector": "gaming",
-      "score": 51,
-      "decile": 8,
-      "rank": 32,
-      "coverage": "4/4",
-      "currency": "GBP",
-      "factors": {
-        "f_val": 68.1,
-        "f_own": 9.0,
-        "f_bs": 71.6,
-        "f_sz": 97.8,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 186122738.88,
-        "ev_ebitda": 8.823,
-        "ev_rev": 1.394,
-        "nd_ebitda": -1.3251952524444992,
-        "float_pct": 0.5628150671746954
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
       "name": "Asseco Poland",
       "ticker": "ACP.WA",
       "region": "cee",
@@ -1143,21 +1072,21 @@
       "subsector": "appsw",
       "score": 51,
       "decile": 8,
-      "rank": 33,
+      "rank": 31,
       "coverage": "4/4",
       "currency": "PLN",
       "factors": {
-        "f_val": 76.5,
+        "f_val": 75.2,
         "f_own": 39.3,
         "f_bs": 68.2,
-        "f_sz": 50.6,
+        "f_sz": 51.7,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3425713059.84,
-        "ev_ebitda": 7.733,
-        "ev_rev": 1.04,
+        "mktcap_eur": 3406269706.2400002,
+        "ev_ebitda": 7.637,
+        "ev_rev": 1.027,
         "nd_ebitda": -1.2637906508728343,
         "float_pct": 0.7919599945815624
       },
@@ -1177,21 +1106,21 @@
       "subsector": "itserv",
       "score": 50,
       "decile": 7,
-      "rank": 34,
+      "rank": 32,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 72.8,
+        "f_val": 75.0,
         "f_own": 58.4,
         "f_bs": 19.3,
-        "f_sz": 18.0,
+        "f_sz": 19.1,
         "f_sc": 20.0,
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 16035451904.0,
-        "ev_ebitda": 8.137,
-        "ev_rev": 1.049,
+        "mktcap_eur": 15955223552.0,
+        "ev_ebitda": 7.895,
+        "ev_rev": 1.018,
         "nd_ebitda": 2.2934069350286657,
         "float_pct": 0.91195
       },
@@ -1214,93 +1143,23 @@
       "subsector": "gaming",
       "score": 50,
       "decile": 7,
-      "rank": 35,
+      "rank": 33,
       "coverage": "4/4",
       "currency": "SEK",
       "factors": {
         "f_val": 84.8,
         "f_own": 33.7,
         "f_bs": 9.1,
-        "f_sz": 96.6,
+        "f_sz": 97.8,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 188685370.368,
-        "ev_ebitda": 5.512,
-        "ev_rev": 1.021,
+        "mktcap_eur": 185905629.184,
+        "ev_ebitda": 5.487,
+        "ev_rev": 1.016,
         "nd_ebitda": 3.5013795031386494,
         "float_pct": 0.76528999
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
-      "name": "Teleperformance",
-      "ticker": "TEP.PA",
-      "region": "fr",
-      "country": "France",
-      "subsector": "itserv",
-      "score": 50,
-      "decile": 7,
-      "rank": 36,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 91.4,
-        "f_own": 40.4,
-        "f_bs": 17.0,
-        "f_sz": 52.8,
-        "f_sc": 20.0,
-        "f_si": 70.0
-      },
-      "raw": {
-        "mktcap_eur": 3256073216.0,
-        "ev_ebitda": 4.552,
-        "ev_rev": 0.715,
-        "nd_ebitda": 2.4786324881878095,
-        "float_pct": 0.81858
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
-      }
-    },
-    {
-      "name": "GN Store Nord",
-      "ticker": "GN.CO",
-      "region": "nordics",
-      "country": "Denmark",
-      "subsector": "hw",
-      "score": 50,
-      "decile": 7,
-      "rank": 37,
-      "coverage": "4/4",
-      "currency": "DKK",
-      "factors": {
-        "f_val": 48.7,
-        "f_own": 98.3,
-        "f_bs": 2.3,
-        "f_sz": 66.3,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 1779891992.5760002,
-        "ev_ebitda": 15.383,
-        "ev_rev": 1.36,
-        "nd_ebitda": 6.199726715213013,
-        "float_pct": 1.0
       },
       "edgar": {
         "sc_deals": 0,
@@ -1316,13 +1175,13 @@
       "region": "seur",
       "country": "Spain",
       "subsector": "appsw",
-      "score": 49,
-      "decile": 6,
-      "rank": 38,
+      "score": 50,
+      "decile": 7,
+      "rank": 34,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 49.7,
+        "f_val": 51.8,
         "f_own": 70.8,
         "f_bs": 35.2,
         "f_sz": 13.5,
@@ -1330,9 +1189,9 @@
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 22146347008.0,
-        "ev_ebitda": 9.969,
-        "ev_rev": 3.752,
+        "mktcap_eur": 21469102080.0,
+        "ev_ebitda": 9.588,
+        "ev_rev": 3.609,
         "nd_ebitda": 1.0836266159631232,
         "float_pct": 0.9790007956486243
       },
@@ -1348,30 +1207,135 @@
       }
     },
     {
-      "name": "Comet Holding",
-      "ticker": "COTN.SW",
+      "name": "SUSS MicroTec",
+      "ticker": "SMHN.DE",
       "region": "dach",
-      "country": "Switzerland",
+      "country": "Germany",
       "subsector": "semieq",
-      "score": 49,
+      "score": 50,
       "decile": 7,
-      "rank": 39,
+      "rank": 35,
       "coverage": "4/4",
-      "currency": "CHF",
+      "currency": "EUR",
       "factors": {
-        "f_val": 23.9,
-        "f_own": 86.5,
-        "f_bs": 50.0,
-        "f_sz": 56.2,
+        "f_val": 22.0,
+        "f_own": 68.5,
+        "f_bs": 73.9,
+        "f_sz": 66.3,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3034971878.4,
-        "ev_ebitda": 71.954,
-        "ev_rev": 6.146,
-        "nd_ebitda": -0.13542867389021235,
-        "float_pct": 0.9976800589444693
+        "mktcap_eur": 1790170112.0,
+        "ev_ebitda": 33.539,
+        "ev_rev": 3.695,
+        "nd_ebitda": -1.4203917433163435,
+        "float_pct": 0.9731699939598875
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
+      "name": "Nova",
+      "ticker": "NVMI",
+      "region": "me",
+      "country": "Israel",
+      "subsector": "semieq",
+      "score": 50,
+      "decile": 7,
+      "rank": 36,
+      "coverage": "4/4",
+      "currency": "USD",
+      "factors": {
+        "f_val": 8.0,
+        "f_own": 91.0,
+        "f_bs": 65.9,
+        "f_sz": 18.0,
+        "f_sc": 20.0,
+        "f_si": 100.0
+      },
+      "raw": {
+        "mktcap_eur": 16375413555.2,
+        "ev_ebitda": 61.622,
+        "ev_rev": 19.381,
+        "nd_ebitda": -1.0511347533561008,
+        "float_pct": 0.99903999997
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 100.0,
+        "si_flags": [
+          "SC TO-T tender offer (2026-04-13)",
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "SC TO-T tender offer (2026-04-13) | Merger proxy / going-private filing"
+      }
+    },
+    {
+      "name": "Frontier Developments",
+      "ticker": "FDEV.L",
+      "region": "ukie",
+      "country": "UK",
+      "subsector": "gaming",
+      "score": 50,
+      "decile": 7,
+      "rank": 37,
+      "coverage": "4/4",
+      "currency": "GBP",
+      "factors": {
+        "f_val": 64.4,
+        "f_own": 9.0,
+        "f_bs": 71.6,
+        "f_sz": 96.6,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 197704615.67999998,
+        "ev_ebitda": 9.733,
+        "ev_rev": 1.537,
+        "nd_ebitda": -1.3251952524444992,
+        "float_pct": 0.5628150671746954
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
+      "name": "Embracer",
+      "ticker": "EMBRAC-B.ST",
+      "region": "nordics",
+      "country": "Sweden",
+      "subsector": "gaming",
+      "score": 49,
+      "decile": 7,
+      "rank": 38,
+      "coverage": "4/4",
+      "currency": "SEK",
+      "factors": {
+        "f_val": 50.6,
+        "f_own": 15.7,
+        "f_bs": 92.0,
+        "f_sz": 73.0,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 1212506611.712,
+        "ev_ebitda": 13.584,
+        "ev_rev": 1.815,
+        "nd_ebitda": -4.020726225974513,
+        "float_pct": 0.66050997
       },
       "edgar": {
         "sc_deals": 0,
@@ -1389,21 +1353,21 @@
       "subsector": "internet",
       "score": 49,
       "decile": 7,
-      "rank": 40,
+      "rank": 39,
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 34.9,
+        "f_val": 36.8,
         "f_own": 83.1,
         "f_bs": 48.9,
-        "f_sz": 48.3,
+        "f_sz": 49.4,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 3719599004.16,
-        "ev_ebitda": 11.265,
-        "ev_rev": 7.68,
+        "mktcap_eur": 3670928501.7599998,
+        "ev_ebitda": 10.919,
+        "ev_rev": 7.445,
         "nd_ebitda": -0.12323752605230676,
         "float_pct": 0.9949800004
       },
@@ -1413,6 +1377,42 @@
         "si_score": 50.0,
         "si_flags": [],
         "si_flag_str": ""
+      }
+    },
+    {
+      "name": "Spectris",
+      "ticker": "SXS.L",
+      "region": "ukie",
+      "country": "UK",
+      "subsector": "hw",
+      "score": 48,
+      "decile": 6,
+      "rank": 40,
+      "coverage": "0/4",
+      "currency": "GBP",
+      "factors": {
+        "f_val": 50.0,
+        "f_own": 50.0,
+        "f_bs": 50.0,
+        "f_sz": 50.0,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": null,
+        "ev_ebitda": null,
+        "ev_rev": null,
+        "nd_ebitda": null,
+        "float_pct": null
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
       }
     },
     {
@@ -1452,40 +1452,6 @@
       }
     },
     {
-      "name": "Embracer",
-      "ticker": "EMBRAC-B.ST",
-      "region": "nordics",
-      "country": "Sweden",
-      "subsector": "gaming",
-      "score": 48,
-      "decile": 6,
-      "rank": 42,
-      "coverage": "4/4",
-      "currency": "SEK",
-      "factors": {
-        "f_val": 50.6,
-        "f_own": 15.7,
-        "f_bs": 92.0,
-        "f_sz": 71.9,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 1241496993.7919998,
-        "ev_ebitda": 13.903,
-        "ev_rev": 1.857,
-        "nd_ebitda": -4.020726225974513,
-        "float_pct": 0.66050997
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
       "name": "Prosus",
       "ticker": "PRX.AS",
       "region": "benelux",
@@ -1493,7 +1459,7 @@
       "subsector": "internet",
       "score": 48,
       "decile": 6,
-      "rank": 43,
+      "rank": 42,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
@@ -1505,9 +1471,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 84290142208.0,
-        "ev_ebitda": 203.684,
-        "ev_rev": 12.406,
+        "mktcap_eur": 83576004608.0,
+        "ev_ebitda": 199.955,
+        "ev_rev": 12.179,
         "nd_ebitda": -10.548076307692307,
         "float_pct": 0.99119
       },
@@ -1522,112 +1488,6 @@
       }
     },
     {
-      "name": "Wavestone",
-      "ticker": "WAVE.PA",
-      "region": "fr",
-      "country": "France",
-      "subsector": "itserv",
-      "score": 48,
-      "decile": 6,
-      "rank": 44,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 73.1,
-        "f_own": 2.2,
-        "f_bs": 47.7,
-        "f_sz": 78.7,
-        "f_sc": 20.0,
-        "f_si": 70.0
-      },
-      "raw": {
-        "mktcap_eur": 1033730944.0,
-        "ev_ebitda": 7.969,
-        "ev_rev": 1.13,
-        "nd_ebitda": 0.05230833601063949,
-        "float_pct": 0.3268799854037072
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
-      }
-    },
-    {
-      "name": "Spectris",
-      "ticker": "SXS.L",
-      "region": "ukie",
-      "country": "UK",
-      "subsector": "hw",
-      "score": 48,
-      "decile": 6,
-      "rank": 45,
-      "coverage": "0/4",
-      "currency": "GBP",
-      "factors": {
-        "f_val": 50.0,
-        "f_own": 50.0,
-        "f_bs": 50.0,
-        "f_sz": 50.0,
-        "f_sc": 20.0,
-        "f_si": 70.0
-      },
-      "raw": {
-        "mktcap_eur": null,
-        "ev_ebitda": null,
-        "ev_rev": null,
-        "nd_ebitda": null,
-        "float_pct": null
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
-      }
-    },
-    {
-      "name": "Netcompany",
-      "ticker": "NETC.CO",
-      "region": "nordics",
-      "country": "Denmark",
-      "subsector": "itserv",
-      "score": 48,
-      "decile": 6,
-      "rank": 46,
-      "coverage": "2/4",
-      "currency": "DKK",
-      "factors": {
-        "f_val": 50.0,
-        "f_own": 52.8,
-        "f_bs": 50.0,
-        "f_sz": 65.2,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 1955365048.3200002,
-        "ev_ebitda": null,
-        "ev_rev": null,
-        "nd_ebitda": null,
-        "float_pct": 0.8919222463069425
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
       "name": "Sapiens",
       "ticker": "SPNS",
       "region": "me",
@@ -1635,7 +1495,7 @@
       "subsector": "appsw",
       "score": 48,
       "decile": 6,
-      "rank": 47,
+      "rank": 43,
       "coverage": "0/4",
       "currency": "USD",
       "factors": {
@@ -1671,7 +1531,7 @@
       "subsector": "hw",
       "score": 48,
       "decile": 6,
-      "rank": 48,
+      "rank": 44,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
@@ -1683,9 +1543,9 @@
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 65929732096.0,
-        "ev_ebitda": 24.929,
-        "ev_rev": 3.163,
+        "mktcap_eur": 65762250752.0,
+        "ev_ebitda": 25.017,
+        "ev_rev": 3.174,
         "nd_ebitda": -0.9873867777661623,
         "float_pct": 0.93491
       },
@@ -1708,11 +1568,11 @@
       "subsector": "appsw",
       "score": 48,
       "decile": 6,
-      "rank": 49,
+      "rank": 45,
       "coverage": "4/4",
       "currency": "SEK",
       "factors": {
-        "f_val": 48.5,
+        "f_val": 49.2,
         "f_own": 65.2,
         "f_bs": 14.8,
         "f_sz": 82.0,
@@ -1720,11 +1580,149 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 824071897.0879999,
-        "ev_ebitda": 11.859,
-        "ev_rev": 3.414,
+        "mktcap_eur": 817105969.152,
+        "ev_ebitda": 11.505,
+        "ev_rev": 3.313,
         "nd_ebitda": 2.687873526246969,
         "float_pct": 0.948330216033704
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
+      "name": "Netcompany",
+      "ticker": "NETC.CO",
+      "region": "nordics",
+      "country": "Denmark",
+      "subsector": "itserv",
+      "score": 48,
+      "decile": 6,
+      "rank": 46,
+      "coverage": "2/4",
+      "currency": "DKK",
+      "factors": {
+        "f_val": 50.0,
+        "f_own": 52.8,
+        "f_bs": 50.0,
+        "f_sz": 65.2,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 1960175155.2,
+        "ev_ebitda": null,
+        "ev_rev": null,
+        "nd_ebitda": null,
+        "float_pct": 0.8919222463069425
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
+      "name": "Comet Holding",
+      "ticker": "COTN.SW",
+      "region": "dach",
+      "country": "Switzerland",
+      "subsector": "semieq",
+      "score": 48,
+      "decile": 6,
+      "rank": 47,
+      "coverage": "4/4",
+      "currency": "CHF",
+      "factors": {
+        "f_val": 21.6,
+        "f_own": 86.5,
+        "f_bs": 50.0,
+        "f_sz": 56.2,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 3003969561.6,
+        "ev_ebitda": 73.148,
+        "ev_rev": 6.248,
+        "nd_ebitda": -0.13542867389021235,
+        "float_pct": 0.9976800589444693
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
+      "name": "Wavestone",
+      "ticker": "WAVE.PA",
+      "region": "fr",
+      "country": "France",
+      "subsector": "itserv",
+      "score": 47,
+      "decile": 5,
+      "rank": 48,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 72.3,
+        "f_own": 2.2,
+        "f_bs": 47.7,
+        "f_sz": 78.7,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": 1005493696.0,
+        "ev_ebitda": 7.969,
+        "ev_rev": 1.13,
+        "nd_ebitda": 0.05230833601063949,
+        "float_pct": 0.3268799854037072
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
+      "name": "Teleperformance",
+      "ticker": "TEP.PA",
+      "region": "fr",
+      "country": "France",
+      "subsector": "itserv",
+      "score": 47,
+      "decile": 5,
+      "rank": 49,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 91.4,
+        "f_own": 40.4,
+        "f_bs": 17.0,
+        "f_sz": 52.8,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 3186300160.0,
+        "ev_ebitda": 4.466,
+        "ev_rev": 0.701,
+        "nd_ebitda": 2.4786324881878095,
+        "float_pct": 0.81858
       },
       "edgar": {
         "sc_deals": 0,
@@ -1741,12 +1739,12 @@
       "country": "Israel",
       "subsector": "semis",
       "score": 47,
-      "decile": 5,
+      "decile": 6,
       "rank": 50,
       "coverage": "4/4",
       "currency": "USD",
       "factors": {
-        "f_val": 12.5,
+        "f_val": 11.4,
         "f_own": 85.4,
         "f_bs": 86.4,
         "f_sz": 9.0,
@@ -1754,9 +1752,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 25565599907.84,
-        "ev_ebitda": 46.397,
-        "ev_rev": 15.384,
+        "mktcap_eur": 28280454021.120003,
+        "ev_ebitda": 51.59,
+        "ev_rev": 17.105,
         "nd_ebitda": -2.4973439276255096,
         "float_pct": 0.99613078469598
       },
@@ -1777,12 +1775,12 @@
       "country": "Netherlands",
       "subsector": "pay",
       "score": 47,
-      "decile": 5,
+      "decile": 6,
       "rank": 51,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 33.7,
+        "f_val": 34.2,
         "f_own": 53.9,
         "f_bs": 96.6,
         "f_sz": 10.1,
@@ -1790,9 +1788,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 25141051392.0,
-        "ev_ebitda": 12.324,
-        "ev_rev": 6.208,
+        "mktcap_eur": 24762611712.0,
+        "ev_ebitda": 11.853,
+        "ev_rev": 5.97,
         "nd_ebitda": -8.834752579550878,
         "float_pct": 0.894589990605229
       },
@@ -1818,7 +1816,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 63.4,
+        "f_val": 64.3,
         "f_own": 46.1,
         "f_bs": 27.3,
         "f_sz": 61.8,
@@ -1826,9 +1824,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2321865472.0,
-        "ev_ebitda": 10.672,
-        "ev_rev": 1.511,
+        "mktcap_eur": 2312679168.0,
+        "ev_ebitda": 10.51,
+        "ev_rev": 1.488,
         "nd_ebitda": 1.447490223938224,
         "float_pct": 0.86711
       },
@@ -1847,7 +1845,7 @@
       "country": "US",
       "subsector": "cyber",
       "score": 46,
-      "decile": 4,
+      "decile": 5,
       "rank": 53,
       "coverage": "4/4",
       "currency": "USD",
@@ -1860,9 +1858,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 4664461352.96,
-        "ev_ebitda": -17.008,
-        "ev_rev": 4.208,
+        "mktcap_eur": 4655000043.52,
+        "ev_ebitda": -16.968,
+        "ev_rev": 4.198,
         "nd_ebitda": 2.53106866545917,
         "float_pct": 0.9936100002
       },
@@ -1998,9 +1996,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5076086456.32,
-        "ev_ebitda": 22.827,
-        "ev_rev": 6.709,
+        "mktcap_eur": 5151694749.696,
+        "ev_ebitda": 23.051,
+        "ev_rev": 6.774,
         "nd_ebitda": -0.9516194387438933,
         "float_pct": 0.998
       },
@@ -2013,39 +2011,37 @@
       }
     },
     {
-      "name": "Allegro",
-      "ticker": "ALE.WA",
+      "name": "Comarch",
+      "ticker": "CMR.WA",
       "region": "cee",
       "country": "Poland",
-      "subsector": "internet",
+      "subsector": "appsw",
       "score": 46,
       "decile": 5,
       "rank": 58,
-      "coverage": "4/4",
+      "coverage": "0/4",
       "currency": "PLN",
       "factors": {
-        "f_val": 50.4,
-        "f_own": 61.8,
-        "f_bs": 36.4,
-        "f_sz": 28.1,
+        "f_val": 50.0,
+        "f_own": 50.0,
+        "f_bs": 50.0,
+        "f_sz": 50.0,
         "f_sc": 20.0,
-        "f_si": 70.0
+        "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 8081829232.64,
-        "ev_ebitda": 11.723,
-        "ev_rev": 3.247,
-        "nd_ebitda": 1.0330550718986107,
-        "float_pct": 0.9185099999999999
+        "mktcap_eur": null,
+        "ev_ebitda": null,
+        "ev_rev": null,
+        "nd_ebitda": null,
+        "float_pct": null
       },
       "edgar": {
         "sc_deals": 0,
         "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
       }
     },
     {
@@ -2117,40 +2113,6 @@
       }
     },
     {
-      "name": "Comarch",
-      "ticker": "CMR.WA",
-      "region": "cee",
-      "country": "Poland",
-      "subsector": "appsw",
-      "score": 46,
-      "decile": 5,
-      "rank": 61,
-      "coverage": "0/4",
-      "currency": "PLN",
-      "factors": {
-        "f_val": 50.0,
-        "f_own": 50.0,
-        "f_bs": 50.0,
-        "f_sz": 50.0,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": null,
-        "ev_ebitda": null,
-        "ev_rev": null,
-        "nd_ebitda": null,
-        "float_pct": null
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
       "name": "Nexi",
       "ticker": "NEXI.MI",
       "region": "seur",
@@ -2158,11 +2120,11 @@
       "subsector": "pay",
       "score": 45,
       "decile": 4,
-      "rank": 62,
+      "rank": 61,
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 81.1,
+        "f_val": 80.4,
         "f_own": 30.3,
         "f_bs": 13.6,
         "f_sz": 46.1,
@@ -2170,9 +2132,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 3944727040.0,
-        "ev_ebitda": 5.606,
-        "ev_rev": 1.242,
+        "mktcap_eur": 3923581696.0,
+        "ev_ebitda": 5.58,
+        "ev_rev": 1.237,
         "nd_ebitda": 2.747481876258993,
         "float_pct": 0.74676
       },
@@ -2184,6 +2146,40 @@
           "Merger proxy / going-private filing"
         ],
         "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
+      "name": "Playtech",
+      "ticker": "PTEC.L",
+      "region": "ukie",
+      "country": "UK",
+      "subsector": "gaming",
+      "score": 45,
+      "decile": 4,
+      "rank": 62,
+      "coverage": "4/4",
+      "currency": "GBP",
+      "factors": {
+        "f_val": 77.3,
+        "f_own": 21.3,
+        "f_bs": 26.1,
+        "f_sz": 74.2,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 1113731648.6399999,
+        "ev_ebitda": -14.981,
+        "ev_rev": 1.158,
+        "nd_ebitda": 1.4745762711864407,
+        "float_pct": 0.7023457858475446
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
       }
     },
     {
@@ -2206,9 +2202,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 1558235414.5279999,
-        "ev_ebitda": 12.114,
-        "ev_rev": 0.517,
+        "mktcap_eur": 1552485363.712,
+        "ev_ebitda": 11.83,
+        "ev_rev": 0.505,
         "nd_ebitda": 0.8550910088473542,
         "float_pct": 0.70455
       },
@@ -2221,37 +2217,39 @@
       }
     },
     {
-      "name": "Playtech",
-      "ticker": "PTEC.L",
-      "region": "ukie",
-      "country": "UK",
-      "subsector": "gaming",
+      "name": "Allegro",
+      "ticker": "ALE.WA",
+      "region": "cee",
+      "country": "Poland",
+      "subsector": "internet",
       "score": 45,
       "decile": 4,
       "rank": 64,
       "coverage": "4/4",
-      "currency": "GBP",
+      "currency": "PLN",
       "factors": {
-        "f_val": 77.3,
-        "f_own": 21.3,
-        "f_bs": 26.1,
-        "f_sz": 75.3,
+        "f_val": 48.3,
+        "f_own": 61.8,
+        "f_bs": 36.4,
+        "f_sz": 28.1,
         "f_sc": 20.0,
-        "f_si": 50.0
+        "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 1118282780.1599998,
-        "ev_ebitda": -15.27,
-        "ev_rev": 1.18,
-        "nd_ebitda": 1.4745762711864407,
-        "float_pct": 0.7023457858475446
+        "mktcap_eur": 8078333173.76,
+        "ev_ebitda": 11.734,
+        "ev_rev": 3.25,
+        "nd_ebitda": 1.0330550718986107,
+        "float_pct": 0.9185099999999999
       },
       "edgar": {
         "sc_deals": 0,
         "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
       }
     },
     {
@@ -2266,7 +2264,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 83.3,
+        "f_val": 84.1,
         "f_own": 24.7,
         "f_bs": 29.5,
         "f_sz": 58.4,
@@ -2274,9 +2272,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2836480512.0,
-        "ev_ebitda": 6.813,
-        "ev_rev": 0.645,
+        "mktcap_eur": 2793971968.0,
+        "ev_ebitda": 6.624,
+        "ev_rev": 0.627,
         "nd_ebitda": 1.261414730538922,
         "float_pct": 0.7064119514292306
       },
@@ -2289,30 +2287,30 @@
       }
     },
     {
-      "name": "Wise",
-      "ticker": "WISE.L",
-      "region": "ukie",
-      "country": "UK",
-      "subsector": "pay",
+      "name": "Nordic Semiconductor",
+      "ticker": "NOD.OL",
+      "region": "nordics",
+      "country": "Norway",
+      "subsector": "semis",
       "score": 44,
       "decile": 4,
       "rank": 66,
       "coverage": "4/4",
-      "currency": "GBP",
+      "currency": "NOK",
       "factors": {
-        "f_val": 38.5,
-        "f_own": 29.2,
-        "f_bs": 85.2,
-        "f_sz": 24.7,
+        "f_val": 2.3,
+        "f_own": 43.8,
+        "f_bs": 87.5,
+        "f_sz": 55.1,
         "f_sc": 20.0,
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 9222039290.88,
-        "ev_ebitda": 13.154,
-        "ev_rev": 3.985,
-        "nd_ebitda": -2.4609330005759262,
-        "float_pct": 0.74637
+        "mktcap_eur": 3056690520.0639997,
+        "ev_ebitda": 813.952,
+        "ev_rev": 50.383,
+        "nd_ebitda": -2.592085061527533,
+        "float_pct": 0.85011
       },
       "edgar": {
         "sc_deals": 0,
@@ -2344,119 +2342,11 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 3233536770.048,
-        "ev_ebitda": 185.244,
-        "ev_rev": 62.357,
+        "mktcap_eur": 3181476151.2959995,
+        "ev_ebitda": 178.461,
+        "ev_rev": 60.074,
         "nd_ebitda": 0.7877041306436119,
         "float_pct": 0.99324
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
-      }
-    },
-    {
-      "name": "Nordic Semiconductor",
-      "ticker": "NOD.OL",
-      "region": "nordics",
-      "country": "Norway",
-      "subsector": "semis",
-      "score": 44,
-      "decile": 4,
-      "rank": 68,
-      "coverage": "4/4",
-      "currency": "NOK",
-      "factors": {
-        "f_val": 2.3,
-        "f_own": 43.8,
-        "f_bs": 87.5,
-        "f_sz": 55.1,
-        "f_sc": 20.0,
-        "f_si": 70.0
-      },
-      "raw": {
-        "mktcap_eur": 3068577398.784,
-        "ev_ebitda": 809.869,
-        "ev_rev": 50.131,
-        "nd_ebitda": -2.592085061527533,
-        "float_pct": 0.85011
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
-      }
-    },
-    {
-      "name": "Indra Sistemas",
-      "ticker": "IDR.MC",
-      "region": "seur",
-      "country": "Spain",
-      "subsector": "itserv",
-      "score": 43,
-      "decile": 3,
-      "rank": 69,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 51.0,
-        "f_own": 5.6,
-        "f_bs": 70.5,
-        "f_sz": 23.6,
-        "f_sc": 20.0,
-        "f_si": 100.0
-      },
-      "raw": {
-        "mktcap_eur": 9433470976.0,
-        "ev_ebitda": 14.095,
-        "ev_rev": 1.545,
-        "nd_ebitda": -1.32168062160671,
-        "float_pct": 0.49729997000000004
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 100.0,
-        "si_flags": [
-          "SC TO-T tender offer (2025-09-29)"
-        ],
-        "si_flag_str": "SC TO-T tender offer (2025-09-29)"
-      }
-    },
-    {
-      "name": "ASML",
-      "ticker": "ASML.AS",
-      "region": "benelux",
-      "country": "Netherlands",
-      "subsector": "semieq",
-      "score": 43,
-      "decile": 3,
-      "rank": 70,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 10.2,
-        "f_own": 93.3,
-        "f_bs": 55.7,
-        "f_sz": 0.0,
-        "f_sc": 20.0,
-        "f_si": 70.0
-      },
-      "raw": {
-        "mktcap_eur": 599324491776.0,
-        "ev_ebitda": 45.276,
-        "ev_rev": 17.072,
-        "nd_ebitda": -0.44635715662281195,
-        "float_pct": 0.9999
       },
       "edgar": {
         "sc_deals": 0,
@@ -2476,11 +2366,11 @@
       "subsector": "itserv",
       "score": 43,
       "decile": 3,
-      "rank": 71,
+      "rank": 68,
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 68.3,
+        "f_val": 67.5,
         "f_own": 11.2,
         "f_bs": 76.1,
         "f_sz": 36.0,
@@ -2488,9 +2378,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 4997548707.84,
-        "ev_ebitda": 13.152,
-        "ev_rev": 0.425,
+        "mktcap_eur": 5029473945.599999,
+        "ev_ebitda": 13.032,
+        "ev_rev": 0.421,
         "nd_ebitda": -1.4365534567485696,
         "float_pct": 0.6072499986803067
       },
@@ -2503,18 +2393,90 @@
       }
     },
     {
+      "name": "Indra Sistemas",
+      "ticker": "IDR.MC",
+      "region": "seur",
+      "country": "Spain",
+      "subsector": "itserv",
+      "score": 43,
+      "decile": 3,
+      "rank": 69,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 48.1,
+        "f_own": 5.6,
+        "f_bs": 70.5,
+        "f_sz": 23.6,
+        "f_sc": 20.0,
+        "f_si": 100.0
+      },
+      "raw": {
+        "mktcap_eur": 9615489024.0,
+        "ev_ebitda": 14.367,
+        "ev_rev": 1.575,
+        "nd_ebitda": -1.32168062160671,
+        "float_pct": 0.49729997000000004
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 100.0,
+        "si_flags": [
+          "SC TO-T tender offer (2025-09-29)"
+        ],
+        "si_flag_str": "SC TO-T tender offer (2025-09-29)"
+      }
+    },
+    {
+      "name": "Wise",
+      "ticker": "WISE.L",
+      "region": "ukie",
+      "country": "UK",
+      "subsector": "pay",
+      "score": 43,
+      "decile": 3,
+      "rank": 70,
+      "coverage": "4/4",
+      "currency": "GBP",
+      "factors": {
+        "f_val": 37.8,
+        "f_own": 29.2,
+        "f_bs": 85.2,
+        "f_sz": 24.7,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": 9198633000.96,
+        "ev_ebitda": 13.036,
+        "ev_rev": 3.949,
+        "nd_ebitda": -2.4609330005759262,
+        "float_pct": 0.74637
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
       "name": "Sage Group",
       "ticker": "SGE.L",
       "region": "ukie",
       "country": "UK",
       "subsector": "appsw",
-      "score": 42,
+      "score": 43,
       "decile": 3,
-      "rank": 72,
+      "rank": 71,
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 36.8,
+        "f_val": 38.7,
         "f_own": 74.2,
         "f_bs": 18.2,
         "f_sz": 27.0,
@@ -2522,11 +2484,47 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 8715137034.24,
-        "ev_ebitda": 14.98,
-        "ev_rev": 3.56,
+        "mktcap_eur": 8492100065.28,
+        "ev_ebitda": 14.32,
+        "ev_rev": 3.403,
         "nd_ebitda": 2.402555910543131,
         "float_pct": 0.9895
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
+      "name": "ASML",
+      "ticker": "ASML.AS",
+      "region": "benelux",
+      "country": "Netherlands",
+      "subsector": "semieq",
+      "score": 43,
+      "decile": 4,
+      "rank": 72,
+      "coverage": "4/4",
+      "currency": "EUR",
+      "factors": {
+        "f_val": 10.2,
+        "f_own": 93.3,
+        "f_bs": 55.7,
+        "f_sz": 0.0,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": 607418253312.0,
+        "ev_ebitda": 47.363,
+        "ev_rev": 17.859,
+        "nd_ebitda": -0.44635715662281195,
+        "float_pct": 0.9999
       },
       "edgar": {
         "sc_deals": 0,
@@ -2550,7 +2548,7 @@
       "coverage": "4/4",
       "currency": "USD",
       "factors": {
-        "f_val": 14.4,
+        "f_val": 13.8,
         "f_own": 10.1,
         "f_bs": 93.2,
         "f_sz": 57.3,
@@ -2558,9 +2556,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 2981005373.44,
-        "ev_ebitda": 35.13,
-        "ev_rev": 5.631,
+        "mktcap_eur": 2946582712.32,
+        "ev_ebitda": 34.666,
+        "ev_rev": 5.557,
         "nd_ebitda": -5.10560247323179,
         "float_pct": 0.56706002
       },
@@ -2586,7 +2584,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 41.7,
+        "f_val": 40.1,
         "f_own": 50.6,
         "f_bs": 22.7,
         "f_sz": 59.6,
@@ -2594,9 +2592,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2495581696.0,
-        "ev_ebitda": 15.022,
-        "ev_rev": 2.662,
+        "mktcap_eur": 2488713216.0,
+        "ev_ebitda": 15.284,
+        "ev_rev": 2.709,
         "nd_ebitda": 1.676072442439623,
         "float_pct": 0.89
       },
@@ -2609,39 +2607,37 @@
       }
     },
     {
-      "name": "Global-e Online",
-      "ticker": "GLBE",
-      "region": "me",
-      "country": "Israel",
-      "subsector": "internet",
+      "name": "Qt Group",
+      "ticker": "QTCOM.HE",
+      "region": "nordics",
+      "country": "Finland",
+      "subsector": "appsw",
       "score": 40,
       "decile": 3,
       "rank": 75,
       "coverage": "4/4",
-      "currency": "USD",
+      "currency": "EUR",
       "factors": {
-        "f_val": 18.6,
-        "f_own": 19.1,
-        "f_bs": 89.8,
-        "f_sz": 33.7,
+        "f_val": 27.4,
+        "f_own": 37.1,
+        "f_bs": 23.9,
+        "f_sz": 87.6,
         "f_sc": 20.0,
-        "f_si": 70.0
+        "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5057767034.88,
-        "ev_ebitda": 28.207,
-        "ev_rev": 4.86,
-        "nd_ebitda": -2.995059580736544,
-        "float_pct": 0.69146
+        "mktcap_eur": 612943872.0,
+        "ev_ebitda": 17.901,
+        "ev_rev": 4.268,
+        "nd_ebitda": 1.6477029864013768,
+        "float_pct": 0.7745960600303782
       },
       "edgar": {
         "sc_deals": 0,
         "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
       }
     },
     {
@@ -2664,9 +2660,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 99515686912.0,
-        "ev_ebitda": 25.824,
-        "ev_rev": 6.859,
+        "mktcap_eur": 100139442176.0,
+        "ev_ebitda": 26.458,
+        "ev_rev": 7.028,
         "nd_ebitda": 1.5287528727508548,
         "float_pct": 0.9999899999973759
       },
@@ -2681,86 +2677,18 @@
       }
     },
     {
-      "name": "Qt Group",
-      "ticker": "QTCOM.HE",
-      "region": "nordics",
-      "country": "Finland",
-      "subsector": "appsw",
-      "score": 40,
-      "decile": 3,
-      "rank": 77,
-      "coverage": "4/4",
-      "currency": "EUR",
-      "factors": {
-        "f_val": 26.8,
-        "f_own": 37.1,
-        "f_bs": 23.9,
-        "f_sz": 87.6,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 627162944.0,
-        "ev_ebitda": 18.494,
-        "ev_rev": 4.409,
-        "nd_ebitda": 1.6477029864013768,
-        "float_pct": 0.7745960600303782
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
-      "name": "Sinch",
-      "ticker": "SINCH.ST",
-      "region": "nordics",
-      "country": "Sweden",
-      "subsector": "infrasw",
-      "score": 39,
-      "decile": 2,
-      "rank": 78,
-      "coverage": "4/4",
-      "currency": "SEK",
-      "factors": {
-        "f_val": 58.3,
-        "f_own": 31.5,
-        "f_bs": 12.5,
-        "f_sz": 60.7,
-        "f_sc": 20.0,
-        "f_si": 50.0
-      },
-      "raw": {
-        "mktcap_eur": 2398267260.928,
-        "ev_ebitda": 13.019,
-        "ev_rev": 1.294,
-        "nd_ebitda": 2.8858635287934598,
-        "float_pct": 0.7498640640286602
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
-      }
-    },
-    {
       "name": "Check Point",
       "ticker": "CHKP",
       "region": "me",
       "country": "Israel",
       "subsector": "cyber",
-      "score": 39,
-      "decile": 2,
-      "rank": 79,
+      "score": 40,
+      "decile": 3,
+      "rank": 77,
       "coverage": "4/4",
       "currency": "USD",
       "factors": {
-        "f_val": 33.2,
+        "f_val": 34.0,
         "f_own": 32.6,
         "f_bs": 62.5,
         "f_sz": 22.5,
@@ -2768,9 +2696,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 12029234872.32,
-        "ev_ebitda": 14.158,
-        "ev_rev": 4.486,
+        "mktcap_eur": 11783271915.52,
+        "ev_ebitda": 13.85,
+        "ev_rev": 4.389,
         "nd_ebitda": -0.9106836106056058,
         "float_pct": 0.7608699999999999
       },
@@ -2785,13 +2713,83 @@
       }
     },
     {
+      "name": "Global-e Online",
+      "ticker": "GLBE",
+      "region": "me",
+      "country": "Israel",
+      "subsector": "internet",
+      "score": 40,
+      "decile": 3,
+      "rank": 78,
+      "coverage": "4/4",
+      "currency": "USD",
+      "factors": {
+        "f_val": 17.8,
+        "f_own": 20.2,
+        "f_bs": 89.8,
+        "f_sz": 33.7,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": 5133486714.88,
+        "ev_ebitda": 28.675,
+        "ev_rev": 4.941,
+        "nd_ebitda": -2.995059580736544,
+        "float_pct": 0.69156
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
+      "name": "Sinch",
+      "ticker": "SINCH.ST",
+      "region": "nordics",
+      "country": "Sweden",
+      "subsector": "infrasw",
+      "score": 39,
+      "decile": 2,
+      "rank": 79,
+      "coverage": "4/4",
+      "currency": "SEK",
+      "factors": {
+        "f_val": 58.3,
+        "f_own": 31.5,
+        "f_bs": 12.5,
+        "f_sz": 60.7,
+        "f_sc": 20.0,
+        "f_si": 50.0
+      },
+      "raw": {
+        "mktcap_eur": 2357287387.1359997,
+        "ev_ebitda": 12.76,
+        "ev_rev": 1.268,
+        "nd_ebitda": 2.8858635287934598,
+        "float_pct": 0.7498640640286602
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
+      }
+    },
+    {
       "name": "Paradox Interactive",
       "ticker": "PDX.ST",
       "region": "nordics",
       "country": "Sweden",
       "subsector": "gaming",
       "score": 39,
-      "decile": 3,
+      "decile": 2,
       "rank": 80,
       "coverage": "4/4",
       "currency": "SEK",
@@ -2799,14 +2797,14 @@
         "f_val": 18.7,
         "f_own": 3.4,
         "f_bs": 88.6,
-        "f_sz": 73.0,
+        "f_sz": 71.9,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
         "mktcap_eur": 1234352914.432,
-        "ev_ebitda": 24.423,
-        "ev_rev": 5.901,
+        "ev_ebitda": 24.2,
+        "ev_rev": 5.848,
         "nd_ebitda": -2.6811924764337394,
         "float_pct": 0.44272999999999996
       },
@@ -2830,7 +2828,7 @@
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 42.0,
+        "f_val": 43.2,
         "f_own": 16.9,
         "f_bs": 61.4,
         "f_sz": 44.9,
@@ -2838,9 +2836,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 4214715747.8399997,
-        "ev_ebitda": 17.445,
-        "ev_rev": 2.043,
+        "mktcap_eur": 4148107292.16,
+        "ev_ebitda": 16.772,
+        "ev_rev": 1.965,
         "nd_ebitda": -0.8224138994029734,
         "float_pct": 0.6685921922196291
       },
@@ -2864,7 +2862,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 25.9,
+        "f_val": 23.6,
         "f_own": 25.8,
         "f_bs": 59.1,
         "f_sz": 6.7,
@@ -2872,9 +2870,9 @@
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 56536195072.0,
-        "ev_ebitda": 21.335,
-        "ev_rev": 4.292,
+        "mktcap_eur": 57638297600.0,
+        "ev_ebitda": 22.592,
+        "ev_rev": 4.545,
         "nd_ebitda": -0.7180722232583312,
         "float_pct": 0.7247399999999999
       },
@@ -2909,9 +2907,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 95171657400.32,
-        "ev_ebitda": 39.914,
-        "ev_rev": 5.57,
+        "mktcap_eur": 91936841072.64,
+        "ev_ebitda": 38.477,
+        "ev_rev": 5.369,
         "nd_ebitda": -2.378168392311711,
         "float_pct": 0.77011
       },
@@ -2937,7 +2935,7 @@
       "coverage": "4/4",
       "currency": "GBP",
       "factors": {
-        "f_val": 18.4,
+        "f_val": 19.2,
         "f_own": 4.5,
         "f_bs": 80.7,
         "f_sz": 43.8,
@@ -2945,9 +2943,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 4280515499.5199995,
-        "ev_ebitda": 28.225,
-        "ev_rev": 4.671,
+        "mktcap_eur": 4214137973.7599998,
+        "ev_ebitda": 27.671,
+        "ev_rev": 4.579,
         "nd_ebitda": -1.8541184493074339,
         "float_pct": 0.46867000000000003
       },
@@ -2962,37 +2960,39 @@
       }
     },
     {
-      "name": "Halma",
-      "ticker": "HLMA.L",
-      "region": "ukie",
-      "country": "UK",
-      "subsector": "hw",
+      "name": "VAT Group",
+      "ticker": "VACN.SW",
+      "region": "dach",
+      "country": "Switzerland",
+      "subsector": "semieq",
       "score": 36,
       "decile": 2,
       "rank": 85,
       "coverage": "4/4",
-      "currency": "GBP",
+      "currency": "CHF",
       "factors": {
-        "f_val": 11.4,
-        "f_own": 75.8,
-        "f_bs": 34.1,
-        "f_sz": 16.9,
+        "f_val": 9.1,
+        "f_own": 56.2,
+        "f_bs": 45.5,
+        "f_sz": 14.6,
         "f_sc": 20.0,
-        "f_si": 50.0
+        "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 18100142161.92,
-        "ev_ebitda": 31.643,
-        "ev_rev": 7.535,
-        "nd_ebitda": 1.1156392058516196,
-        "float_pct": 0.98952
+        "mktcap_eur": 20584581427.2,
+        "ev_ebitda": 66.787,
+        "ev_rev": 18.362,
+        "nd_ebitda": 0.36354915783741015,
+        "float_pct": 0.899110004
       },
       "edgar": {
         "sc_deals": 0,
         "sc_score": 20,
-        "si_score": 50.0,
-        "si_flags": [],
-        "si_flag_str": ""
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
       }
     },
     {
@@ -3007,7 +3007,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 31.9,
+        "f_val": 33.8,
         "f_own": 49.4,
         "f_bs": 52.3,
         "f_sz": 1.1,
@@ -3015,9 +3015,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 167264501760.0,
-        "ev_ebitda": 14.859,
-        "ev_rev": 4.617,
+        "mktcap_eur": 163341500416.0,
+        "ev_ebitda": 13.877,
+        "ev_rev": 4.312,
         "nd_ebitda": -0.18812475009996002,
         "float_pct": 0.8897521044263279
       },
@@ -3041,17 +3041,17 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 17.0,
+        "f_val": 15.9,
         "f_own": 41.6,
         "f_bs": 43.2,
-        "f_sz": 39.3,
+        "f_sz": 41.6,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 4729326080.0,
-        "ev_ebitda": 40.431,
-        "ev_rev": 7.649,
+        "mktcap_eur": 4593590784.0,
+        "ev_ebitda": 41.466,
+        "ev_rev": 7.845,
         "nd_ebitda": 0.49107142857142855,
         "float_pct": 0.84409
       },
@@ -3064,75 +3064,37 @@
       }
     },
     {
-      "name": "VAT Group",
-      "ticker": "VACN.SW",
-      "region": "dach",
-      "country": "Switzerland",
-      "subsector": "semieq",
+      "name": "Halma",
+      "ticker": "HLMA.L",
+      "region": "ukie",
+      "country": "UK",
+      "subsector": "hw",
       "score": 35,
       "decile": 2,
       "rank": 88,
       "coverage": "4/4",
-      "currency": "CHF",
+      "currency": "GBP",
       "factors": {
-        "f_val": 8.0,
-        "f_own": 56.2,
-        "f_bs": 45.5,
-        "f_sz": 14.6,
+        "f_val": 10.8,
+        "f_own": 75.8,
+        "f_bs": 34.1,
+        "f_sz": 16.9,
         "f_sc": 20.0,
-        "f_si": 70.0
+        "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 20295101030.4,
-        "ev_ebitda": 64.289,
-        "ev_rev": 17.675,
-        "nd_ebitda": 0.36354915783741015,
-        "float_pct": 0.899110004
+        "mktcap_eur": 17358261073.92,
+        "ev_ebitda": 31.643,
+        "ev_rev": 7.535,
+        "nd_ebitda": 1.1156392058516196,
+        "float_pct": 0.98952
       },
       "edgar": {
         "sc_deals": 0,
         "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
-      }
-    },
-    {
-      "name": "Camtek",
-      "ticker": "CAMT",
-      "region": "me",
-      "country": "Israel",
-      "subsector": "semieq",
-      "score": 34,
-      "decile": 1,
-      "rank": 89,
-      "coverage": "4/4",
-      "currency": "USD",
-      "factors": {
-        "f_val": 13.6,
-        "f_own": 13.5,
-        "f_bs": 69.3,
-        "f_sz": 29.2,
-        "f_sc": 20.0,
-        "f_si": 70.0
-      },
-      "raw": {
-        "mktcap_eur": 7061141606.400001,
-        "ev_ebitda": 54.088,
-        "ev_rev": 15.013,
-        "nd_ebitda": -1.3170502737443577,
-        "float_pct": 0.62034
-      },
-      "edgar": {
-        "sc_deals": 0,
-        "sc_score": 20,
-        "si_score": 70.0,
-        "si_flags": [
-          "Merger proxy / going-private filing"
-        ],
-        "si_flag_str": "Merger proxy / going-private filing"
+        "si_score": 50.0,
+        "si_flags": [],
+        "si_flag_str": ""
       }
     },
     {
@@ -3143,7 +3105,7 @@
       "subsector": "gaming",
       "score": 34,
       "decile": 1,
-      "rank": 90,
+      "rank": 89,
       "coverage": "4/4",
       "currency": "PLN",
       "factors": {
@@ -3155,9 +3117,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 5039386583.04,
-        "ev_ebitda": 43.157,
-        "ev_rev": 24.092,
+        "mktcap_eur": 5069259468.8,
+        "ev_ebitda": 42.994,
+        "ev_rev": 24.001,
         "nd_ebitda": -1.9333094437553047,
         "float_pct": 0.70475
       },
@@ -3177,23 +3139,59 @@
       "subsector": "appsw",
       "score": 33,
       "decile": 1,
-      "rank": 91,
+      "rank": 90,
       "coverage": "4/4",
       "currency": "CHF",
       "factors": {
-        "f_val": 25.9,
+        "f_val": 26.5,
         "f_own": 28.1,
         "f_bs": 20.5,
-        "f_sz": 37.1,
+        "f_sz": 39.3,
         "f_sc": 20.0,
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 4802331340.8,
-        "ev_ebitda": 17.925,
-        "ev_rev": 4.658,
+        "mktcap_eur": 4690059494.400001,
+        "ev_ebitda": 17.33,
+        "ev_rev": 4.504,
         "nd_ebitda": 2.2326642900764897,
         "float_pct": 0.74614
+      },
+      "edgar": {
+        "sc_deals": 0,
+        "sc_score": 20,
+        "si_score": 70.0,
+        "si_flags": [
+          "Merger proxy / going-private filing"
+        ],
+        "si_flag_str": "Merger proxy / going-private filing"
+      }
+    },
+    {
+      "name": "Camtek",
+      "ticker": "CAMT",
+      "region": "me",
+      "country": "Israel",
+      "subsector": "semieq",
+      "score": 33,
+      "decile": 1,
+      "rank": 91,
+      "coverage": "4/4",
+      "currency": "USD",
+      "factors": {
+        "f_val": 12.5,
+        "f_own": 13.5,
+        "f_bs": 69.3,
+        "f_sz": 29.2,
+        "f_sc": 20.0,
+        "f_si": 70.0
+      },
+      "raw": {
+        "mktcap_eur": 7800762961.92,
+        "ev_ebitda": 59.891,
+        "ev_rev": 16.623,
+        "nd_ebitda": -1.3170502737443577,
+        "float_pct": 0.62034
       },
       "edgar": {
         "sc_deals": 0,
@@ -3217,17 +3215,17 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 39.5,
+        "f_val": 42.2,
         "f_own": 6.7,
         "f_bs": 75.0,
-        "f_sz": 11.2,
+        "f_sz": 12.4,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 24657055744.0,
-        "ev_ebitda": 13.831,
-        "ev_rev": 3.745,
+        "mktcap_eur": 23908478976.0,
+        "ev_ebitda": 12.939,
+        "ev_rev": 3.503,
         "nd_ebitda": -1.4334869164792166,
         "float_pct": 0.50949
       },
@@ -3259,9 +3257,9 @@
         "f_si": 100.0
       },
       "raw": {
-        "mktcap_eur": 12558015528.96,
-        "ev_ebitda": 113.718,
-        "ev_rev": 69.479,
+        "mktcap_eur": 12457385656.32,
+        "ev_ebitda": 112.926,
+        "ev_rev": 68.995,
         "nd_ebitda": -0.8026516508798397,
         "float_pct": 0.6158367761932787
       },
@@ -3292,14 +3290,14 @@
         "f_val": 5.7,
         "f_own": 51.7,
         "f_bs": 54.5,
-        "f_sz": 12.4,
+        "f_sz": 11.2,
         "f_sc": 20.0,
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 24033740800.0,
-        "ev_ebitda": 109.167,
-        "ev_rev": 36.061,
+        "mktcap_eur": 24390207488.0,
+        "ev_ebitda": 116.416,
+        "ev_rev": 38.456,
         "nd_ebitda": -0.4421908328942957,
         "float_pct": 0.891090006
       },
@@ -3331,9 +3329,9 @@
         "f_si": 50.0
       },
       "raw": {
-        "mktcap_eur": 2236258560.0,
-        "ev_ebitda": 11.409,
-        "ev_rev": 3.15,
+        "mktcap_eur": 2249712128.0,
+        "ev_ebitda": 11.447,
+        "ev_rev": 3.161,
         "nd_ebitda": 4.16436997375328,
         "float_pct": 0.16844004
       },
@@ -3357,7 +3355,7 @@
       "coverage": "4/4",
       "currency": "EUR",
       "factors": {
-        "f_val": 21.5,
+        "f_val": 22.1,
         "f_own": 7.9,
         "f_bs": 46.6,
         "f_sz": 30.3,
@@ -3365,9 +3363,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 6797578240.0,
-        "ev_ebitda": 20.824,
-        "ev_rev": 5.867,
+        "mktcap_eur": 6589841920.0,
+        "ev_ebitda": 19.414,
+        "ev_rev": 5.47,
         "nd_ebitda": 0.14352201033312656,
         "float_pct": 0.54663
       },
@@ -3401,9 +3399,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 18699592400.896,
-        "ev_ebitda": 170.726,
-        "ev_rev": 40.14,
+        "mktcap_eur": 18581479358.464,
+        "ev_ebitda": 166.519,
+        "ev_rev": 39.151,
         "nd_ebitda": 1.0000001003213392,
         "float_pct": 0.7835720635337757
       },
@@ -3423,13 +3421,13 @@
       "region": "me",
       "country": "Israel",
       "subsector": "infrasw",
-      "score": 29,
+      "score": 30,
       "decile": 1,
       "rank": 98,
       "coverage": "4/4",
       "currency": "USD",
       "factors": {
-        "f_val": 11.4,
+        "f_val": 13.6,
         "f_own": 48.3,
         "f_bs": 0.0,
         "f_sz": 25.8,
@@ -3437,9 +3435,9 @@
         "f_si": 70.0
       },
       "raw": {
-        "mktcap_eur": 8954526924.800001,
-        "ev_ebitda": -172.916,
-        "ev_rev": 15.989,
+        "mktcap_eur": 8745038479.36,
+        "ev_ebitda": -168.545,
+        "ev_rev": 15.585,
         "nd_ebitda": 13.91245238689368,
         "float_pct": 0.8868199999999999
       },
