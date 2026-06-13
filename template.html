@@ -374,6 +374,17 @@
   .ftrack i { display:block; height:100%; border-radius:4px; }
   .narr { color:var(--txt-2); font-size:12px; line-height:1.55; background:var(--panel-2); border:1px solid var(--line); border-left:2px solid var(--accent); border-radius:8px; padding:11px 13px; }
 
+  /* structured thesis */
+  .thesis { display:flex; flex-direction:column; gap:9px; }
+  .thpart { background:var(--panel-2); border:1px solid var(--line); border-left:2px solid var(--line); border-radius:8px; padding:9px 13px; }
+  .thpart:nth-child(1){ border-left-color:var(--accent); }
+  .thpart:nth-child(2){ border-left-color:var(--cool); }
+  .thpart:nth-child(3){ border-left-color:var(--warm); }
+  .thpart:nth-child(4){ border-left-color:var(--gold); }
+  .thpart .thlab { font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--txt-2); font-weight:700; margin-bottom:4px; }
+  .thpart .thval { font-size:12.5px; line-height:1.55; color:var(--txt); }
+  .thpart .thval b { color:var(--accent); font-weight:700; }
+
   /* acquirer cards */
   .acq { background:var(--panel-2); border:1px solid var(--line); border-radius:9px; margin-bottom:8px; overflow:hidden; }
   .acq summary { list-style:none; cursor:pointer; padding:10px 12px; display:flex; align-items:center; gap:10px; }
@@ -708,6 +719,11 @@ const LIVE_RAW = [
   {n:"Nemetschek",t:"NEM.DE",r:"dach",s:"appsw",F:[21.2,10.3,43.6,41.0],R:[7322688000,21.545,6.071,0.144,0.493],c:"4/4"},
   {n:"Evolution",t:"EVO.ST",r:"nordics",s:"gaming",F:[0.0,17.9,61.5,33.3],R:[12068742692.86,109.378,66.827,-0.803,0.616],c:"4/4"},
 ];
+/* Live named-buyer lists & structured theses, keyed by FULL ticker.
+   build_index.py injects these from huntr_scored.json (insights.py engine);
+   they refresh every night with the data. Empty {} = demo build. */
+const LIVE_BUYERS = {};
+const LIVE_THESIS = {};
 const liveCompanies = LIVE_RAW.map(o=>{
   const f={val:o.F[0], o:o.F[1], bs:o.F[2], sz:o.F[3], sc:o.F[4]??50, si:o.F[5]??50};
   const m=METAByKey[normKey(o.t)]||{};
@@ -796,14 +812,26 @@ const ARCHETYPES = {
   gaming:[A("Major publisher (Microsoft / EA / Take-Two / Tencent)","strat",70,"AAA IP and studio capacity are scarce and strategically coveted."),A("Savvy Games / PIF (sovereign)","state",62,"Effectively unlimited capital and explicit gaming ambitions."),A("Gaming consolidator / PE","spons",52,"<span class='ang'>Creative angle:</span> a roll-up vehicle assembles mid-cap studios into a publishing platform.")],
 };
 function getAcquirers(c){
+  // Live mode: use the nightly-ranked NAMED buyers from insights.py (keyed by full ticker).
+  if(c.live && typeof LIVE_BUYERS!=="undefined" && LIVE_BUYERS[c.ticker] && LIVE_BUYERS[c.ticker].length){
+    return LIVE_BUYERS[c.ticker].slice().sort((a,b)=>b.fit-a.fit);
+  }
+  // Demo / fallback: curated bespoke list, else subsector archetypes nudged by strategic interest.
   let list = ACQUIRERS[normKey(c.ticker)];
   if(!list){
     list = (ARCHETYPES[c.subsector]||ARCHETYPES.appsw).map(a=>({...a}));
-    // nudge fit by the company's strategic-interest factor so fallback isn't static
     const tilt=(c.f.si-55)/5;
     list.forEach(a=>{ a.fit=Math.max(20,Math.min(95,Math.round(a.fit+tilt))); });
   }
   return [...list].sort((a,b)=>b.fit-a.fit);
+}
+// Structured thesis (Why now / The asset / Most likely path / Key risk) for live names;
+// falls back to the illustrative one-liner for demo names.
+function thesisHTML(c){
+  const t = (c.live && typeof LIVE_THESIS!=="undefined") ? LIVE_THESIS[c.ticker] : null;
+  if(!t) return `<div class="narr">${c.note}</div>`;
+  const row=(lab,val)=> val? `<div class="thpart"><div class="thlab">${lab}</div><div class="thval">${val}</div></div>`:"";
+  return `<div class="thesis">${row("Why now",t.why_now)}${row("The asset",t.asset)}${row("Most likely path",t.path)}${row("Key risk",t.risk)}</div>`;
 }
 
 /* ---------- helpers ---------- */
@@ -1115,8 +1143,8 @@ function openDrawer(tk){
       <div class="stat-grid">
         ${Object.entries(stats).map(([l,v])=>`<div class="stat"><div class="l">${l}</div><div class="v">${v}</div></div>`).join("")}
       </div>
-      <div class="sech">Thesis (illustrative)</div>
-      <div class="narr">${c.note}</div>
+      <div class="sech">Thesis${(c.live && typeof LIVE_THESIS!=="undefined" && LIVE_THESIS[c.ticker])?"":" (illustrative)"}</div>
+      ${thesisHTML(c)}
       <div class="sech">Share price <span class="sp-demo">◆ illustrative</span></div>
       <div class="spwrap">
         <div class="sphead"><span class="spperf" id="spPerf"></span><span class="spmeta" id="spMeta"></span></div>

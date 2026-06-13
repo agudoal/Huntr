@@ -44,5 +44,14 @@ html  = html.replace(
     ' if(_sp){_sp.className="pill";_sp.innerHTML=\'<span class="dot"></span>'
     ' Live \\u00b7 Yahoo + EDGAR (WS-A)\';} }'
     "\nbuildFilters();\nsyncSlider();\nsyncDSlider();\nrender();")
+# Inject named-buyer lists + structured theses (insights.py output), keyed by full ticker.
+buyers_map = {c["ticker"]: c.get("buyers", []) for c in data["companies"]}
+thesis_map = {c["ticker"]: c.get("thesis", {}) for c in data["companies"]}
+html = html.replace("const LIVE_BUYERS = {};",
+                    "const LIVE_BUYERS = " + json.dumps(buyers_map, ensure_ascii=False) + ";", 1)
+html = html.replace("const LIVE_THESIS = {};",
+                    "const LIVE_THESIS = " + json.dumps(thesis_map, ensure_ascii=False) + ";", 1)
+
 open("index.html","w",encoding="utf-8").write(html)
-print("Built index.html with", len(data["companies"]), "companies.")
+nb = sum(1 for v in buyers_map.values() if v)
+print("Built index.html with", len(data["companies"]), "companies;", nb, "with named buyers + thesis.")

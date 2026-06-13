@@ -25,6 +25,7 @@ import pandas as pd
 import yfinance as yf
 
 import edgar_data  # Workstream A -- EDGAR enrichment
+import insights     # Buyer-ranking & structured-thesis engine
 
 # ---------------------------------------------------------------------------
 # Currency / FX helpers  (unchanged from Stage-1 v2)
@@ -235,7 +236,7 @@ def main():
         sub = r["subsector"]
         sc_info = sc_audit.get(sub, {"count": 0, "score": 50})
 
-        out.append({
+        company = {
             "name": r["name"],
             "ticker": tk,
             "region": r["region"],
@@ -264,7 +265,26 @@ def main():
                 "si_flags":    si_info["flags"],
                 "si_flag_str": " | ".join(si_info["flags"]) if si_info["flags"] else "",
             },
-        })
+        }
+
+        # --- Buyer ranking + structured thesis (insights.py) ---
+        # Re-ranks named acquirers from tonight's factors and injects live
+        # figures into the thesis, so both refresh every night.
+        try:
+            _ins = insights.enrich({
+                "name": company["name"], "ticker": tk,
+                "subsector": company["subsector"],
+                "factors": company["factors"],
+                "raw": company["raw"],
+                "edgar": {"sc_deals": sc_info["count"], "si_flags": si_info["flags"]},
+            })
+            company["buyers"] = _ins["buyers"]
+            company["thesis"] = _ins["thesis"]
+        except Exception as _e:
+            print("      ! insights failed for " + tk + " (" + type(_e).__name__ + ": " + str(_e) + ")")
+            company["buyers"], company["thesis"] = [], {}
+
+        out.append(company)
 
     payload = {
         "meta": {
