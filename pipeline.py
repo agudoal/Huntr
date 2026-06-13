@@ -118,7 +118,7 @@ def main():
             "country": u.get("country", ""),
             "ccy": ccy_of(tk),
             "mktcap_eur": None, "ev_ebitda": None, "ev_rev": None,
-            "nd_ebitda": None, "float_pct": None,
+            "nd_ebitda": None, "float_pct": None, "fin": {},
         }
         try:
             info = get_info(tk)
@@ -136,6 +136,14 @@ def main():
                              if (net_debt is not None and ebitda) else None,
                 "float_pct": flp,
             })
+            # Target financials (EUR) for accretion/dilution
+            _fxr = fx.get(rec["ccy"], 1.0)
+            rec["fin"] = {
+                "revenue":    info.get("totalRevenue") * _fxr if info.get("totalRevenue") else None,
+                "ebitda":     ebitda * _fxr if ebitda else None,
+                "net_income": info.get("netIncomeToCommon") * _fxr if info.get("netIncomeToCommon") else None,
+                "net_debt":   net_debt * _fxr if net_debt is not None else None,
+            }
         except Exception as e:
             print("      ! " + tk + " skipped (" + type(e).__name__ + ": " + str(e) + ")")
         return rec
@@ -158,6 +166,38 @@ def main():
             time.sleep(1.2)
         still = sum(1 for j in missing if recs[j]["mktcap_eur"] is None)
         print("After retry: " + str(len(missing) - still) + " recovered, " + str(still) + " still blank.")
+
+    # -----------------------------------------------------------------------
+    # Pass 1b -- buyer-universe financials (firepower + accretion/dilution)
+    # -----------------------------------------------------------------------
+    print("\n-- Buyer financials (strategic acquirers) --")
+    buyer_fin = {}
+    btks = insights.buyer_universe()
+    for bi, tk in enumerate(btks, 1):
+        try:
+            info = get_info(tk)
+            mc = info.get("marketCap")
+            if not mc:
+                continue
+            fxr = fx.get(ccy_of(tk), 1.0)
+            td, tc = info.get("totalDebt"), info.get("totalCash")
+            nd = (td - tc) if (td is not None and tc is not None) else None
+            sh = info.get("sharesOutstanding")
+            buyer_fin[tk] = {
+                "name": tk,
+                "mc":         mc * fxr,
+                "net_debt":   nd * fxr if nd is not None else None,
+                "cash":       tc * fxr if tc is not None else None,
+                "ebitda":     info.get("ebitda") * fxr if info.get("ebitda") else None,
+                "revenue":    info.get("totalRevenue") * fxr if info.get("totalRevenue") else None,
+                "net_income": info.get("netIncomeToCommon") * fxr if info.get("netIncomeToCommon") else None,
+                "shares":     sh,
+                "price_eur":  (mc * fxr / sh) if sh else None,
+            }
+        except Exception as exc:
+            print("      ! buyer " + tk + " skipped (" + type(exc).__name__ + ")")
+        time.sleep(0.6)
+    print("Buyer financials: " + str(len(buyer_fin)) + " / " + str(len(btks)) + " fetched.")
 
     # -----------------------------------------------------------------------
     # Pass 2 -- EDGAR enrichment (Workstream A)
@@ -271,13 +311,17 @@ def main():
         # Re-ranks named acquirers from tonight's factors and injects live
         # figures into the thesis, so both refresh every night.
         try:
+            _t_fin = r.get("fin")
+            if not isinstance(_t_fin, dict):
+                _t_fin = {}
             _ins = insights.enrich({
                 "name": company["name"], "ticker": tk,
                 "subsector": company["subsector"],
                 "factors": company["factors"],
                 "raw": company["raw"],
+                "fin": _t_fin,
                 "edgar": {"sc_deals": sc_info["count"], "si_flags": si_info["flags"]},
-            })
+            }, buyer_fin)
             company["buyers"] = _ins["buyers"]
             company["thesis"] = _ins["thesis"]
         except Exception as _e:

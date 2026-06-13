@@ -468,13 +468,263 @@ def rank_buyers(rec, top=6):
     out.sort(key=lambda x: -x["fit"])
     return out[:top]
 
-def enrich(rec):
-    """rec must have: name, ticker, subsector, factors{f_*}, raw{...}, edgar{...}.
-       Returns {'buyers':[...], 'thesis':{why_now,asset,path,risk}}."""
+def enrich(rec, buyer_fin=None):
+    """rec: name, ticker, subsector, factors{f_*}, raw{...}, edgar{...}, optional fin{...}.
+       buyer_fin: {ticker: {mc,net_debt,cash,ebitda,revenue,net_income,shares,price_eur}} (EUR).
+       Returns {'buyers':[...with intel/fin/ad...], 'thesis':{why_now,asset,path,risk}}."""
     rec.setdefault("factors", {})
     rec.setdefault("raw", {})
     rec.setdefault("edgar", {})
     buyers = rank_buyers(rec)
+    attach_intel(buyers, rec, buyer_fin)
     thesis = {"why_now": _why_now(rec), "asset": _asset(rec),
               "path": _path(rec, buyers), "risk": _risk(rec)}
     return {"buyers": buyers, "thesis": thesis}
+
+# ===========================================================================
+# 6. BUYER INTELLIGENCE  --  sponsor profiles + strategic firepower & A/D
+# ===========================================================================
+# Standard, transparent deal assumptions for accretion/dilution. Surfaced in
+# the UI tooltip and editable here. These drive the EPS A/D numbers.
+ASSUMPTIONS = {
+    "premium":      0.30,   # control premium to current price
+    "tax":          0.25,   # marginal tax rate
+    "cost_debt":    0.05,   # pre-tax cost of acquisition debt
+    "synergy_rev":  0.05,   # run-rate net cost synergies as % of TARGET revenue
+    "max_leverage": 3.0,    # fund in cash up to this pro-forma net debt/EBITDA, rest in stock
+}
+
+# Curated sponsor (financial-buyer) profiles. Stable, so not refreshed nightly.
+# focus = subsectors where the sponsor is most active; deals = real precedents.
+SPONSOR_PROFILES = {
+ "Thoma Bravo": {
+   "strategy": "The benchmark software & cybersecurity take-private machine; buys sticky, recurring-revenue platforms, drives margin and bolt-ons, then re-exits.",
+   "focus": ["appsw","infrasw","cyber"],
+   "deals": ["Darktrace ($5.3bn, 2024)","Proofpoint ($12.3bn)","Anaplan ($10.7bn)","Sophos","EQS Group (€400m)"],
+   "firepower": "~$160bn AUM; first dedicated European fund €1.8bn (2025)",
+   "cheque": "$1bn–15bn+",
+   "src": "https://techcrunch.com/2025/02/25/thoma-bravo-raises-e1-8b-for-its-first-european-fund/" },
+ "Vista Equity Partners": {
+   "strategy": "Enterprise-software specialist with a heavy operational playbook; expands margins on mission-critical SaaS.",
+   "focus": ["appsw","infrasw","cyber"],
+   "deals": ["Citrix (w/ Evergreen, $16.5bn)","Avalara ($8.4bn)","KnowBe4","Duck Creek","Pluralsight"],
+   "firepower": "~$100bn AUM",
+   "cheque": "$1bn–16bn",
+   "src": "https://en.wikipedia.org/wiki/Vista_Equity_Partners" },
+ "EQT": {
+   "strategy": "European-rooted large-cap sponsor; software, healthcare and infrastructure take-privates and buy-and-build.",
+   "focus": ["appsw","infrasw","itserv","semieq"],
+   "deals": ["IFS / WorkWave (~$10bn)","Dechra Pharmaceuticals (£4.5bn)","SUSE","Zeals","Baring PE Asia"],
+   "firepower": "~€130bn AUM; EQT X fund ~€22bn",
+   "cheque": "€1bn–12bn",
+   "src": "https://www.eqtgroup.com/" },
+ "Hg": {
+   "strategy": "European software champion-builder; specialises in vertical SaaS, tax/accounting and ERP, holding for the long run.",
+   "focus": ["appsw","infrasw"],
+   "deals": ["Visma","IRIS Software","Access Group","TeamSystem","Argus Media"],
+   "firepower": "~$80bn AUM",
+   "cheque": "€0.5bn–8bn",
+   "src": "https://hgcapital.com/" },
+ "Permira": {
+   "strategy": "Global tech & consumer sponsor; growth-tech, marketplaces and software take-privates.",
+   "focus": ["appsw","internet","cyber"],
+   "deals": ["Adevinta (consortium, ~€14bn)","Zendesk (w/ H&F, $10.2bn)","Squarespace","BioCatch","McAfee (consumer)"],
+   "firepower": "~€80bn AUM; Permira VIII ~€16.7bn",
+   "cheque": "€1bn–10bn",
+   "src": "https://www.permira.com/" },
+ "Advent International": {
+   "strategy": "The most active payments & fintech sponsor; also industrial-tech; cost-out plus inorganic scaling.",
+   "focus": ["pay","appsw","itserv","hw"],
+   "deals": ["Nexi (heritage)","Worldpay (legacy)","Planview","Encora","Maxar (w/ partners)"],
+   "firepower": "~$90bn AUM; GPE X ~$25bn",
+   "cheque": "$1bn–15bn",
+   "src": "https://www.adventinternational.com/" },
+ "Silver Lake": {
+   "strategy": "Large-cap technology sponsor; comfortable with complex carve-outs and founder-aligned take-privates.",
+   "focus": ["appsw","internet","pay","hw"],
+   "deals": ["Endeavor (take-private)","Qualtrics (w/ CPP)","Software AG","Vantage Data Centers","Dell (heritage)"],
+   "firepower": "~$100bn AUM",
+   "cheque": "$2bn–20bn",
+   "src": "https://www.silverlake.com/" },
+ "Hellman & Friedman": {
+   "strategy": "Large-cap software, fintech and internet sponsor; concentrated, high-conviction bets.",
+   "focus": ["appsw","internet","pay"],
+   "deals": ["Zendesk (w/ Permira)","Nets / Nexi (heritage)","Adevinta (consortium)","Splunk? no — Genesys","AlphaSights"],
+   "firepower": "~$100bn AUM; HF XI ~$24bn",
+   "cheque": "$2bn–15bn",
+   "src": "https://www.hf.com/" },
+ "KKR": {
+   "strategy": "Diversified mega-sponsor; technology, infrastructure and carve-outs across the cycle.",
+   "focus": ["appsw","infrasw","semis","hw","itserv"],
+   "deals": ["OutSystems","BMC Software","Telecom Italia (netco)","Hitachi units","Cordis"],
+   "firepower": "~$600bn AUM (firm-wide)",
+   "cheque": "$1bn–20bn+",
+   "src": "https://www.kkr.com/" },
+ "Bain Capital": {
+   "strategy": "Diversified sponsor with deep tech & semis experience; take-privates and consortium deals.",
+   "focus": ["appsw","semis","itserv","cyber"],
+   "deals": ["Kioxia / Toshiba memory (consortium)","Guidehouse","Envision","SoftwareOne (approach)","Zelis"],
+   "firepower": "~$185bn AUM",
+   "cheque": "$1bn–15bn",
+   "src": "https://www.baincapital.com/" },
+ "CVC Capital Partners": {
+   "strategy": "Diversified European-led sponsor; sports, gaming, consumer and services platforms.",
+   "focus": ["gaming","internet","itserv","pay"],
+   "deals": ["La Liga (media rights)","Authority Brands","Tipico","Sebia","System One"],
+   "firepower": "~€200bn AUM; CVC IX ~€26bn",
+   "cheque": "€1bn–15bn",
+   "src": "https://www.cvc.com/" },
+ "Carlyle": {
+   "strategy": "Diversified global sponsor; industrial-tech, aerospace/defence-adjacent and software carve-outs.",
+   "focus": ["semieq","hw","itserv","appsw"],
+   "deals": ["Veritas","ManTech","Forgital","Nouryon (w/)","HCP/Calastone"],
+   "firepower": "~$440bn AUM (firm-wide)",
+   "cheque": "$1bn–10bn",
+   "src": "https://www.carlyle.com/" },
+ "Blackstone": {
+   "strategy": "The largest alternative-asset manager; mega-cap take-privates, data-centre and growth-tech bets.",
+   "focus": ["internet","appsw","infrasw","hw"],
+   "deals": ["QTS Data Centers","Emerson Climate (w/)","Cvent","Ancestry","AirTrunk"],
+   "firepower": "~$1.1tn AUM (firm-wide)",
+   "cheque": "$2bn–25bn+",
+   "src": "https://www.blackstone.com/" },
+ "Bridgepoint": {
+   "strategy": "European mid-market sponsor; cash-generative services and software roll-ups.",
+   "focus": ["itserv","appsw","pay"],
+   "deals": ["Calypso (heritage)","Kyriba (heritage)","eFront","PEI / Infopro","MotorK"],
+   "firepower": "~€40bn AUM",
+   "cheque": "€0.3bn–3bn",
+   "src": "https://www.bridgepointgroup.com/" },
+ "Brookfield": {
+   "strategy": "Infrastructure-style buyer; treats payment rails, data centres and networks as long-life cash-flow assets.",
+   "focus": ["pay","hw","infrasw"],
+   "deals": ["Network International (payments, ~$2.8bn)","Data4","CDK Global (w/)","Compass Datacenters","American Tower (India)"],
+   "firepower": "~$1tn AUM (firm-wide)",
+   "cheque": "$1bn–15bn",
+   "src": "https://www.brookfield.com/" },
+ "Apollo": {
+   "strategy": "Value- and credit-oriented mega-sponsor; complex, hardware/industrial and distressed situations.",
+   "focus": ["hw","semis","itserv"],
+   "deals": ["Tenneco","Univar","Atlas Air","Lottomatica (heritage)","Worldline (financing talks)"],
+   "firepower": "~$700bn AUM (firm-wide)",
+   "cheque": "$1bn–20bn",
+   "src": "https://www.apollo.com/" },
+ "Platinum Equity": {
+   "strategy": "Operational carve-out specialist; buys sub-scale or non-core divisions and rebuilds them.",
+   "focus": ["semieq","hw","itserv"],
+   "deals": ["Ingram Micro","Solenis","McGraw Hill","Inmar","NCR units"],
+   "firepower": "~$48bn AUM",
+   "cheque": "$0.5bn–8bn",
+   "src": "https://www.platinumequity.com/" },
+ "Savvy Games / PIF": {
+   "strategy": "Saudi sovereign gaming vehicle; effectively unlimited capital and an explicit mandate to build a global gaming champion.",
+   "focus": ["gaming"],
+   "deals": ["Scopely ($4.9bn)","ESL / FACEIT ($1.5bn)","Niantic games unit","Nintendo / Capcom (stakes)","Embracer (stake)"],
+   "firepower": "Backed by PIF (~$900bn sovereign fund); $38bn gaming commitment",
+   "cheque": "$1bn–20bn+",
+   "src": "https://www.savvygames.com/" },
+}
+
+# Fuzzy lookup so combined labels ("Apollo / Bain Capital", "EQT / KKR (gaming PE)") still resolve.
+def sponsor_profile(name):
+    if name in SPONSOR_PROFILES:
+        return SPONSOR_PROFILES[name]
+    for key in SPONSOR_PROFILES:
+        if key.lower() in name.lower():
+            return SPONSOR_PROFILES[key]
+    return None
+
+# Distinct strategic-buyer tickers across all pools -> the nightly financials fetch list.
+def buyer_universe():
+    tks = set()
+    for pool in list(SUBSECTOR_BUYERS.values()) + list(NAMED_BUYERS.values()):
+        for b in pool:
+            if b["t"] == "strat" and b["tk"]:
+                tks.add(b["tk"])
+    return sorted(tks)
+
+# ---- strategic-buyer financials: firepower + accretion/dilution ----
+def _num(x):
+    try:
+        x=float(x); return x if x==x else None   # drop NaN
+    except (TypeError, ValueError):
+        return None
+
+def firepower(bf):
+    """Net leverage (net debt/EBITDA), cash, and debt headroom to the leverage cap."""
+    nd, eb, cash = _num(bf.get("net_debt")), _num(bf.get("ebitda")), _num(bf.get("cash"))
+    lev = (nd/eb) if (nd is not None and eb and eb>0) else None
+    headroom = max(0.0, ASSUMPTIONS["max_leverage"]*eb - nd) if (eb and nd is not None) else None
+    return {"net_leverage": (round(lev,1) if lev is not None else None),
+            "cash_eur": cash, "ebitda_eur": eb, "debt_headroom_eur": headroom}
+
+def _target_fin(rec):
+    raw = rec.get("raw", {}) or {}
+    fin = rec.get("fin", {}) or {}
+    mc, ee, er, nde = (_num(raw.get("mktcap_eur")), _num(raw.get("ev_ebitda")),
+                       _num(raw.get("ev_rev")), _num(raw.get("nd_ebitda")))
+    ebitda = rev = nd = None
+    if mc and ee is not None and nde is not None and (ee-nde) > 0:
+        ebitda = mc/(ee-nde); nd = nde*ebitda
+        if er and er > 0: rev = (ebitda*ee)/er
+    ebitda = _num(fin.get("ebitda")) or ebitda
+    rev    = _num(fin.get("revenue")) or rev
+    nd     = _num(fin.get("net_debt")) if fin.get("net_debt") is not None else nd
+    ni     = _num(fin.get("net_income"))
+    if ni is None and ebitda: ni = ebitda*0.55   # rough fallback when NI unavailable
+    return {"mc": mc, "ebitda": ebitda, "revenue": rev, "net_debt": nd, "net_income": ni}
+
+def accretion_dilution(bf, tf):
+    """Standardised margin + EPS accretion/dilution under ASSUMPTIONS. EUR throughout; A/D is unit-free %."""
+    A = ASSUMPTIONS
+    mc_t = _num(tf.get("mc"))
+    if not mc_t: return None
+    offer = mc_t * (1 + A["premium"])
+    b_eb, t_eb = _num(bf.get("ebitda")) or 0, _num(tf.get("ebitda")) or 0
+    t_rev = _num(tf.get("revenue")) or 0
+    syn = A["synergy_rev"] * t_rev
+    comb_eb = b_eb + t_eb + syn
+    cap_nd = A["max_leverage"] * comb_eb
+    cur_nd = (_num(bf.get("net_debt")) or 0) + (_num(tf.get("net_debt")) or 0)
+    debt_cap = max(0.0, cap_nd - cur_nd)
+    usable_cash = 0.5 * (_num(bf.get("cash")) or 0)
+    cash_portion = min(offer, debt_cap + usable_cash)
+    stock_portion = offer - cash_portion
+    # margin A/D (EBITDA margin)
+    b_rev = _num(bf.get("revenue"))
+    margin_bps = None
+    if b_rev and t_rev:
+        b_margin = ((_num(bf.get("ebitda")) or 0)/b_rev)
+        pf_margin = comb_eb/(b_rev+t_rev)
+        margin_bps = round((pf_margin-b_margin)*10000)
+    # EPS A/D
+    b_ni, b_sh, b_px = _num(bf.get("net_income")), _num(bf.get("shares")), _num(bf.get("price_eur"))
+    t_ni = _num(tf.get("net_income"))
+    eps_ad = None
+    if b_ni and b_sh and b_px and b_px>0 and t_ni is not None:
+        new_sh = stock_portion / b_px
+        after_tax_fin = cash_portion * A["cost_debt"] * (1-A["tax"])
+        after_tax_syn = syn * (1-A["tax"])
+        pf_eps = (b_ni + t_ni + after_tax_syn - after_tax_fin) / (b_sh + new_sh)
+        std_eps = b_ni / b_sh
+        if std_eps: eps_ad = (pf_eps/std_eps - 1)*100
+    return {"eps_ad": (round(eps_ad,1) if eps_ad is not None else None),
+            "margin_bps": margin_bps,
+            "cash_pct": (round(cash_portion/offer*100) if offer else None),
+            "stock_pct": (round(stock_portion/offer*100) if offer else None),
+            "rel_size_pct": (round(offer/_num(bf.get("mc"))*100) if _num(bf.get("mc")) else None)}
+
+def attach_intel(buyers, rec, buyer_fin):
+    """Adds b['intel'] (sponsor profile) or b['fin']+b['ad'] (strategic firepower + A/D)."""
+    buyer_fin = buyer_fin or {}
+    tf = _target_fin(rec)
+    for b in buyers:
+        if b["t"] == "spons":
+            p = sponsor_profile(b["n"])
+            if p: b["intel"] = p
+        elif b["t"] == "strat" and b.get("tk") and b["tk"] in buyer_fin:
+            bf = buyer_fin[b["tk"]]
+            b["fin"] = firepower(bf)
+            ad = accretion_dilution(bf, tf)
+            if ad: b["ad"] = ad
+    return buyers

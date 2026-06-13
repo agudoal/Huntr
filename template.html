@@ -411,6 +411,20 @@
   .acq .afitbar { flex:1; height:5px; border-radius:3px; background:var(--line); overflow:hidden; }
   .acq .afitbar i { display:block; height:100%; border-radius:3px; }
   .acq .afitv { font-family:var(--mono); font-size:10.5px; color:var(--txt-2); width:54px; text-align:right; }
+  /* rich buyer-card body: strategic firepower/A&D + sponsor profile */
+  .bmetrics { display:grid; grid-template-columns:1fr 1fr; gap:7px 14px; margin-top:9px; }
+  .bm { display:flex; flex-direction:column; gap:2px; }
+  .bm.bm-wide { grid-column:1 / -1; }
+  .bm span { color:var(--txt-2); font-size:9px; letter-spacing:.05em; text-transform:uppercase; }
+  .bm b { font-family:var(--mono); font-size:12px; color:var(--txt); font-weight:600; }
+  .bm b.pos { color:var(--cool); }
+  .bm b.neg { color:var(--hot); }
+  .bnote { margin-top:8px; font-size:9px; color:var(--txt-3); line-height:1.45; }
+  .sponsor { margin-top:9px; display:flex; flex-direction:column; gap:9px; }
+  .sdeals > span { color:var(--txt-2); font-size:9px; letter-spacing:.05em; text-transform:uppercase; }
+  .schips { display:flex; flex-wrap:wrap; gap:5px; margin-top:5px; }
+  .schips em { font-style:normal; font-size:10.5px; background:var(--line); color:var(--txt); padding:2px 8px; border-radius:5px; }
+  .ssrc { font-size:10px; color:var(--accent); text-decoration:none; align-self:flex-start; }
   .acq .chev { color:var(--txt-3); font-size:11px; transition:transform .2s; flex:none; }
   .acq[open] .chev { transform:rotate(90deg); }
   .acq .why { padding:0 12px 12px 38px; font-size:11.5px; line-height:1.55; color:var(--txt-2); }
@@ -879,6 +893,37 @@ function thesisHTML(c){
   const row=(lab,val)=> val? `<div class="thpart"><div class="thlab">${lab}</div><div class="thval">${val}</div></div>`:"";
   return `<div class="thesis">${row("Why now",t.why_now)}${row("The asset",t.asset)}${row("Most likely path",t.path)}${row("Key risk",t.risk)}</div>`;
 }
+// Rich buyer card body: rationale + (strategic) firepower & accretion/dilution, or (sponsor) profile.
+function buyerBody(a){
+  let h = `<div class="why">${a.why}</div>`;
+  if(a.fin){
+    const nl=a.fin.net_leverage;
+    const lev=(nl===null||nl===undefined)?"n/a":(nl<0?`net cash (${nl.toFixed(1)}×)`:`${nl.toFixed(1)}× net debt / EBITDA`);
+    const cash=a.fin.cash_eur?`€${(a.fin.cash_eur/1e9).toFixed(1)}bn`:"n/a";
+    let rows=`<div class="bm"><span>Firepower · net leverage</span><b>${lev}</b></div>`+
+             `<div class="bm"><span>Cash &amp; equivalents</span><b>${cash}</b></div>`;
+    if(a.ad){
+      const e=a.ad.eps_ad, m=a.ad.margin_bps;
+      const eTxt=(e===null||e===undefined)?"n/a":`${e>0?"+":""}${e}% ${e>0?"accretive":e<0?"dilutive":"neutral"}`;
+      const mTxt=(m===null||m===undefined)?"n/a":`${m>0?"+":""}${m} bps ${m>0?"accretive":m<0?"dilutive":"neutral"}`;
+      const eC=(e>0?"pos":e<0?"neg":""), mC=(m>0?"pos":m<0?"neg":"");
+      rows+=`<div class="bm"><span>EPS accretion / (dilution)</span><b class="${eC}">${eTxt}</b></div>`+
+            `<div class="bm"><span>EBITDA-margin impact</span><b class="${mC}">${mTxt}</b></div>`+
+            `<div class="bm bm-wide"><span>Consideration · relative size</span><b>${a.ad.cash_pct}% cash · ${a.ad.rel_size_pct}% of buyer mkt cap</b></div>`;
+    }
+    h+=`<div class="bmetrics">${rows}</div>`;
+    if(a.ad) h+=`<div class="bnote">Illustrative pro-forma: 30% premium · cash to 3.0× pro-forma leverage then stock · synergies 5% of target revenue · 25% tax · 5% cost of debt.</div>`;
+  }
+  if(a.intel){
+    const p=a.intel;
+    h+=`<div class="sponsor">`+
+       `<div class="bmetrics"><div class="bm"><span>Firepower</span><b>${p.firepower}</b></div>`+
+       `<div class="bm"><span>Typical cheque</span><b>${p.cheque}</b></div></div>`+
+       `<div class="sdeals"><span>Recent comparable deals</span><div class="schips">${p.deals.map(d=>`<em>${d}</em>`).join("")}</div></div>`+
+       `<a class="ssrc" href="${p.src}" target="_blank" rel="noopener">Source ↗</a></div>`;
+  }
+  return h;
+}
 
 /* ---------- helpers ---------- */
 const fmtMc = v => v>=100? v.toFixed(0) : v.toFixed(1);
@@ -1196,7 +1241,7 @@ function openDrawer(tk){
             </div>
             <span class="chev">▶</span>
           </summary>
-          <div class="why">${a.why}</div>
+          ${buyerBody(a)}
         </details>`;
       }).join("")}
 
