@@ -242,7 +242,7 @@
   .buildhdr.open .bchev { transform:rotate(90deg); }
   .build { display:none; padding:4px 13px 12px; }
   .build.open { display:block; }
-  .brow { display:grid; grid-template-columns:1fr 58px 38px 84px; gap:6px; padding:5px 0; border-bottom:1px solid var(--line); font-size:11.5px; align-items:center; }
+  .brow { display:grid; grid-template-columns:1fr 38px 60px 74px; gap:6px; padding:5px 0; border-bottom:1px solid var(--line); font-size:11.5px; align-items:center; }
   .brow > span:first-child { color:var(--txt-2); }
   .brow .num { text-align:right; color:var(--txt); }
   .brow.bhead { font-size:9px; letter-spacing:.05em; text-transform:uppercase; border-bottom:1px solid var(--line-2); }
@@ -253,13 +253,24 @@
   .bnote { font-size:10.5px; color:var(--txt-3); line-height:1.5; margin-top:9px; }
   .methlink { color:var(--accent); cursor:pointer; }
   .methlink:hover { text-decoration:underline; }
-  /* editable driver inputs */
-  .ed-sub { width:48px; background:var(--bg); border:1px solid var(--line-2); color:var(--accent);
+  /* editable driver / weight inputs */
+  .ed-sub, .ed-wt { width:46px; background:var(--bg); border:1px solid var(--line-2); color:var(--accent);
     font-family:var(--mono); font-size:11.5px; text-align:right; border-radius:5px; padding:2px 5px; outline:none; }
-  .ed-sub:focus { border-color:var(--accent); box-shadow:0 0 0 2px rgba(77,163,255,.18); }
-  .ed-sub::-webkit-inner-spin-button { opacity:.45; }
+  .ed-sub:focus, .ed-wt:focus { border-color:var(--accent); box-shadow:0 0 0 2px rgba(77,163,255,.18); }
+  .ed-sub::-webkit-inner-spin-button, .ed-wt::-webkit-inner-spin-button { opacity:.45; }
   .edhint { font-size:10px; color:var(--txt-3); margin:3px 0 7px; }
   .edhint b { color:var(--cool); font-weight:600; }
+  .wreset { color:var(--accent); cursor:pointer; font-weight:600; white-space:nowrap; }
+  .wreset:hover { text-decoration:underline; }
+  /* settings — global weights */
+  .setw { border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-top:12px; }
+  .setrow { display:grid; grid-template-columns:1fr 112px; gap:0; align-items:center; border-bottom:1px solid var(--line); padding:9px 13px; }
+  .setrow:last-child { border-bottom:0; }
+  .setn { color:var(--txt); font-size:12.5px; font-weight:600; }
+  .setn .setd { color:var(--txt-3); font-weight:400; font-size:10.5px; margin-left:8px; font-family:var(--mono); }
+  .setc { display:flex; align-items:center; justify-content:flex-end; gap:5px; font-family:var(--mono); color:var(--txt-2); font-size:12px; }
+  .setrow.settot { background:var(--bg-2); }
+  .setrow.settot .setn, .setrow.settot .setc { font-weight:700; color:var(--accent); }
   /* share-price chart */
   .sp-demo { float:right; text-transform:none; letter-spacing:0; font-weight:600; color:var(--gold); font-size:10px; }
   .spwrap { border:1px solid var(--line); border-radius:10px; padding:10px 12px 12px; background:var(--panel-2); }
@@ -429,6 +440,7 @@
     .brand .tag { display:none; }
     .col-sub, thead th.col-sub { display:none; }
     .col-mc, thead th.col-mc { display:none; }
+    .col-mult, thead th.col-mult { display:none; }
     .drawer { width:100%; max-width:100%; }
   }
   @media (max-width:520px){
@@ -462,6 +474,7 @@
       <input id="searchInput" placeholder="Search company or ticker…  (e.g. Worldline, UBI)" autocomplete="off" />
     </div>
     <div class="spacer"></div>
+    <div class="pill infobtn" id="setBtn" title="Adjust the factor weights used to score every company"><span style="color:var(--accent)">⚙</span> Settings</div>
     <div class="pill infobtn" id="methBtn" title="How the signal is built &amp; where the data comes from"><span style="color:var(--accent)">ⓘ</span> Methodology</div>
     <div class="seg" id="dsSeg" title="Switch between placeholder and live Stage-1 data"><button data-ds="demo" class="on">Demo</button><button data-ds="live">Live</button></div>
     <div class="pill warn" id="srcPill" title="Data source">⚠ Illustrative data</div>
@@ -537,6 +550,8 @@
               <th class="l" data-k="name">Company</th>
               <th class="l col-sub" data-k="subsector">Subsector</th>
               <th class="col-mc" data-k="mc">Mkt cap</th>
+              <th class="col-mult" data-k="evrev" title="Firm value / Revenue (LTM)">FV/Rev</th>
+              <th class="col-mult" data-k="evebitda" title="Firm value / EBITDA (LTM)">FV/EBITDA</th>
               <th class="col-dec" data-k="decile">Decile</th>
               <th data-k="delta" title="30-day change in score">Δ30d</th>
               <th data-k="score">Signal ▾</th>
@@ -569,6 +584,20 @@
       <button class="close" id="methClose">✕</button>
     </div>
     <div class="mb" id="methBody"></div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-scrim" id="setScrim">
+  <div class="modal" id="setModal">
+    <div class="mh">
+      <div>
+        <div class="mt">Settings — factor weights</div>
+        <div class="ms">Tune how much each driver contributes; weights apply to every company and re-rank live</div>
+      </div>
+      <button class="close" id="setClose">✕</button>
+    </div>
+    <div class="mb" id="setBody"></div>
   </div>
 </div>
 
@@ -649,9 +678,26 @@ const DATA = [
 // factor weights — SINGLE SOURCE OF TRUTH for scoring & audit (editable at runtime)
 const FKEYS=["val","o","bs","sz","sc","si"];
 const WEIGHTS={val:20,o:20,bs:15,sz:15,sc:15,si:15};
+const DEFAULT_WEIGHTS={...WEIGHTS};            // immutable baseline for "restore defaults"
+const sumW=()=>FKEYS.reduce((s,k)=>s+WEIGHTS[k],0);
 // composite is weighted MEAN (normalised by the weight sum) so it stays 0–100 even if weights are edited
 const compositeRaw=f=>{ let n=0,d=0; for(const k of FKEYS){ n+=WEIGHTS[k]*f[k]; d+=WEIGHTS[k]; } return d? n/d : 0; };
 const rescore=c=>{ c.scoreRaw=compositeRaw(c.f); c.score=Math.round(c.scoreRaw); };
+// --- weights are GLOBAL model parameters: editing one rescores & re-ranks the whole universe ---
+function applyWeights(){ [DATASETS.demo,DATASETS.live].forEach(ds=>ds&&ds.forEach(rescore)); reassignDeciles(); }
+function setWeight(key,v){
+  if(FKEYS.indexOf(key)<0) return;
+  v=Math.round(+v); if(isNaN(v)) v=0; v=Math.max(0,Math.min(100,v));
+  const others=FKEYS.filter(k=>k!==key), oldOther=others.reduce((s,k)=>s+WEIGHTS[k],0), rem=100-v;
+  if(oldOther<=0){ const e=rem/others.length; others.forEach(k=>WEIGHTS[k]=e); }       // even split if others were 0
+  else { others.forEach(k=>WEIGHTS[k]=WEIGHTS[k]/oldOther*rem); }                       // redistribute pro-rata
+  WEIGHTS[key]=v;
+  others.forEach(k=>WEIGHTS[k]=Math.round(WEIGHTS[k]));                                 // integerise
+  let drift=100-sumW();                                                                 // fix rounding so total = 100
+  if(drift!==0){ for(const k of others.slice().sort((a,b)=>WEIGHTS[b]-WEIGHTS[a])){ if(WEIGHTS[k]+drift>=0){ WEIGHTS[k]+=drift; break; } } }
+  applyWeights();
+}
+function restoreWeights(){ FKEYS.forEach(k=>WEIGHTS[k]=DEFAULT_WEIGHTS[k]); applyWeights(); }
 
 // clean dup / placeholder rows; HEADLINE SCORE IS COMPUTED from the weighted factors,
 // so the audit drill-down always reconciles exactly to the score.
@@ -836,6 +882,19 @@ function thesisHTML(c){
 
 /* ---------- helpers ---------- */
 const fmtMc = v => v>=100? v.toFixed(0) : v.toFixed(1);
+// market-cap display: < €1bn shown in millions as "€###m" (no decimals); else €#.#bn / €###bn
+const fmtMcStr = mc => (!mc||mc<=0)?"—": mc<1?`€${Math.round(mc*1000)}m` : `€${mc>=100?mc.toFixed(0):mc.toFixed(1)}bn`;
+function mcCell(mc){ if(!mc||mc<=0) return '<span style="color:var(--txt-3)">—</span>';
+  if(mc<1) return `€${Math.round(mc*1000)}<span style="color:var(--txt-3)">m</span>`;
+  return `€${mc>=100?mc.toFixed(0):mc.toFixed(1)}<span style="color:var(--txt-3)">bn</span>`; }
+// firm-value multiple cell for the table (live only; demo has no fundamentals)
+const fmtMult = (c,key)=> (c.liveRaw && c.liveRaw[key]!=null)? c.liveRaw[key].toFixed(1)+"×" : '<span style="color:var(--txt-3)">—</span>';
+// Yahoo enterprise-value multiples are trailing-twelve-months
+const MULT_PERIOD = "LTM";
+// data-refresh date for the Live badge → "dd-mmm-yy"
+const MONTHS3=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDDMMMYY(s){ const m=(s||"").match(/(\d{4})-(\d{2})-(\d{2})/); if(!m) return s||""; return `${m[3]}-${MONTHS3[+m[2]-1]}-${m[1].slice(2)}`; }
+const liveBanner = ()=> '<span class="dot"></span> Live · '+fmtDDMMMYY(LIVE_META.retrieved);
 /* circular matte SVG flags — emoji flags don't render on Windows, so we draw our own.
    Muted palette for a matte finish; unknown country -> neutral disc. */
 const cc = f => { const L=[...(f||"")].map(ch=>ch.codePointAt(0)-0x1F1E6+65).filter(n=>n>=65&&n<=90).map(n=>String.fromCharCode(n)).join(""); return /^[A-Z]{2}$/.test(L)?L:""; };
@@ -892,11 +951,11 @@ function peerTable(c){
   const rows = peers.map(p=>`<div class="prow peer-row" data-tk="${p.ticker}"><span class="pn">${p.name}</span><span class="pv">${live?fmtX(p.liveRaw&&p.liveRaw.ev_ebitda):"—"}</span><span class="pv">${live?fmtX(p.liveRaw&&p.liveRaw.ev_rev):"—"}</span></div>`).join("");
   return `<div class="peers-head" data-peers><span>Peer set &amp; subsector median · ${SUBSECTORS[c.subsector].label} (${pool.length})</span><span class="pchev">▸</span></div>
           <div class="peers">
-            <div class="prow phead"><span class="pn">Company</span><span class="pv">EV/EBITDA</span><span class="pv">EV/Sales</span></div>
+            <div class="prow phead"><span class="pn">Company</span><span class="pv">FV/EBITDA ${MULT_PERIOD}</span><span class="pv">FV/Rev ${MULT_PERIOD}</span></div>
             <div class="prow pself"><span class="pn">${c.name} — this company</span><span class="pv">${live?fmtX(c.liveRaw&&c.liveRaw.ev_ebitda):"—"}</span><span class="pv">${live?fmtX(c.liveRaw&&c.liveRaw.ev_rev):"—"}</span></div>
             ${rows}
             <div class="prow pmed"><span class="pn">Subsector median</span><span class="pv">${live?fmtX(median(evE)):"—"}</span><span class="pv">${live?fmtX(median(evS)):"—"}</span></div>
-            <div class="pnote">${live?"Median across all "+SUBSECTORS[c.subsector].label+" names with data in the live universe (incl. this company). Depressed-EBITDA outliers are visible here; the f_val sub-score uses the cross-universe percentile rank, so one extreme multiple cannot dominate. Click a peer to open its tearsheet.":"◆ Demo dataset — peer multiples are not populated here; switch to <b>Live</b> (top bar) for real EV/EBITDA &amp; EV/Sales per peer and the computed median. Click a peer to open its tearsheet."}</div>
+            <div class="pnote">${live?"Median across all "+SUBSECTORS[c.subsector].label+" names with data in the live universe (incl. this company). Depressed-EBITDA outliers are visible here; the f_val sub-score uses the cross-universe percentile rank, so one extreme multiple cannot dominate. Click a peer to open its tearsheet.":"◆ Demo dataset — peer multiples are not populated here; switch to <b>Live</b> (top bar) for real FV/EBITDA &amp; FV/Revenue per peer and the computed median. Click a peer to open its tearsheet."}</div>
           </div>`;
 }
 
@@ -960,7 +1019,7 @@ function applyFilters(){
   return list;
 }
 
-const sortKey = (c,k)=> k==="name"?c.name.toLowerCase() : k==="subsector"?SUBSECTORS[c.subsector].label : k==="mc"?c.mc : k==="decile"?c.decile : k==="delta"?c.d30 : c.score;
+const sortKey = (c,k)=> k==="name"?c.name.toLowerCase() : k==="subsector"?SUBSECTORS[c.subsector].label : k==="mc"?c.mc : k==="evrev"?(c.liveRaw&&c.liveRaw.ev_rev!=null?c.liveRaw.ev_rev:-Infinity) : k==="evebitda"?(c.liveRaw&&c.liveRaw.ev_ebitda!=null?c.liveRaw.ev_ebitda:-Infinity) : k==="decile"?c.decile : k==="delta"?c.d30 : c.score;
 
 /* ---------- render ---------- */
 function render(){
@@ -995,7 +1054,9 @@ function render(){
       <td class="l rank">${rankMap.get(c)}</td>
       <td class="l"><div class="co">${flagHTML(ccOf(c))}<div><div class="nm">${c.name}</div><div class="tk">${c.ticker} · ${REGIONS[c.region]}</div></div></div></td>
       <td class="l col-sub"><span class="chip" style="color:${sc.c};border-color:${sc.c}55">${sc.label}</span></td>
-      <td class="col-mc num">€${fmtMc(c.mc)}<span style="color:var(--txt-3)">bn</span></td>
+      <td class="col-mc num">${mcCell(c.mc)}</td>
+      <td class="col-mult num">${fmtMult(c,'ev_rev')}</td>
+      <td class="col-mult num">${fmtMult(c,'ev_ebitda')}</td>
       <td class="col-dec"><span class="dec" style="${decileBg(c.decile)}">D${c.decile}</span></td>
       <td class="num">${dArr}</td>
       <td><div class="score"><div class="scorebar"><i style="width:${c.score}%;background:${col}"></i></div><span class="scoreval" style="color:${col}">${c.score}</span></div></td>
@@ -1014,8 +1075,8 @@ function render(){
 
 /* ---------- drawer ---------- */
 const FACTOR_DEF=[
-  {k:"val",nm:"Valuation gap",w:WEIGHTS.val,desc:"EV/EBITDA & EV/Sales discount vs subsector median — cheap vs peers and private-market value",src:"Prices + fundamentals",url:"https://eodhd.com/financial-apis/",
-    input:"EV/EBITDA & EV/Sales vs subsector median",
+  {k:"val",nm:"Valuation gap",w:WEIGHTS.val,desc:"FV/EBITDA & FV/Revenue discount vs subsector median — cheap vs peers and private-market value",src:"Prices + fundamentals",url:"https://eodhd.com/financial-apis/",
+    input:"FV/EBITDA & FV/Revenue vs subsector median (LTM)",
     why:"Cheapness is the strongest single precursor of takeovers — acquirers pursue what trades below peers and private-market value. Joint-highest weight."},
   {k:"o", nm:"Ownership & float",w:WEIGHTS.o,desc:"Free float, top-holder concentration, activist or sponsor presence on the register",src:"Filings / 13D-G",url:"https://www.sec.gov/cgi-bin/browse-edgar",
     input:"Free float %, top-holder concentration, sponsor/activist presence",
@@ -1039,7 +1100,7 @@ function rawDemo(k,c,v){
     case "val": { const d=v-50; return d>=0?`≈${d}% below subsector median EV/EBITDA`:`≈${-d}% above peers (richer)`; }
     case "o":   return v>=70?"Dispersed float; sponsor/activist present":v>=50?"Mixed register; some concentration":"Tightly held (founder/state control)";
     case "bs":  { const nd=(50-v)/20; return nd<=0?`Net cash ≈ ${(-nd).toFixed(1)}x EBITDA`:`Net debt ≈ ${nd.toFixed(1)}x EBITDA`; }
-    case "sz":  return `Mkt cap €${fmtMc(c.mc)}bn → smaller = more acquirable`;
+    case "sz":  return `Mkt cap ${fmtMcStr(c.mc)} → smaller = more acquirable`;
     case "sc":  return `≈ ${Math.max(1,Math.round(v/12))} subsector deals, trailing 24m`;
     case "si":  return v>=80?"Named-buyer / firm press chatter":v>=60?"Moderate strategic interest":"Limited public chatter";
   }
@@ -1048,10 +1109,10 @@ function rawDemo(k,c,v){
 function liveRawStr(k,c){
   const r=c.liveRaw||{};
   switch(k){
-    case "val": return (r.ev_ebitda==null&&r.ev_rev==null)?"no data":`EV/EBITDA ${r.ev_ebitda==null?"n/a":r.ev_ebitda.toFixed(1)}× · EV/Sales ${r.ev_rev==null?"n/a":r.ev_rev.toFixed(1)}×`;
+    case "val": return (r.ev_ebitda==null&&r.ev_rev==null)?"no data":`FV/EBITDA ${r.ev_ebitda==null?"n/a":r.ev_ebitda.toFixed(1)}× · FV/Revenue ${r.ev_rev==null?"n/a":r.ev_rev.toFixed(1)}× (${MULT_PERIOD})`;
     case "o":   return r.float_pct==null?"no data":`Free float ${(r.float_pct*100).toFixed(0)}%`;
     case "bs":  return r.nd_ebitda==null?"no data":`Net debt/EBITDA ${r.nd_ebitda.toFixed(1)}×`;
-    case "sz":  return r.mktcap_eur==null?"no data":`Mkt cap €${(r.mktcap_eur/1e9).toFixed(1)}bn`;
+    case "sz":  return r.mktcap_eur==null?"no data":`Mkt cap ${fmtMcStr(r.mktcap_eur/1e9)}`;
     case "sc":  return c.liveRaw?.sc_deals!=null?`${c.liveRaw.sc_deals} deals in sector (last 24m · EDGAR SC TO-T + DEFM14A)`:"n/a";
     case "si":  return c.liveRaw?.si_flags?c.liveRaw.si_flags:"No EDGAR signals — neutral baseline";
   }
@@ -1066,7 +1127,7 @@ function openDrawer(tk){
   const stats={
     "Signal rank":`#${rank} / ${ranked.length}`,
     "Decile":`D${c.decile}`,
-    "Mkt cap (illus.)":`€${fmtMc(c.mc)}bn`,
+    "Mkt cap":fmtMcStr(c.mc),
     "Subsector":sc.label,
     "Region":REGIONS[c.region],
     "30-day Δ":`${c.d30>0?"+":""}${c.d30}`,
@@ -1090,11 +1151,11 @@ function openDrawer(tk){
       <div class="buildwrap">
         <div class="buildhdr" data-build><span>How this ${c.score}/100 is built — weighting</span><span class="bchev">▸</span></div>
         <div class="build" id="buildPanel">
-          <div class="edhint">Sub-scores are <b>editable</b> — change any value to model a what-if; the score, decile &amp; ranking update live.</div>
-          <div class="brow bhead"><span>Driver</span><span class="num">Sub ✎</span><span class="num">Wt</span><span class="num">Contrib.</span></div>
-          ${FACTOR_DEF.map(f=>{const v=c.f[f.k];const ws=FKEYS.reduce((s,k)=>s+WEIGHTS[k],0);const ct=WEIGHTS[f.k]*v/ws;return `<div class="brow"><span>${f.nm}</span><span class="num"><input class="ed-sub" type="number" min="0" max="100" step="1" data-k="${f.k}" value="${v}"></span><span class="num">${WEIGHTS[f.k]}%</span><span class="num">${ct.toFixed(1)}</span></div>`;}).join("")}
-          <div class="brow btot"><span>Composite</span><span class="num"></span><span class="num">100%</span><span class="num">${c.scoreRaw.toFixed(1)} → ${c.score}</span></div>
-          <div class="bnote">Composite = Σ (weight × sub-score). Each driver is percentile-ranked 0–100 across the universe. Weights are an interpretable starting point — the backtest will re-estimate them from what actually predicted deals. <span class="methlink">Full weighting rationale ›</span></div>
+          <div class="edhint"><b>Weights</b> are editable and apply across the whole model — change one and the rest rebalance pro-rata so the total stays 100%. Sub-scores are fixed (percentile-ranked from data). <span class="wreset" data-wreset>↺ Restore defaults</span></div>
+          <div class="brow bhead"><span>Driver</span><span class="num">Sub</span><span class="num">Wt ✎</span><span class="num">Contrib.</span></div>
+          ${FACTOR_DEF.map(f=>{const v=c.f[f.k];const w=WEIGHTS[f.k];const ws=sumW();const ct=w*v/ws;return `<div class="brow"><span>${f.nm}</span><span class="num">${v}</span><span class="num"><input class="ed-wt" type="number" min="0" max="100" step="1" data-k="${f.k}" value="${w}">%</span><span class="num">${ct.toFixed(1)}</span></div>`;}).join("")}
+          <div class="brow btot"><span>Composite</span><span class="num"></span><span class="num">${sumW()}%</span><span class="num">${c.scoreRaw.toFixed(1)} → ${c.score}</span></div>
+          <div class="bnote">Composite = Σ (weight × sub-score) ÷ Σ weights. Each driver is percentile-ranked 0–100 across the universe. Weights are an interpretable starting point — the backtest will re-estimate them from what actually predicted deals. Set them globally in <span class="methlink" data-opensettings>Settings ›</span></div>
         </div>
       </div>
       <div class="sech">Signal drivers <span class="methlink" style="float:right;text-transform:none;letter-spacing:0;font-weight:600">methodology ›</span></div>
@@ -1103,7 +1164,7 @@ function openDrawer(tk){
         const v=c.f[f.k]; const fc=scoreColor(v); const ct=(WEIGHTS[f.k]*v/100);
         return `<div class="factor" title="${f.desc}">
           <div class="factor-head" data-audit="${f.k}">
-            <div class="fr"><span class="fn">${f.nm} <span class="fw">·${f.w}%</span></span><span class="fhv"><span class="fv" style="color:${fc}">${v}</span><span class="fchev">▸</span></span></div>
+            <div class="fr"><span class="fn">${f.nm} <span class="fw">·${WEIGHTS[f.k]}%</span></span><span class="fhv"><span class="fv" style="color:${fc}">${v}</span><span class="fchev">▸</span></span></div>
             <div class="ftrack"><i style="width:${v}%;background:${fc}"></i></div>
             <div class="prov">${c.live?'<span class="prov-live">● live</span> src: <span class="srctag">'+(f.k==='sc'||f.k==='si'?'EDGAR EFTS':'Yahoo Finance')+'</span>':'<span class="demo">◆ demo</span> src: <span class="srctag">'+f.src+'</span>'}<span class="prov-hint">click to audit ›</span></div>
           </div>
@@ -1227,7 +1288,7 @@ document.getElementById("dsSeg").querySelectorAll("button").forEach(b=>{
     dLo.value=1; dHi.value=10; syncDSlider();
     closeDrawer();
     const sp=document.getElementById("srcPill");
-    if(state.dataset==="live"){ sp.className="pill"; sp.innerHTML='<span class="dot"></span> Live · Yahoo (Stage 1)'; }
+    if(state.dataset==="live"){ sp.className="pill"; sp.innerHTML=liveBanner(); }
     else { sp.className="pill warn"; sp.innerHTML='⚠ Illustrative data'; }
     render();
   });
@@ -1260,14 +1321,23 @@ document.getElementById("drawer").addEventListener("click",e=>{
     const bp=document.getElementById("buildPanel"), bh=e.target.closest("[data-build]");
     bp.classList.toggle("open"); bh.classList.toggle("open"); return;
   }
+  if(e.target.closest("[data-opensettings]")){ openSettings(); return; }
   if(e.target.closest(".methlink")){ openMeth(); }
 });
-// editable driver sub-scores → recompute composite, decile & ranking live
-document.getElementById("drawer").addEventListener("change",e=>{
-  const inp=e.target.closest(".ed-sub"); if(!inp) return;
-  const c=companies.find(x=>x.ticker===state.sel); if(!c) return;
-  let v=Math.round(+inp.value); if(isNaN(v)) v=0; v=Math.max(0,Math.min(100,v));
-  c.f[inp.dataset.k]=v; rescore(c); reassignDeciles(); render(); reopenKeepBuild(c.ticker);
+// editable WEIGHTS (drawer build-panel or Settings) → rebalance pro-rata, rescore & re-rank live
+document.addEventListener("change",e=>{
+  const wi=e.target.closest(".ed-wt"); if(!wi) return;
+  setWeight(wi.dataset.k, wi.value);
+  render();
+  if(state.sel) reopenKeepBuild(state.sel);
+  if(document.getElementById("setScrim").classList.contains("show")) renderSettings();
+});
+// restore-default weights (works from the Settings modal or the drawer build panel)
+document.addEventListener("click",e=>{
+  if(!e.target.closest("[data-wreset]")) return;
+  restoreWeights(); render();
+  if(state.sel) reopenKeepBuild(state.sel);
+  if(document.getElementById("setScrim").classList.contains("show")) renderSettings();
 });
 // mobile sidebar
 const side=document.getElementById("side"), backdrop=document.getElementById("backdrop");
@@ -1328,7 +1398,7 @@ function renderMethodology(){
     <div class="fmeth">
       <div class="row head"><div>Factor · weight</div><div>What it measures</div><div>Primary source</div></div>
       ${FACTOR_DEF.map(f=>`<div class="row">
-        <div class="fnm">${f.nm} <span class="w">${f.w}%</span></div>
+        <div class="fnm">${f.nm} <span class="w">${WEIGHTS[f.k]}%</span></div>
         <div class="desc">${f.desc}</div>
         <div class="src"><a href="${f.url}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">${f.src} ↗</a></div>
       </div>`).join("")}
@@ -1352,6 +1422,24 @@ document.getElementById("methBtn").addEventListener("click",openMeth);
 document.getElementById("methClose").addEventListener("click",closeMeth);
 document.getElementById("methScrim").addEventListener("click",e=>{ if(e.target.id==="methScrim") closeMeth(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeMeth(); });
+
+/* ---------- settings: global factor weights ---------- */
+function renderSettings(){
+  document.getElementById("setBody").innerHTML=`
+    <p class="lead">Adjust how much each driver contributes to the composite signal. Weights always total <b>100%</b> — when you change one, the others rebalance pro-rata. Changes apply to the whole universe immediately and re-rank every company.</p>
+    <div class="setw">
+      ${FACTOR_DEF.map(f=>`<div class="setrow"><div class="setn">${f.nm}<span class="setd">default ${DEFAULT_WEIGHTS[f.k]}%</span></div><div class="setc"><input class="ed-wt" type="number" min="0" max="100" step="1" data-k="${f.k}" value="${WEIGHTS[f.k]}"><span>%</span></div></div>`).join("")}
+      <div class="setrow settot"><div class="setn">Total</div><div class="setc">${sumW()}%</div></div>
+    </div>
+    <div style="margin-top:14px"><span class="wreset" data-wreset>↺ Restore default weights</span></div>
+    <div class="callout">Weights are an interpretable starting point. The forthcoming backtest will re-estimate them empirically from the factors that actually predicted deals — at which point these defaults will be revised.</div>`;
+}
+function openSettings(){ renderSettings(); document.getElementById("setScrim").classList.add("show"); }
+function closeSettings(){ document.getElementById("setScrim").classList.remove("show"); }
+document.getElementById("setBtn").addEventListener("click",openSettings);
+document.getElementById("setClose").addEventListener("click",closeSettings);
+document.getElementById("setScrim").addEventListener("click",e=>{ if(e.target.id==="setScrim") closeSettings(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeSettings(); });
 
 /* ---------- init ---------- */
 buildFilters();

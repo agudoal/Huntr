@@ -41,8 +41,7 @@ html  = html.replace(
     "buildFilters();\nsyncSlider();\nsyncDSlider();\nrender();",
     'if(state.dataset==="live" && typeof DATASETS!=="undefined"){companies=DATASETS.live;'
     ' reassignDeciles(); var _sp=document.getElementById("srcPill");'
-    ' if(_sp){_sp.className="pill";_sp.innerHTML=\'<span class="dot"></span>'
-    ' Live \\u00b7 Yahoo + EDGAR (WS-A)\';} }'
+    ' if(_sp){_sp.className="pill";_sp.innerHTML=liveBanner();} }'
     "\nbuildFilters();\nsyncSlider();\nsyncDSlider();\nrender();")
 # Inject named-buyer lists + structured theses (insights.py output), keyed by full ticker.
 buyers_map = {c["ticker"]: c.get("buyers", []) for c in data["companies"]}
