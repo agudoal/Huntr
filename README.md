@@ -1,56 +1,127 @@
-[README-SETUP.md](https://github.com/user-attachments/files/28770775/README-SETUP.md)
-# Huntr — automation & hosting setup (for agudoal)
+# Huntr
 
-This turns Huntr into a tool that **refreshes itself every night (~03:00 UK)** and lives at a web address you can open on your laptop, iPad or iPhone. You do this once; after that it runs on its own. No coding — just uploading files and clicking a few settings.
+Huntr is an automated M&A target signal for public EMEA technology companies. It screens a curated universe of listed companies, scores them on acquisition-friendly characteristics, and publishes a refreshed static dashboard through GitHub Pages.
 
-**What's in this folder**
-- `pipeline.py` — fetches the data and scores every company (the validated v2 logic, now reading `universe.csv`).
-- `universe.csv` — the company list (~95 EMEA tech names; edit this file to add/remove names later).
-- `build_index.py` — drops the fresh scores into the tool and produces the web page (`index.html`).
-- `nightly.yml` — the schedule that runs it all at 03:00.
-- This guide.
+The project is designed as a lightweight research tool: a nightly data pipeline, a JSON score output, and a browser-based dashboard that can be opened from desktop, tablet, or phone.
 
----
+> Important: Huntr is for research and education only. It is not investment advice, a trading recommendation, or a prediction that any company will be acquired.
 
-## One-time setup (~15 minutes)
+## Live Tool
 
-### 1. Create the repository
-- Go to **github.com → New repository**. Name it **`huntr`**.
-- Set it to **Public** (free hosting needs this — the *code* and *market data* will be visible, but your EODHD key stays secret; we'll do a private URL in the later session).
-- Tick **"Add a README"** and create it.
+If GitHub Pages is enabled for this repository, the hosted dashboard is available at:
 
-### 2. Upload the files
-In the repo, click **Add file → Upload files**, and upload from this folder:
-- `pipeline.py`
-- `universe.csv`
-- `build_index.py`
-- **Your tool**, renamed to **`template.html`** — copy `01. Tool/huntr-prototype.html` from your Drive and rename it `template.html` before uploading.
+https://agudoal.github.io/Huntr/
 
-Then the workflow file, which must sit in a special folder:
-- Click **Add file → Create new file**, and in the name box type exactly: **`.github/workflows/nightly.yml`** (GitHub will create the folders as you type the `/`).
-- Paste the contents of `nightly.yml` from this folder, and commit.
+## What Huntr Does
 
-### 3. Add your EODHD key as a secret
-- Repo **Settings → Secrets and variables → Actions → New repository secret**.
-- Name: **`EODHD_API_KEY`** — Value: *your EODHD key*. Save. (It's encrypted; it never appears in the code or the page.)
+- Loads a curated company universe from `universe.csv`.
+- Pulls market and fundamental data using Yahoo Finance via `yfinance`.
+- Enriches the score with free SEC EDGAR signals for sector consolidation and strategic interest.
+- Scores each company across six factors, weighted into a single 0-100 signal.
+- Builds `huntr_scored.json` as the machine-readable output.
+- Injects the latest data into `template.html` to generate `index.html`, the hosted dashboard.
+- Adds named potential buyers and structured deal theses from the curated logic in `insights.py`.
+- Refreshes automatically every night through GitHub Actions.
 
-### 4. Turn on the website
-- Repo **Settings → Pages**.
-- Under **Source**, choose **Deploy from a branch**, branch **`main`**, folder **`/ (root)`**. Save.
+## Scoring Model
 
-### 5. Run it once to test
-- Go to the **Actions** tab → **Huntr nightly** → **Run workflow** → **Run**.
-- Wait ~2–3 minutes (it fetches ~95 names). When the tick goes green, your page is live at:
+Higher factor scores mean the company looks more acquisition-friendly on that dimension.
 
-  **https://agudoal.github.io/huntr/**
+| Factor | Weight | What it captures | Main source |
+| --- | ---: | --- | --- |
+| `f_val` | 20% | Relative valuation, using EV/EBITDA and EV/Sales | Yahoo Finance |
+| `f_own` | 20% | Free float and ownership openness | Yahoo Finance, adjusted with insider ownership |
+| `f_bs` | 15% | Balance sheet capacity, using net debt / EBITDA | Yahoo Finance |
+| `f_sz` | 15% | Deal feasibility based on market capitalisation | Yahoo Finance |
+| `f_sc` | 15% | Sector consolidation activity over the trailing 24 months | SEC EDGAR |
+| `f_si` | 15% | Company-specific strategic interest, such as tender, activist, or merger filings | SEC EDGAR |
 
-Open it on your phone/iPad too. From now on it refreshes automatically every night.
+The score is a relative screening signal, not a probability model. It should be read as a way to prioritise names for further work, not as a standalone conclusion.
 
----
+## Repository Structure
 
-## Notes & gotchas
-- **Timing:** the cron runs at 02:00 UTC = **03:00 UK in summer**, 02:00 UK in winter. Tell me if you want it pinned differently.
-- **Auto-disable:** GitHub pauses scheduled jobs after **60 days of no repo activity** — the nightly commit keeps it awake, so this won't bite in normal use.
-- **Editing the universe:** open `universe.csv` in the repo, click the pencil, add a row (`name,ticker,region,subsector,active`), commit. Next run picks it up.
-- **Coverage column:** if a name shows low coverage in the tool, its Yahoo ticker is probably slightly off — send it to me and I'll fix it.
-- **First run:** since I can't test GitHub from my side, treat the first run as a shakedown — if anything errors, copy me the red log from the Actions tab and I'll sort it.
+| Path | Purpose |
+| --- | --- |
+| `pipeline.py` | Runs the nightly scoring pipeline and writes `huntr_scored.json`. |
+| `edgar_data.py` | Pulls SEC EDGAR signals for sector consolidation and strategic interest. |
+| `insights.py` | Ranks named potential buyers and generates structured deal theses. |
+| `universe.csv` | Defines the active company universe. |
+| `build_index.py` | Injects scored data into `template.html` and writes `index.html`. |
+| `template.html` | Source dashboard template. |
+| `index.html` | Generated live dashboard published by GitHub Pages. |
+| `.github/workflows/nightly.yml` | Scheduled workflow that refreshes the data and hosted page. |
+
+## Run Locally
+
+Requirements:
+
+- Python 3.11+
+- `yfinance`
+- `pandas`
+- `numpy`
+- `requests`
+
+Install dependencies:
+
+```bash
+python -m pip install yfinance pandas numpy requests
+```
+
+Run the pipeline and rebuild the dashboard:
+
+```bash
+python pipeline.py
+python build_index.py
+```
+
+Then open `index.html` in a browser.
+
+## Nightly Automation
+
+The workflow in `.github/workflows/nightly.yml` runs at `02:00 UTC` each day and can also be triggered manually from the GitHub Actions tab.
+
+Each run:
+
+1. Checks out the repository.
+2. Installs Python dependencies.
+3. Runs `pipeline.py`.
+4. Runs `build_index.py`.
+5. Commits updated `huntr_scored.json` and `index.html` back to `main` if anything changed.
+
+GitHub Pages should be configured to deploy from the `main` branch at the repository root.
+
+## Updating The Company Universe
+
+Edit `universe.csv` and commit the change. The expected fields are:
+
+```csv
+name,ticker,region,subsector,status,country
+```
+
+Use `status=active` for names that should be included. Set `status=delisted` to keep a name in the file but exclude it from future runs.
+
+The next manual or scheduled workflow run will pick up the updated universe.
+
+## Data Caveats
+
+Huntr deliberately uses public and lightweight data sources, which keeps the project easy to run but creates limitations:
+
+- Yahoo Finance data can be incomplete, delayed, restated, or unavailable for some tickers.
+- EDGAR signals are more useful for SEC-covered or SEC-referenced situations than for all EMEA companies equally.
+- Low data coverage should reduce confidence in a score.
+- Extreme multiples, unusual free-float values, and stale market data should be checked manually.
+- The buyer lists are curated logic, while the ranking and injected figures refresh with the latest pipeline output.
+
+Use Huntr as a first-pass screen, then validate any interesting name with primary filings, market data, broker research, and your own judgement.
+
+## Near-Term Priorities
+
+- Add clearer confidence labels for low-coverage companies.
+- Make every score driver traceable to source URL, source date, raw value, cleaned value, and transformation.
+- Replace any illustrative charting with real historical price data in live mode.
+- Add export, watchlist, and shareable-filter workflows.
+- Add backtesting or decile-lift analysis once enough historical snapshots exist.
+
+## Disclaimer
+
+This repository contains experimental research tooling. It does not provide regulated financial advice, investment recommendations, or an offer to buy or sell securities. Always perform independent due diligence before making investment decisions.
